@@ -34,21 +34,86 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. M2 CUSTOM NAV (GLASS EFFECT RESTORED) --- */
+        /* --- 1. M2 CUSTOM NAV (CENTERED & STYLED) --- */
         .m2-nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            /* Full width padding */
-            padding: 0 5%; 
+            padding: 0 40px; 
             height: 120px; 
             z-index: 9999;
             /* Glass effect background */
             background: rgba(0, 0, 0, 0.6); 
-            border-bottom: 1px solid rgba(197, 160, 89, 0.3); /* Zlatá linka */
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
             color: white;
-            display: flex; justify-content: space-between; align-items: center;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Left Logo - Center Nav - Right CTA */
+            align-items: center;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Nav Links Styling */
+        .nav-center {
+            display: flex;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 30px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ccc;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Nav CTA Button */
+        .nav-cta {
+            justify-self: end;
+            padding: 12px 28px;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            color: black;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
         /* --- 2. HERO SECTION & VIDEO --- */
@@ -281,23 +346,39 @@
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
         .fade-in.active { opacity: 1; transform: translateY(0); }
 
+        @media (max-width: 1024px) {
+            .m2-nav {
+                height: 100px;
+                padding: 0 20px;
+                grid-template-columns: auto 1fr auto;
+            }
+            .nav-center { display: none; }
+            .nav-cta { display: none; }
+            /* Simple mobile menu toggle logic would go here if needed, keeping it simple for now based on desktop request */
+        }
+
     </style>
 </head>
 <body>
 
     <!-- NAV -->
     <nav class="m2-nav">
-        <!-- LOGO IMAGE (Zvětšeno na h-28 = cca 112px, s invert filtrem) -->
+        <!-- LOGO IMAGE -->
         <a href="#" class="block">
             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
         </a>
         
-        <div class="flex gap-8 text-xs font-medium text-gray-300">
-            <a href="#sluzby" class="hover:text-white transition">Expertíza</a>
-            <a href="#prace" class="hover:text-white transition">Projekty</a>
-            <a href="#pricing" class="hover:text-white transition">Investice</a>
-            <a href="#kontakt" class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Konzultace</a>
+        <!-- CENTER LINKS (DESKTOP) -->
+        <div class="nav-center hidden md:flex">
+            <a href="#sluzby" class="nav-link">Expertíza</a>
+            <a href="#prace" class="nav-link">Projekty</a>
+            <a href="#pricing" class="nav-link">Investice</a>
         </div>
+
+        <!-- RIGHT CTA (DESKTOP) -->
+        <a href="#kontakt" class="nav-cta hidden md:block">
+            Konzultace
+        </a>
     </nav>
 
     <main>
