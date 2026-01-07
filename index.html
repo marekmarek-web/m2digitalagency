@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M² Digital Agency | Budoucnost patří odvážným</title>
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -19,7 +22,6 @@
             --gold: #C5A059;
             --gold-light: #F9F1D8;
             
-            /* Authentic Apple Variables */
             --global-content-max-width: 1260px;
             --product-viewer-ref-border-radius: 28px;
         }
@@ -37,9 +39,10 @@
             position: fixed;
             top: 0; left: 0; width: 100%;
             padding: 0 max(22px, env(safe-area-inset-right));
-            height: 52px;
+            height: 120px; /* Zvětšeno z 80px na 120px pro větší logo */
             z-index: 9999;
-            mix-blend-mode: difference;
+            mix-blend-mode: normal; 
+            background: rgba(0,0,0,0.7);
             color: white;
             display: flex; justify-content: space-between; align-items: center;
             backdrop-filter: blur(20px);
@@ -48,13 +51,28 @@
             right: 0;
         }
 
-        /* --- 2. HERO TYPOGRAPHY & SHIMMER --- */
+        /* --- 2. HERO SECTION & VIDEO --- */
+        .hero-video-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.5;
+            filter: grayscale(100%) contrast(1.2);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
         .hero-text {
             font-size: clamp(48px, 8vw, 96px);
             line-height: 1.05;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: white;
+            text-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
         
         .text-shimmer {
@@ -70,16 +88,78 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* --- 3. GRADIENT BORDER CARD (GOLD) --- */
+        /* --- 3. CTA BUTTON SHIMMER (2.5s infinite) --- */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+            background: rgba(197, 160, 89, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .btn-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: none;
+            animation: btn-shimmer-anim 2.5s infinite;
+            z-index: -1;
+        }
+
+        @keyframes btn-shimmer-anim {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .btn-shimmer:hover {
+            background: white !important;
+            color: black !important;
+            border-color: white !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Zlatá varianta (Primární CTA) */
+        .btn-shimmer-filled {
+            background: var(--gold);
+            color: black;
+            border: 1px solid var(--gold);
+        }
+        .btn-shimmer-filled:hover {
+            background: white !important;
+            color: black !important;
+            border-color: white !important;
+        }
+
+        /* Šedobílá varianta (Sekundární CTA) */
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e5e5e5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-ghost:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        /* --- 4. GRADIENT BORDER CARD --- */
         .gradient-border-card {
             position: relative;
-            background: #1c1c1e; /* Fallback */
+            background: #1c1c1e;
             border-radius: 28px;
             z-index: 1;
             overflow: hidden;
             transition: transform 0.3s ease;
         }
-        /* Rotující gradient */
         .gradient-border-card::before {
             content: "";
             position: absolute;
@@ -88,12 +168,11 @@
             animation: rotate 4s linear infinite;
             z-index: -2;
         }
-        /* Vnitřní maska (černé pozadí karty) */
         .gradient-border-card::after {
             content: "";
             position: absolute;
-            inset: 2px; /* Tloušťka rámečku */
-            background: #151516; /* Pozadí karty */
+            inset: 2px;
+            background: #151516;
             border-radius: 26px;
             z-index: -1;
         }
@@ -106,91 +185,74 @@
             box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25);
         }
 
-        /* --- 4. VIDEO SCROLL --- */
+        /* --- 5. SMOOTH VIDEO SCROLL --- */
         .scroll-video-container {
-            height: 300vh; position: relative; background: var(--bg);
+            height: 300vh;
+            position: relative;
+            background: var(--bg);
         }
         .scroll-video-sticky {
-            position: sticky; top: 0; height: 100vh; width: 100%;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            position: sticky; 
+            top: 0; 
+            height: 100vh; 
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
         }
         .scroll-video-sticky video {
-            width: 80%; max-width: var(--global-content-max-width); 
+            width: 80%; 
+            max-width: var(--global-content-max-width);
             border-radius: var(--product-viewer-ref-border-radius);
             box-shadow: 0 0 100px rgba(197, 160, 89, 0.1);
+            opacity: 0.6;
+            filter: grayscale(100%);
         }
         .video-overlay-text {
             position: absolute;
-            font-size: 5rem; font-weight: 700;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            opacity: 0; transform: scale(0.95);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            text-align: center; width: 100%;
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 10px 30px rgba(0,0,0,1);
+            opacity: 0; 
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+            z-index: 20;
         }
         .video-overlay-text.visible { opacity: 1; transform: scale(1); }
 
-        /* --- 5. BENTO GRID WITH GLOW EFFECT --- */
+        /* --- 6. BENTO GRID --- */
         .bento-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
             max-width: var(--global-content-max-width); margin: 0 auto; padding: 4rem 20px;
         }
         .bento-item {
-            background: rgba(21, 21, 22, 0.6); /* Slightly transparent for glow */
+            background: rgba(21, 21, 22, 0.6);
             border-radius: 28px; padding: 40px;
             display: flex; flex-direction: column; justify-content: space-between;
             transition: transform 0.3s ease; min-height: 400px;
             position: relative; overflow: hidden; 
             border: 1px solid rgba(255,255,255,0.05);
         }
-        /* Glow Effect Logic */
-        .bento-grid:hover .bento-item::after {
-            opacity: 1;
-        }
-        .bento-item::before, .bento-item::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: inherit;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        /* Border Glow */
+        .bento-grid:hover .bento-item::after { opacity: 1; }
         .bento-item::before {
-            background: radial-gradient(
-                800px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.1),
-                transparent 40%
-            );
-            z-index: 1;
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.5s ease;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.1), transparent 40%); z-index: 1;
         }
-        /* Inner Spotlight */
         .bento-item::after {
-            background: radial-gradient(
-                600px circle at var(--mouse-x) var(--mouse-y),
-                rgba(197, 160, 89, 0.05),
-                transparent 40%
-            );
-            z-index: 2;
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.5s ease;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(197, 160, 89, 0.05), transparent 40%); z-index: 2;
         }
         .bento-item:hover::before { opacity: 1; }
-        
         .bento-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-
         .bento-span-2 { grid-column: span 2; }
-        @media (max-width: 768px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .bento-span-2 { grid-column: span 1; }
-        }
+        @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; } .bento-span-2 { grid-column: span 1; } }
 
-        /* --- MAGNETIC BUTTON --- */
-        .magnetic-btn {
-            display: inline-block;
-            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        /* --- 6. PRICING GRID --- */
+        /* --- 7. PRICING GRID --- */
         .pricing-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
             max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px;
@@ -205,15 +267,9 @@
         }
         .pricing-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.1); }
 
-        /* --- 7. REVEAL LIST --- */
-        .reveal-item {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s; position: relative;
-        }
-        .reveal-item:hover {
-            background: linear-gradient(90deg, rgba(197, 160, 89, 0.05), transparent);
-            border-color: rgba(197, 160, 89, 0.3); padding-left: 20px;
-        }
+        /* --- 8. REVEAL LIST --- */
+        .reveal-item { border-bottom: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; position: relative; }
+        .reveal-item:hover { background: linear-gradient(90deg, rgba(197, 160, 89, 0.05), transparent); border-color: rgba(197, 160, 89, 0.3); padding-left: 20px; }
         .reveal-img-preview {
             position: fixed; pointer-events: none; z-index: 50; width: 320px; height: 220px; object-fit: cover;
             border-radius: 12px; opacity: 0; transform: scale(0.8) translate(-50%, -50%);
@@ -222,28 +278,20 @@
         }
         .reveal-img-preview.active { opacity: 1; transform: scale(1) translate(-50%, -50%); }
 
-        /* UTILS */
-        .fade-in {
-            opacity: 0; transform: translateY(30px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
         .fade-in.active { opacity: 1; transform: translateY(0); }
-
-        .btn-gold {
-            background: var(--gold); color: black; padding: 14px 32px;
-            border-radius: 999px; font-weight: 600; font-size: 17px; transition: all 0.3s;
-        }
-        .btn-gold:hover { background: #d4af37; box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
 
     </style>
 </head>
 <body>
 
-    <!-- 1. BLEND NAV -->
+    <!-- NAV -->
     <nav class="apple-nav">
-        <div class="font-bold text-xl tracking-tight flex items-center gap-1">
-            M<sup style="color: var(--gold); font-size: 0.7em;">2</sup>
-        </div>
+        <!-- LOGO IMAGE (Zvětšeno na h-28 = cca 112px, s invert filtrem) -->
+        <a href="#" class="block">
+            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
+        </a>
+        
         <div class="flex gap-8 text-xs font-medium text-gray-300">
             <a href="#sluzby" class="hover:text-white transition">Expertíza</a>
             <a href="#prace" class="hover:text-white transition">Projekty</a>
@@ -256,33 +304,42 @@
 
         <!-- HERO -->
         <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
-            <!-- Background ambient glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C5A059] rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+            <!-- BACKGROUND VIDEO (GitHub Raw Source) -->
+            <video autoplay muted loop playsinline class="hero-video-bg">
+                <source src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/videohero.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 bg-black/60 z-0"></div>
 
-            <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
-                Budoucnost patří <br>
-                <span class="text-shimmer">odvážným.</span>
-            </h1>
-            
-            <p class="text-xl text-gray-400 max-w-2xl fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
-                Nenechte zákazníky odejít ke konkurenci. Tvoříme prémiové weby a strategie, které budují důvěru a zvyšují váš obrat.
-            </p>
-            
-            <div class="mt-10 flex flex-col sm:flex-row gap-4 fade-in" style="transition-delay: 0.3s;">
-                <a href="#kontakt" class="btn-gold magnetic-btn">Získat návrh zdarma</a>
-                <a href="#prace" class="px-8 py-3.5 border border-white/20 rounded-full font-medium hover:bg-white/10 transition text-white magnetic-btn">
-                    Ukázat výsledky
-                </a>
+            <div class="hero-content">
+                <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
+                    Budoucnost patří <br>
+                    <span class="text-shimmer">odvážným.</span>
+                </h1>
+                
+                <p class="text-xl text-gray-200 max-w-2xl mx-auto fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
+                    Nenechte zákazníky odejít ke konkurenci. Tvoříme prémiové weby a strategie, které budují důvěru a zvyšují váš obrat.
+                </p>
+                
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center fade-in" style="transition-delay: 0.3s;">
+                    <!-- Primary CTA (Gold Shimmer) -->
+                    <a href="#kontakt" class="px-8 py-3.5 btn-shimmer-filled btn-shimmer rounded-full text-black">Nezávazná poptávka</a>
+                    
+                    <!-- Secondary CTA (Grey-White Style) -->
+                    <a href="#prace" class="px-8 py-3.5 btn-ghost rounded-full">
+                        Ukázat výsledky
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- 2. SCROLLYTELLING VIDEO (ENGINEERING THEME) -->
+        <!-- 2. SCROLLYTELLING VIDEO -->
         <section class="scroll-video-container">
             <div class="scroll-video-sticky">
-                <!-- Using a more technical/code oriented video from Pexels -->
-                <video id="apple-video" muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4" class="opacity-60"></video>
-                <h2 class="video-overlay-text" id="overlay-1">Precision Engineering</h2>
-                <h2 class="video-overlay-text" id="overlay-2">Pixel Perfect</h2>
+                <video muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4" class="opacity-60"></video>
+                <h2 class="video-overlay-text" id="overlay-1">Precizní inženýrství</h2>
+                <h2 class="video-overlay-text" id="overlay-2">Dokonalý detail</h2>
             </div>
         </section>
 
@@ -291,7 +348,7 @@
             <div class="max-w-[1260px] mx-auto px-6 mb-16 flex items-end justify-between">
                 <div>
                     <h2 class="text-xs font-mono text-[#C5A059] uppercase tracking-widest mb-4">Portfolio</h2>
-                    <h3 class="text-4xl md:text-5xl font-bold text-white">Case Studies</h3>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white">Vybrané projekty</h3>
                 </div>
                 <span class="hidden md:block text-xs text-gray-500 uppercase tracking-widest">Najeďte pro náhled</span>
             </div>
@@ -300,10 +357,10 @@
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">01</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Prémiové Interiéry</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Prémiové interiéry</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web & Design</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web a design</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
@@ -311,10 +368,10 @@
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">02</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Architektura & Reality</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Architektura a reality</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Brand Identity</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Identita značky</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
@@ -322,10 +379,10 @@
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">03</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právní Služby</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právní služby</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Corporate Web</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Firemní web</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
@@ -334,25 +391,24 @@
             <img src="" alt="Project Preview" class="reveal-img-preview" id="reveal-img">
         </section>
 
-        <!-- 4. BENTO GRID (Services with Glow & Magnetic) -->
+        <!-- 4. BENTO GRID -->
         <section id="sluzby" class="py-32 bg-[#000]">
             <div class="max-w-[1260px] mx-auto px-6 mb-16 text-center md:text-left">
                 <h2 class="text-5xl font-semibold tracking-tight text-white mb-4">Nestavíme jen weby.</h2>
                 <p class="text-gray-400 text-xl">Stavíme vaše digitální aktiva.</p>
             </div>
 
-            <!-- Bento Container with Glow Logic -->
             <div class="bento-grid" id="bento-container">
                 <!-- Large Item -->
                 <div class="bento-item bento-span-2 group">
                     <div class="bento-content">
                         <div class="relative z-10">
                             <span class="text-xs font-bold text-[#C5A059] uppercase mb-2 block">Strategie</span>
-                            <h3 class="text-4xl font-semibold text-white mb-4">Strategie, co prodává</h3>
+                            <h3 class="text-4xl font-semibold text-white mb-4">Strategie, která prodává</h3>
                             <p class="text-gray-400 max-w-md">Váš brand není jen logo. Definujeme vaši unikátní pozici na trhu a psychologii prodeje.</p>
                         </div>
                         <div class="mt-4">
-                            <button class="magnetic-btn px-6 py-2 border border-white/20 rounded-full text-sm text-white hover:bg-white hover:text-black transition">Více o strategii</button>
+                            <button class="px-6 py-2 border border-white/20 rounded-full text-sm text-white hover:bg-white hover:text-black transition">Více o strategii</button>
                         </div>
                     </div>
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-[#C5A059]/20 to-transparent rounded-full blur-3xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
@@ -361,9 +417,9 @@
                 <!-- Small Item -->
                 <div class="bento-item text-center">
                     <div class="bento-content items-center justify-center">
-                        <i data-lucide="bar-chart-2" class="w-16 h-16 text-gray-500 mb-6 group-hover:text-[#C5A059] transition-colors magnetic-btn"></i>
+                        <i data-lucide="bar-chart-2" class="w-16 h-16 text-gray-500 mb-6 group-hover:text-[#C5A059] transition-colors"></i>
                         <h3 class="text-3xl font-semibold text-white mb-2">Analytika</h3>
-                        <p class="text-gray-500 font-medium">Data-driven rozhodnutí</p>
+                        <p class="text-gray-500 font-medium">Rozhodování na základě dat</p>
                     </div>
                 </div>
 
@@ -375,7 +431,7 @@
                             <h3 class="text-2xl font-semibold mt-2 text-white">Bez kompromisů</h3>
                         </div>
                         <div class="mt-auto text-gray-400 text-sm">
-                            Rychlost načítání pod 100ms. SEO friendly struktura.
+                            Rychlost načítání pod 100ms. Struktura přátelská pro SEO.
                         </div>
                     </div>
                 </div>
@@ -393,7 +449,7 @@
                                 <div class="text-gray-400 max-w-md">
                                     Navrhujeme intuitivní cesty, které návštěvníka hladce provedou od prvního kliknutí až k objednávce.
                                 </div>
-                                <button class="magnetic-btn w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition">
+                                <button class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition">
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                 </button>
                             </div>
@@ -413,15 +469,15 @@
             <div class="pricing-grid">
                 <!-- Card 1 -->
                 <div class="pricing-card">
-                    <h3 class="text-xl font-bold text-white mb-2">Essential</h3>
+                    <h3 class="text-xl font-bold text-white mb-2">Start</h3>
                     <div class="text-4xl font-bold text-[#C5A059] mb-6">15 000 <span class="text-lg text-gray-500">Kč</span></div>
                     <p class="text-gray-400 text-sm mb-8">Pro živnostníky, kteří chtějí okamžitě zvýšit profesionalitu.</p>
                     <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> One-page landing page</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Mobilní optimalizace</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Jednostránkový web</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Optimalizace pro mobily</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition magnetic-btn">Vybrat</a>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat</a>
                 </div>
 
                 <!-- Card 2 -->
@@ -431,25 +487,25 @@
                     <div class="text-5xl font-bold text-[#C5A059] mb-6">1 500 <span class="text-lg text-gray-500">Kč/měs</span></div>
                     <p class="text-gray-300 text-sm mb-8">Pronájem webu. Vše v ceně, bez velkých počátečních nákladů.</p>
                     <ul class="space-y-4 mb-8 text-sm text-white font-medium">
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupního poplatku</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupních poplatků</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Hosting v ceně</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Pravidelné aktualizace</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Technická podpora</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-4 text-center bg-[#C5A059] text-black rounded-full font-bold hover:bg-white transition shadow-lg shadow-[#C5A059]/20 magnetic-btn">Vybrat</a>
+                    <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled rounded-full font-bold">Vybrat</a>
                 </div>
 
                 <!-- Card 3 -->
                 <div class="pricing-card">
-                    <h3 class="text-xl font-bold text-white mb-2">Business Elite</h3>
+                    <h3 class="text-xl font-bold text-white mb-2">Byznys</h3>
                     <div class="text-4xl font-bold text-[#C5A059] mb-6">35 000 <span class="text-lg text-gray-500">Kč</span></div>
                     <p class="text-gray-400 text-sm mb-8">Kompletní digitální stroj na zakázky pro rostoucí firmy.</p>
                     <ul class="space-y-4 mb-8 text-sm text-gray-300">
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web do 5 sekcí</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Animace na míru</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Copywriting</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Tvorba textů</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition magnetic-btn">Vybrat</a>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat</a>
                 </div>
             </div>
         </section>
@@ -457,6 +513,11 @@
         <!-- CONTACT -->
         <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
             <div class="max-w-xl mx-auto px-6">
+                <!-- LOGO NAD FORMULÁŘEM (Zvětšeno na h-40 = cca 160px, s invert filtrem) -->
+                <div class="flex justify-center mb-8">
+                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo_cele.png" alt="M2 Digital Agency" class="h-40 opacity-80 invert">
+                </div>
+                
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit něco velkého.</h2>
                     <p class="text-gray-400">Ozvěte se nám. Do 24 hodin pošleme návrh strategie.</p>
@@ -472,7 +533,7 @@
                     <div>
                         <textarea rows="4" placeholder="O čem budeme mluvit?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
-                    <button class="w-full py-4 bg-[#C5A059] text-black font-bold rounded-2xl hover:bg-white transition-colors shadow-lg shadow-[#C5A059]/20 magnetic-btn">
+                    <button class="w-full py-4 btn-shimmer-filled rounded-2xl font-bold">
                         Odeslat nezávaznou poptávku
                     </button>
                 </form>
@@ -483,9 +544,8 @@
             <div class="max-w-[1260px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p>Copyright © 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
                 <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition">Instagram</a>
-                    <a href="#" class="hover:text-white transition">LinkedIn</a>
-                    <a href="#" class="hover:text-white transition">Dribbble</a>
+                    <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
                 </div>
             </div>
         </footer>
@@ -505,20 +565,19 @@
 
         // 2. VIDEO SCROLL LOGIC
         const videoSection = document.querySelector('.scroll-video-container');
-        const video = document.getElementById('apple-video');
         const overlay1 = document.getElementById('overlay-1');
         const overlay2 = document.getElementById('overlay-2');
         
-        if(videoSection && video) {
+        if(videoSection) {
             window.addEventListener('scroll', () => {
                 const rect = videoSection.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
                 const sectionHeight = videoSection.offsetHeight;
                 
+                // Only animate text based on scroll, let video play normally
                 if(rect.top <= 0 && rect.bottom >= 0) {
                     const progress = Math.abs(rect.top) / (sectionHeight - windowHeight);
-                    if(video.duration) video.currentTime = video.duration * progress;
-
+                    
                     if(progress > 0.2 && progress < 0.45) overlay1.classList.add('visible');
                     else overlay1.classList.remove('visible');
 
@@ -562,21 +621,6 @@
                 }
             };
         }
-
-        // 5. MAGNETIC BUTTONS
-        const magneticBtns = document.querySelectorAll('.magnetic-btn');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`; // Plynulý posun
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px)';
-            });
-        });
-
     </script>
 </body>
 </html>
