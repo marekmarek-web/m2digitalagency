@@ -34,21 +34,20 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. BLEND MODE NAV --- */
-        .apple-nav {
+        /* --- 1. M2 CUSTOM NAV --- */
+        .m2-nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            padding: 0 max(22px, env(safe-area-inset-right));
-            height: 120px; /* Zvětšeno z 80px na 120px pro větší logo */
+            /* Full width padding */
+            padding: 0 5%; 
+            height: 120px; 
             z-index: 9999;
-            mix-blend-mode: normal; 
-            background: rgba(0,0,0,0.7);
+            background: rgba(5, 5, 5, 0.95); /* Téměř neprůhledná černá pro kontrast */
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3); /* Zlatá linka */
             color: white;
             display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(20px);
-            max-width: 1440px;
-            margin: 0 auto;
-            right: 0;
+            backdrop-filter: blur(10px);
+            /* Odstraněno max-width a margin auto pro full-width efekt */
         }
 
         /* --- 2. HERO SECTION & VIDEO --- */
@@ -286,7 +285,7 @@
 <body>
 
     <!-- NAV -->
-    <nav class="apple-nav">
+    <nav class="m2-nav">
         <!-- LOGO IMAGE (Zvětšeno na h-28 = cca 112px, s invert filtrem) -->
         <a href="#" class="block">
             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
