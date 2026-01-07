@@ -34,7 +34,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. M2 CUSTOM NAV --- */
+        /* --- 1. M2 CUSTOM NAV (GLASS EFFECT RESTORED) --- */
         .m2-nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -42,12 +42,13 @@
             padding: 0 5%; 
             height: 120px; 
             z-index: 9999;
-            background: rgba(5, 5, 5, 0.95); /* Téměř neprůhledná černá pro kontrast */
+            /* Glass effect background */
+            background: rgba(0, 0, 0, 0.6); 
             border-bottom: 1px solid rgba(197, 160, 89, 0.3); /* Zlatá linka */
             color: white;
             display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(10px);
-            /* Odstraněno max-width a margin auto pro full-width efekt */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         /* --- 2. HERO SECTION & VIDEO --- */
