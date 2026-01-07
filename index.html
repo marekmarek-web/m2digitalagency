@@ -3,686 +3,532 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA | Proměňte svou vizi v zisk</title>
-    <meta name="description" content="Prémiový digitální design a vývoj, který buduje autoritu a zvyšuje prodeje.">
-    
-    <!-- Tailwind CSS -->
+    <title>M² Digital Agency | Budoucnost patří odvážným</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Tailwind Config & Custom CSS -->
-    <script>
-        tailwind.config = {
-            theme: {
-                fontFamily: {
-                    sans: ['Manrope', 'sans-serif'],
-                },
-                extend: {
-                    colors: {
-                        dark: '#050505', // Deepest black
-                        surface: '#ffffff',
-                        accent: '#C5A059',
-                        gold: {
-                            50: '#FBF8F1',
-                            100: '#F5EDD6',
-                            300: '#E6C985',
-                            500: '#C5A059', // Primary Gold
-                            600: '#A48240',
-                            900: '#463514',
-                        },
-                        slate: {
-                            850: '#1a1a1a', // Soft black for text
-                            900: '#0f172a',
-                        }
-                    },
-                    animation: {
-                        'spin-slow': 'spin 8s linear infinite',
-                        'shimmer': 'shimmer 3s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        shimmer: {
-                            '0%': { backgroundPosition: '0% 50%' },
-                            '100%': { backgroundPosition: '200% 50%' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- BASE & UTILS --- */
+        :root {
+            --bg: #000000;
+            --text: #f5f5f7;
+            --gray: #86868b;
+            --gold: #C5A059;
+            --gold-light: #F9F1D8;
+            
+            /* Authentic Apple Variables */
+            --global-content-max-width: 1260px;
+            --product-viewer-ref-border-radius: 28px;
+        }
+
         body {
-            background-color: #FAFAFA;
-            /* Subtle grain or gradient for texture */
-            background-image: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08), transparent 60%);
-            color: #1a1a1a;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #fff; }
-        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
-
-        /* Focus styles for A11y */
-        :focus-visible {
-            outline: 2px solid #C5A059;
-            outline-offset: 4px;
+        /* --- 1. BLEND MODE NAV --- */
+        .apple-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 0 max(22px, env(safe-area-inset-right));
+            height: 52px;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(20px);
+            max-width: 1440px;
+            margin: 0 auto;
+            right: 0;
         }
 
-        /* --- 5) SCROLL REVEAL --- */
-        .reveal-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, transform;
+        /* --- 2. HERO TYPOGRAPHY & SHIMMER --- */
+        .hero-text {
+            font-size: clamp(48px, 8vw, 96px);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: white;
         }
-        .reveal-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- 8) INFINITE MARQUEE --- */
-        .marquee-container {
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-        .marquee-content {
-            display: flex;
-            gap: 4rem;
-            width: max-content;
-            animation: scroll 30s linear infinite;
-        }
-        @keyframes scroll {
-            to { transform: translateX(-50%); }
-        }
-        @media (hover: hover) {
-            .marquee-container:hover .marquee-content { animation-play-state: paused; }
-        }
-
-        /* --- 2) SPOTLIGHT HOVER (High Contrast Fix) --- */
-        .spotlight-card {
-            position: relative;
-            background: #ffffff;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .spotlight-card:hover {
-            box-shadow: 0 25px 50px -12px rgba(197, 160, 89, 0.15);
-            border-color: rgba(197, 160, 89, 0.3);
-        }
-        .spotlight-card > * {
-            position: relative;
-            z-index: 10;
-        }
-        .spotlight-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            /* Gold tint spotlight */
-            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(197, 160, 89, 0.08), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 2;
-        }
-        .spotlight-card:hover::before { opacity: 1; }
-
-        /* --- 6) 3D TILT HOVER --- */
-        .tilt-card {
-            transition: transform 0.1s ease-out;
-            transform-style: preserve-3d;
-        }
-        .tilt-content {
-            transform: translateZ(20px);
-        }
-
-        /* --- 3) CARD FAN --- */
-        .fan-container {
-            perspective: 1000px;
-        }
-        .fan-container:hover .fan-card:nth-child(1) { transform: translateX(-140px) rotate(-10deg) scale(0.95); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .fan-container:hover .fan-card:nth-child(2) { transform: translateX(0) rotate(0deg) scale(1.05) translateY(-20px); z-index: 10; border-color: #C5A059; box-shadow: 0 35px 60px -15px rgba(197, 160, 89, 0.25); }
-        .fan-container:hover .fan-card:nth-child(3) { transform: translateX(140px) rotate(10deg) scale(0.95); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
         
-        .fan-card {
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            position: absolute;
-            left: 50%;
-            top: 0;
-            margin-left: -140px;
-            transform-origin: bottom center;
-            background-color: #ffffff;
-            border: 1px solid #e5e5e5;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .fan-card:nth-child(1) { transform: translateX(-40px) rotate(-5deg); z-index: 1; opacity: 0.95; }
-        .fan-card:nth-child(2) { transform: translateX(0px) rotate(0deg); z-index: 2; }
-        .fan-card:nth-child(3) { transform: translateX(40px) rotate(5deg); z-index: 1; opacity: 0.95; }
-
-        /* --- 7) TEXT SHIMMER (Updated for Dark Background Contrast) --- */
         .text-shimmer {
-            background: linear-gradient(to right, #ffffff 20%, #C5A059 45%, #fff 50%, #C5A059 55%, #ffffff 80%);
+            background: linear-gradient(to right, #9ca3af 20%, #C5A059 45%, #fff 50%, #C5A059 55%, #9ca3af 80%);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: shimmer 4s linear infinite;
+            animation: shimmer 3s linear infinite;
         }
-        
-        .text-gradient-gold {
-             background: linear-gradient(135deg, #0a0a0a 30%, #8E733E 100%);
-             -webkit-background-clip: text;
-             -webkit-text-fill-color: transparent;
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
-        /* --- 1) MOVING GRADIENT BORDER (PRICING) --- */
+        /* --- 3. GRADIENT BORDER CARD (GOLD) --- */
         .gradient-border-card {
             position: relative;
-            background: #fff;
-            border-radius: 1.5rem;
+            background: #1c1c1e; /* Fallback */
+            border-radius: 28px;
             z-index: 1;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(197, 160, 89, 0.2);
+            transition: transform 0.3s ease;
         }
+        /* Rotující gradient */
         .gradient-border-card::before {
             content: "";
             position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, #C5A059, #F9F1D8, #C5A059, transparent, transparent);
+            background: conic-gradient(transparent, transparent, var(--gold), var(--gold-light), var(--gold), transparent, transparent);
             animation: rotate 4s linear infinite;
             z-index: -2;
         }
+        /* Vnitřní maska (černé pozadí karty) */
         .gradient-border-card::after {
             content: "";
             position: absolute;
-            inset: 2px;
-            background: #ffffff;
-            border-radius: 1.4rem;
+            inset: 2px; /* Tloušťka rámečku */
+            background: #151516; /* Pozadí karty */
+            border-radius: 26px;
             z-index: -1;
         }
         @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* --- 4) IMAGE REVEAL LIST --- */
-        .reveal-img-preview {
-            position: fixed;
-            width: 320px;
-            height: 220px;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-            border: 4px solid #fff;
+        .gradient-border-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25);
         }
-        .reveal-img-preview.active {
+
+        /* --- 4. VIDEO SCROLL --- */
+        .scroll-video-container {
+            height: 300vh; position: relative; background: var(--bg);
+        }
+        .scroll-video-sticky {
+            position: sticky; top: 0; height: 100vh; width: 100%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .scroll-video-sticky video {
+            width: 80%; max-width: var(--global-content-max-width); 
+            border-radius: var(--product-viewer-ref-border-radius);
+            box-shadow: 0 0 100px rgba(197, 160, 89, 0.1);
+        }
+        .video-overlay-text {
+            position: absolute;
+            font-size: 5rem; font-weight: 700;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            opacity: 0; transform: scale(0.95);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            text-align: center; width: 100%;
+        }
+        .video-overlay-text.visible { opacity: 1; transform: scale(1); }
+
+        /* --- 5. BENTO GRID WITH GLOW EFFECT --- */
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            max-width: var(--global-content-max-width); margin: 0 auto; padding: 4rem 20px;
+        }
+        .bento-item {
+            background: rgba(21, 21, 22, 0.6); /* Slightly transparent for glow */
+            border-radius: 28px; padding: 40px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.3s ease; min-height: 400px;
+            position: relative; overflow: hidden; 
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        /* Glow Effect Logic */
+        .bento-grid:hover .bento-item::after {
             opacity: 1;
-            transform: scale(1);
+        }
+        .bento-item::before, .bento-item::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        /* Border Glow */
+        .bento-item::before {
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.1),
+                transparent 40%
+            );
+            z-index: 1;
+        }
+        /* Inner Spotlight */
+        .bento-item::after {
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(197, 160, 89, 0.05),
+                transparent 40%
+            );
+            z-index: 2;
+        }
+        .bento-item:hover::before { opacity: 1; }
+        
+        .bento-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .bento-span-2 { grid-column: span 2; }
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-span-2 { grid-column: span 1; }
         }
 
-        /* PREFERS REDUCED MOTION */
-        @media (prefers-reduced-motion: reduce) {
-            .reveal-section { transition: none; opacity: 1; transform: none; }
-            .marquee-content { animation: none; transform: translateX(0); flex-wrap: wrap; justify-content: center; }
-            .gradient-border-card::before { animation: none; background: #E6C985; }
-            .text-shimmer { animation: none; color: white; background: none; }
-            .tilt-card { transform: none !important; }
-            .fan-container:hover .fan-card { transform: none !important; margin: 0; position: relative; left: auto; top: auto; }
-            .fan-card { position: relative; left: auto; margin-left: 0; transform: none !important; margin-bottom: 20px; }
-            .fan-container { display: flex; flex-direction: column; height: auto !important; }
-            .animate-float { animation: none; }
+        /* --- MAGNETIC BUTTON --- */
+        .magnetic-btn {
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* MOBILE FIXES */
-        @media (max-width: 1024px) {
-            .fan-container { height: auto !important; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-            .fan-card { position: relative !important; left: auto !important; margin-left: 0 !important; transform: none !important; width: 100%; max-width: 320px; }
-            .reveal-img-preview { display: none; }
-            .spotlight-card::before { opacity: 0 !important; }
+        /* --- 6. PRICING GRID --- */
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px;
+            align-items: center;
         }
+        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+        
+        .pricing-card {
+            background: #151516; border-radius: 28px; padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease; position: relative; overflow: hidden; height: 100%;
+        }
+        .pricing-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.1); }
+
+        /* --- 7. REVEAL LIST --- */
+        .reveal-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s; position: relative;
+        }
+        .reveal-item:hover {
+            background: linear-gradient(90deg, rgba(197, 160, 89, 0.05), transparent);
+            border-color: rgba(197, 160, 89, 0.3); padding-left: 20px;
+        }
+        .reveal-img-preview {
+            position: fixed; pointer-events: none; z-index: 50; width: 320px; height: 220px; object-fit: cover;
+            border-radius: 12px; opacity: 0; transform: scale(0.8) translate(-50%, -50%);
+            transition: opacity 0.3s, transform 0.3s; top: 0; left: 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2);
+        }
+        .reveal-img-preview.active { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+
+        /* UTILS */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .fade-in.active { opacity: 1; transform: translateY(0); }
+
+        .btn-gold {
+            background: var(--gold); color: black; padding: 14px 32px;
+            border-radius: 999px; font-weight: 600; font-size: 17px; transition: all 0.3s;
+        }
+        .btn-gold:hover { background: #d4af37; box-shadow: 0 0 20px rgba(197, 160, 89, 0.4); }
+
     </style>
 </head>
-<body class="font-sans text-slate-850 selection:bg-gold-500/30 selection:text-black">
+<body>
 
-    <!-- 1) STICKY HEADER -->
-    <header class="fixed w-full top-0 z-50 border-b border-gray-200/80 bg-white/90 backdrop-blur-xl transition-all duration-300" id="header">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <a href="#" class="text-2xl font-extrabold tracking-tighter text-black">LUMINA<span class="text-gold-500">.</span></a>
-            
-            <nav class="hidden md:flex gap-8 text-sm font-bold text-slate-600">
-                <a href="#sluzby" class="hover:text-black hover:text-gold-600 transition-colors">Expertíza</a>
-                <a href="#proces" class="hover:text-black hover:text-gold-600 transition-colors">Proces</a>
-                <a href="#prace" class="hover:text-black hover:text-gold-600 transition-colors">Výsledky</a>
-                <a href="#pricing" class="hover:text-black hover:text-gold-600 transition-colors">Investice</a>
-            </nav>
-
-            <a href="#kontakt" class="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-black rounded-full hover:bg-gold-600 transition-all duration-300 shadow-lg hover:shadow-gold-500/30 hover:scale-105">
-                Chci nezávaznou konzultaci
-            </a>
-            
-            <button class="md:hidden text-black p-2" aria-label="Menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
+    <!-- 1. BLEND NAV -->
+    <nav class="apple-nav">
+        <div class="font-bold text-xl tracking-tight flex items-center gap-1">
+            M<sup style="color: var(--gold); font-size: 0.7em;">2</sup>
         </div>
-    </header>
+        <div class="flex gap-8 text-xs font-medium text-gray-300">
+            <a href="#sluzby" class="hover:text-white transition">Expertíza</a>
+            <a href="#prace" class="hover:text-white transition">Projekty</a>
+            <a href="#pricing" class="hover:text-white transition">Investice</a>
+            <a href="#kontakt" class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Konzultace</a>
+        </div>
+    </nav>
 
-    <main class="pt-20">
+    <main>
 
-        <!-- 2) HERO SECTION (High Sales Impact) -->
-        <section class="min-h-[90vh] flex flex-col justify-center items-center text-center px-6 relative reveal-section overflow-hidden">
-            <!-- Ambient Golden Glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold-300/15 blur-[120px] rounded-full pointer-events-none"></div>
-            
-            <!-- Floating Elements -->
-            <div class="absolute top-20 right-[10%] w-32 h-32 bg-gradient-to-tr from-gold-100 to-transparent rounded-full blur-2xl opacity-60 animate-float"></div>
-            <div class="absolute bottom-20 left-[10%] w-48 h-48 bg-gradient-to-bl from-gray-100 to-transparent rounded-full blur-2xl opacity-80 animate-float" style="animation-delay: 2s;"></div>
+        <!-- HERO -->
+        <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+            <!-- Background ambient glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C5A059] rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
 
-            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-gold-500/20 bg-white/60 backdrop-blur-sm mb-8 shadow-sm relative z-10 hover:border-gold-500/40 transition-colors cursor-default">
-                <span class="flex h-2.5 w-2.5 relative">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                </span>
-                <span class="text-xs font-bold text-slate-700 tracking-wide uppercase">Přijímáme projekty na Q1 2026</span>
-            </div>
-
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[1.05] relative z-10 max-w-5xl text-slate-900">
-                Digitální identita, která
-                <!-- Gold/Dark Shimmer for contrast on light bg -->
-                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-gold-500 to-slate-900 animate-shimmer bg-[length:200%_auto]">vydělává peníze.</span>
+            <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
+                Budoucnost patří <br>
+                <span class="text-shimmer">odvážným.</span>
             </h1>
-
-            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mb-12 leading-relaxed relative z-10 font-medium">
-                Nenechte zákazníky odejít ke konkurenci. Tvoříme prémiové weby a strategie, které budují <span class="text-slate-900 font-bold underline decoration-gold-400 decoration-2 underline-offset-4">důvěru</span> a zvyšují váš obrat.
+            
+            <p class="text-xl text-gray-400 max-w-2xl fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
+                Nenechte zákazníky odejít ke konkurenci. Tvoříme prémiové weby a strategie, které budují důvěru a zvyšují váš obrat.
             </p>
-
-            <div class="flex flex-col sm:flex-row gap-5 mb-20 relative z-10 w-full sm:w-auto px-6">
-                <a href="#kontakt" class="px-8 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gold-600 hover:shadow-xl hover:shadow-gold-500/20 transition-all duration-300 text-center">
-                    Získat návrh zdarma
-                </a>
-                <a href="#prace" class="px-8 py-4 border-2 border-slate-200 bg-white text-slate-900 text-lg font-bold rounded-full hover:border-gold-500 hover:text-gold-700 transition-colors shadow-sm text-center">
+            
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 fade-in" style="transition-delay: 0.3s;">
+                <a href="#kontakt" class="btn-gold magnetic-btn">Získat návrh zdarma</a>
+                <a href="#prace" class="px-8 py-3.5 border border-white/20 rounded-full font-medium hover:bg-white/10 transition text-white magnetic-btn">
                     Ukázat výsledky
                 </a>
             </div>
+        </section>
 
-            <div class="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-bold text-slate-500 relative z-10 uppercase tracking-wider">
-                <span class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    Zvýšení konverzí
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    Prémiový Design
-                </span>
-                <span class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    Návratnost Investice
-                </span>
+        <!-- 2. SCROLLYTELLING VIDEO (ENGINEERING THEME) -->
+        <section class="scroll-video-container">
+            <div class="scroll-video-sticky">
+                <!-- Using a more technical/code oriented video from Pexels -->
+                <video id="apple-video" muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4" class="opacity-60"></video>
+                <h2 class="video-overlay-text" id="overlay-1">Precision Engineering</h2>
+                <h2 class="video-overlay-text" id="overlay-2">Pixel Perfect</h2>
             </div>
         </section>
 
-        <!-- 3) INFINITE MARQUEE -->
-        <section class="py-12 border-y border-gray-200 bg-white reveal-section">
-            <div class="marquee-container overflow-hidden max-w-full">
-                <div class="marquee-content text-xl md:text-2xl font-bold text-slate-300 uppercase tracking-widest items-center">
-                    <span class="text-slate-800">Next.js</span> <span>•</span> <span class="text-slate-800">Tailwind</span> <span>•</span> <span class="text-slate-800">React</span> <span>•</span> <span class="text-slate-800">TypeScript</span> <span>•</span> <span class="text-gold-500">AI Integration</span> <span>•</span> <span class="text-slate-800">Figma</span> <span>•</span> <span class="text-slate-800">Node.js</span> <span>•</span> <span class="text-slate-800">AWS</span> <span>•</span> <span class="text-gold-500">Three.js</span> <span>•</span>
-                    <span class="text-slate-800">Next.js</span> <span>•</span> <span class="text-slate-800">Tailwind</span> <span>•</span> <span class="text-slate-800">React</span> <span>•</span> <span class="text-slate-800">TypeScript</span> <span>•</span> <span class="text-gold-500">AI Integration</span> <span>•</span> <span class="text-slate-800">Figma</span> <span>•</span> <span class="text-slate-800">Node.js</span> <span>•</span> <span class="text-slate-800">AWS</span> <span>•</span> <span class="text-gold-500">Three.js</span> <span>•</span>
+        <!-- 3. CASE STUDIES -->
+        <section id="prace" class="py-32 bg-[#050505] border-t border-white/5">
+            <div class="max-w-[1260px] mx-auto px-6 mb-16 flex items-end justify-between">
+                <div>
+                    <h2 class="text-xs font-mono text-[#C5A059] uppercase tracking-widest mb-4">Portfolio</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white">Case Studies</h3>
                 </div>
+                <span class="hidden md:block text-xs text-gray-500 uppercase tracking-widest">Najeďte pro náhled</span>
             </div>
-        </section>
-
-        <!-- 4) SLUŽBY (Benefit Driven) -->
-        <section id="sluzby" class="py-32 px-6 max-w-7xl mx-auto reveal-section">
-            <div class="mb-20 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-6">
-                <div class="max-w-2xl">
-                    <span class="text-gold-600 font-bold uppercase tracking-widest text-sm mb-2 block">Naše expertíza</span>
-                    <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">Nestavíme jen weby.<br>Stavíme <span class="text-gradient-gold">vaše aktiva.</span></h2>
-                    <p class="text-slate-600 text-lg">Většina webů jsou jen digitální vizitky. My vytváříme nástroje, které aktivně pracují pro váš byznys 24/7.</p>
-                </div>
-                <a href="#kontakt" class="hidden md:block text-slate-900 font-bold border-b-2 border-gold-500 hover:text-gold-600 transition-colors pb-1">Probrat můj projekt →</a>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <article class="spotlight-card tilt-card p-10 rounded-[2rem] flex flex-col h-full group cursor-default">
-                    <div class="tilt-content">
-                        <div class="w-16 h-16 bg-slate-50 border border-gray-100 rounded-2xl flex items-center justify-center mb-8 text-black group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-gold-600 transition-colors">Strategie, co prodává</h3>
-                        <p class="text-slate-600 leading-relaxed mb-8">Váš brand není jen logo. Je to důvod, proč si zákazník vybere vás a ne levnější konkurenci. Definujeme vaši unikátní pozici na trhu.</p>
-                        <ul class="text-sm font-bold space-y-3 text-slate-500">
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> Analýza konkurence</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> Positioning značky</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> Psychologie prodeje</li>
-                        </ul>
+            
+            <div class="max-w-[1260px] mx-auto">
+                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
+                    <div class="flex items-baseline gap-8">
+                        <span class="font-mono text-sm text-[#C5A059]">01</span>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Prémiové Interiéry</h3>
                     </div>
-                </article>
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web & Design</span>
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
+                    </div>
+                </a>
+
+                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000&auto=format&fit=crop">
+                    <div class="flex items-baseline gap-8">
+                        <span class="font-mono text-sm text-[#C5A059]">02</span>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Architektura & Reality</h3>
+                    </div>
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Brand Identity</span>
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
+                    </div>
+                </a>
+
+                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop">
+                    <div class="flex items-baseline gap-8">
+                        <span class="font-mono text-sm text-[#C5A059]">03</span>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právní Služby</h3>
+                    </div>
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Corporate Web</span>
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <img src="" alt="Project Preview" class="reveal-img-preview" id="reveal-img">
+        </section>
+
+        <!-- 4. BENTO GRID (Services with Glow & Magnetic) -->
+        <section id="sluzby" class="py-32 bg-[#000]">
+            <div class="max-w-[1260px] mx-auto px-6 mb-16 text-center md:text-left">
+                <h2 class="text-5xl font-semibold tracking-tight text-white mb-4">Nestavíme jen weby.</h2>
+                <p class="text-gray-400 text-xl">Stavíme vaše digitální aktiva.</p>
+            </div>
+
+            <!-- Bento Container with Glow Logic -->
+            <div class="bento-grid" id="bento-container">
+                <!-- Large Item -->
+                <div class="bento-item bento-span-2 group">
+                    <div class="bento-content">
+                        <div class="relative z-10">
+                            <span class="text-xs font-bold text-[#C5A059] uppercase mb-2 block">Strategie</span>
+                            <h3 class="text-4xl font-semibold text-white mb-4">Strategie, co prodává</h3>
+                            <p class="text-gray-400 max-w-md">Váš brand není jen logo. Definujeme vaši unikátní pozici na trhu a psychologii prodeje.</p>
+                        </div>
+                        <div class="mt-4">
+                            <button class="magnetic-btn px-6 py-2 border border-white/20 rounded-full text-sm text-white hover:bg-white hover:text-black transition">Více o strategii</button>
+                        </div>
+                    </div>
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-[#C5A059]/20 to-transparent rounded-full blur-3xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
+                </div>
+
+                <!-- Small Item -->
+                <div class="bento-item text-center">
+                    <div class="bento-content items-center justify-center">
+                        <i data-lucide="bar-chart-2" class="w-16 h-16 text-gray-500 mb-6 group-hover:text-[#C5A059] transition-colors magnetic-btn"></i>
+                        <h3 class="text-3xl font-semibold text-white mb-2">Analytika</h3>
+                        <p class="text-gray-500 font-medium">Data-driven rozhodnutí</p>
+                    </div>
+                </div>
+
+                <!-- Small Item -->
+                <div class="bento-item">
+                    <div class="bento-content">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#C5A059] uppercase">Technologie</span>
+                            <h3 class="text-2xl font-semibold mt-2 text-white">Bez kompromisů</h3>
+                        </div>
+                        <div class="mt-auto text-gray-400 text-sm">
+                            Rychlost načítání pod 100ms. SEO friendly struktura.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Large Item -->
+                <div class="bento-item bento-span-2 overflow-hidden relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#C5A059]/10 to-transparent opacity-50 group-hover:opacity-100 transition duration-500"></div>
+                    <div class="bento-content">
+                        <div class="relative z-10 flex flex-col h-full justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-[#C5A059] uppercase">Design</span>
+                                <h3 class="text-3xl font-semibold mt-2 text-white">Design pro konverze</h3>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div class="text-gray-400 max-w-md">
+                                    Navrhujeme intuitivní cesty, které návštěvníka hladce provedou od prvního kliknutí až k objednávce.
+                                </div>
+                                <button class="magnetic-btn w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition">
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PRICING -->
+        <section id="pricing" class="py-32 bg-[#000]">
+            <div class="text-center mb-16 px-6">
+                <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4">Investice do růstu.</h2>
+                <p class="text-gray-400">Transparentní ceny. Žádné skryté poplatky.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Card 1 -->
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold text-white mb-2">Essential</h3>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-6">15 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-gray-400 text-sm mb-8">Pro živnostníky, kteří chtějí okamžitě zvýšit profesionalitu.</p>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> One-page landing page</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Mobilní optimalizace</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-3 text-center border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition magnetic-btn">Vybrat</a>
+                </div>
 
                 <!-- Card 2 -->
-                <article class="spotlight-card tilt-card p-10 rounded-[2rem] flex flex-col h-full group cursor-default">
-                    <div class="tilt-content">
-                        <div class="w-16 h-16 bg-slate-50 border border-gray-100 rounded-2xl flex items-center justify-center mb-8 text-black group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-gold-600 transition-colors">Design pro konverze</h3>
-                        <p class="text-slate-600 leading-relaxed mb-8">Krása nestačí. Navrhujeme intuitivní cesty, které návštěvníka hladce provedou od prvního kliknutí až k odeslání objednávky.</p>
-                        <ul class="text-sm font-bold space-y-3 text-slate-500">
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> UX/UI Design</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> Interaktivní prototypy</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> A/B Testování</li>
-                        </ul>
-                    </div>
-                </article>
+                <div class="gradient-border-card p-10 flex flex-col scale-105 z-10">
+                    <div class="absolute top-4 right-8 bg-[#C5A059] text-black text-[10px] font-bold px-3 py-1 rounded-full tracking-widest">NEJOBLÍBENĚJŠÍ</div>
+                    <h3 class="text-2xl font-bold text-white mb-2 mt-2">Partnerství</h3>
+                    <div class="text-5xl font-bold text-[#C5A059] mb-6">1 500 <span class="text-lg text-gray-500">Kč/měs</span></div>
+                    <p class="text-gray-300 text-sm mb-8">Pronájem webu. Vše v ceně, bez velkých počátečních nákladů.</p>
+                    <ul class="space-y-4 mb-8 text-sm text-white font-medium">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupního poplatku</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Hosting v ceně</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Pravidelné aktualizace</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Technická podpora</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-4 text-center bg-[#C5A059] text-black rounded-full font-bold hover:bg-white transition shadow-lg shadow-[#C5A059]/20 magnetic-btn">Vybrat</a>
+                </div>
 
                 <!-- Card 3 -->
-                <article class="spotlight-card tilt-card p-10 rounded-[2rem] flex flex-col h-full group cursor-default">
-                    <div class="tilt-content">
-                        <div class="w-16 h-16 bg-slate-50 border border-gray-100 rounded-2xl flex items-center justify-center mb-8 text-black group-hover:scale-110 group-hover:bg-gold-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-gold-600 transition-colors">Tech bez kompromisů</h3>
-                        <p class="text-slate-600 leading-relaxed mb-8">Pomalý web stojí peníze. Využíváme nejnovější technologie pro bleskové načítání, které milují uživatelé i Google.</p>
-                        <ul class="text-sm font-bold space-y-3 text-slate-500">
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> React / Next.js</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> SEO Optimalizace</li>
-                            <li class="flex items-center gap-3"><span class="text-gold-500">✓</span> Škálovatelnost</li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- 7) TEXT SHIMMER (Dark Section - Ensure Contrast!) -->
-        <section id="shimmer" class="max-w-5xl mx-auto px-6 py-28 mb-20 bg-dark rounded-[2.5rem] text-center reveal-section relative overflow-hidden shadow-2xl border border-white/5">
-             <!-- Background ambient -->
-             <div class="absolute inset-0 bg-gradient-to-b from-gold-900/20 to-transparent opacity-40 pointer-events-none"></div>
-             <div class="absolute -top-20 -right-20 w-80 h-80 bg-gold-600/20 blur-[100px] rounded-full"></div>
-             
-             <span class="text-gold-500 font-bold uppercase tracking-[0.2em] text-sm relative z-10 mb-6 block">Inovace, která vás posune</span>
-             <h2 class="text-5xl md:text-7xl font-black mt-2 tracking-tighter relative z-10 text-white leading-tight">
-                 Budoucnost patří <br>
-                 <span class="text-shimmer">odvážným.</span>
-             </h2>
-             <p class="text-xl text-gray-300 mt-8 max-w-2xl mx-auto relative z-10 leading-relaxed font-medium">
-                 Zatímco konkurence spí, vy můžete ovládnout trh. Implementujeme AI a moderní designové trendy dříve, než se stanou standardem.
-             </p>
-        </section>
-
-        <!-- 5) CARD FAN (Proces) -->
-        <section id="proces" class="py-32 overflow-hidden reveal-section">
-            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-                <div>
-                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-6">Žádný chaos.<br>Jen výsledky.</h2>
-                    <p class="text-slate-600 mb-10 text-lg">Náš proces je transparentní. Víte přesně, za co platíte a kdy to dostanete.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex gap-6 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gold-200 transition duration-300 items-start">
-                            <span class="text-gold-500 font-black text-3xl font-mono leading-none">01</span>
-                            <div>
-                                <h4 class="text-slate-900 font-bold text-xl mb-2">Hloubkový Audit</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Nehádáme. Analyzujeme data, vaši konkurenci a chování zákazníků. Najdeme díry na trhu, které zaplníme.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-6 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gold-200 transition duration-300 items-start">
-                            <span class="text-gold-500 font-black text-3xl font-mono leading-none">02</span>
-                            <div>
-                                <h4 class="text-slate-900 font-bold text-xl mb-2">Prototyp & Design</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Vytvoříme vizuál, který vyvolá "wow" efekt, ale zároveň povede zákazníka přímo k nákupu.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-6 p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-gold-200 transition duration-300 items-start">
-                            <span class="text-gold-500 font-black text-3xl font-mono leading-none">03</span>
-                            <div>
-                                <h4 class="text-slate-900 font-bold text-xl mb-2">Bezchybné Spuštění</h4>
-                                <p class="text-sm text-slate-600 leading-relaxed">Pixel-perfect kód. Testování na všech zařízeních. Rychlost blesku. Spouštíme až když je vše perfektní.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FAN VISUAL -->
-                <div class="h-[500px] relative w-full flex justify-center items-center fan-container cursor-pointer perspective-1000">
-                    <!-- Card 1 -->
-                    <div class="fan-card w-[280px] h-[380px] bg-white rounded-2xl p-6 flex flex-col justify-between">
-                        <div class="w-full h-32 bg-gray-50 rounded-lg mb-4 flex items-center justify-center overflow-hidden border border-gray-100">
-                             <svg class="text-gray-300 w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="w-2/3 h-2 bg-gray-100 rounded"></div>
-                            <div class="w-1/2 h-2 bg-gray-100 rounded"></div>
-                            <div class="w-3/4 h-2 bg-gray-100 rounded"></div>
-                        </div>
-                        <span class="text-xs text-gray-400 uppercase tracking-wider font-bold">Audit & Data</span>
-                    </div>
-                    
-                    <!-- Card 2 (Middle - Gold Accent) -->
-                    <div class="fan-card w-[280px] h-[380px] bg-white rounded-2xl p-6 flex flex-col justify-between border-gold-200">
-                        <div class="w-full h-32 bg-gold-50 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative border border-gold-100">
-                             <div class="absolute inset-0 bg-gradient-to-tr from-gold-100/50 to-transparent"></div>
-                            <span class="text-gold-600 font-bold relative z-10 text-lg">Sales Strategy</span>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="w-full h-2 bg-gold-100/50 rounded"></div>
-                            <div class="w-3/4 h-2 bg-gold-100/50 rounded"></div>
-                            <div class="w-5/6 h-2 bg-gold-100/50 rounded"></div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-gold-600 uppercase tracking-wider font-bold">In Progress</span>
-                            <div class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="fan-card w-[280px] h-[380px] bg-white rounded-2xl p-6 flex flex-col justify-between">
-                         <div class="w-full h-32 bg-gray-50 rounded-lg mb-4 flex items-center justify-center border border-gray-100">
-                             <svg class="text-gray-300 w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                         </div>
-                        <div class="space-y-3">
-                            <div class="w-1/2 h-2 bg-gray-100 rounded"></div>
-                            <div class="w-2/3 h-2 bg-gray-100 rounded"></div>
-                        </div>
-                        <span class="text-xs text-gray-400 uppercase tracking-wider font-bold">Deploy</span>
-                    </div>
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold text-white mb-2">Business Elite</h3>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-6">35 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-gray-400 text-sm mb-8">Kompletní digitální stroj na zakázky pro rostoucí firmy.</p>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web do 5 sekcí</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Animace na míru</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Copywriting</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-3 text-center border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition magnetic-btn">Vybrat</a>
                 </div>
             </div>
         </section>
 
-        <!-- 6) IMAGE REVEAL LIST (Selected Work - Prestige) -->
-        <section id="prace" class="py-32 px-6 reveal-section relative bg-white border-t border-gray-100">
-            <div class="max-w-5xl mx-auto reveal-list-container">
-                <div class="flex items-end justify-between mb-12 border-b border-gray-200 pb-6">
+        <!-- CONTACT -->
+        <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
+            <div class="max-w-xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit něco velkého.</h2>
+                    <p class="text-gray-400">Ozvěte se nám. Do 24 hodin pošleme návrh strategie.</p>
+                </div>
+
+                <form class="space-y-6">
                     <div>
-                         <span class="text-gold-600 font-bold uppercase tracking-widest text-sm mb-2 block">Case Studies</span>
-                        <h2 class="text-4xl font-black text-slate-900">Vybrané úspěchy</h2>
+                        <input type="text" placeholder="Jméno" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
-                    <span class="hidden md:block text-slate-400 font-medium">Posuňte myší pro náhled</span>
-                </div>
-                
-                <div class="space-y-0 relative">
-                    <a href="#" class="group py-12 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 transition-all duration-500 hover:px-8 relative overflow-hidden reveal-item" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
-                        <h3 class="text-3xl md:text-5xl font-bold text-slate-400 group-hover:text-black transition-colors duration-500">Prémiové Interiéry S.R.O.</h3>
-                        <div class="text-right mt-4 md:mt-0">
-                            <span class="text-gold-600 font-bold block">Redesign & Konverze</span>
-                            <span class="text-sm text-slate-400 font-medium">+140 % poptávek po spuštění</span>
-                        </div>
-                    </a>
-                    <a href="#" class="group py-12 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 transition-all duration-500 hover:px-8 relative overflow-hidden reveal-item" data-img="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000&auto=format&fit=crop">
-                        <h3 class="text-3xl md:text-5xl font-bold text-slate-400 group-hover:text-black transition-colors duration-500">Elite Architecture</h3>
-                        <div class="text-right mt-4 md:mt-0">
-                            <span class="text-gold-600 font-bold block">Brand Identity & Web</span>
-                            <span class="text-sm text-slate-400 font-medium">Prezentace pro top 1% trhu</span>
-                        </div>
-                    </a>
-                    <a href="#" class="group py-12 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 transition-all duration-500 hover:px-8 relative overflow-hidden reveal-item" data-img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop">
-                        <h3 class="text-3xl md:text-5xl font-bold text-slate-400 group-hover:text-black transition-colors duration-500">Advokátní Kancelář LP</h3>
-                        <div class="text-right mt-4 md:mt-0">
-                            <span class="text-gold-600 font-bold block">Corporate Web</span>
-                            <span class="text-sm text-slate-400 font-medium">Budování digitální autority</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="py-32 px-6 bg-[#FDFDFD] reveal-section">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-20">
-                    <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-6">Investice do vašeho <span class="text-gold-500">růstu</span></h2>
-                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Transparentní ceny bez skrytých poplatků. Vyberte si model, který nejlépe vyhovuje vaší aktuální fázi podnikání.</p>
-                </div>
-
-                <div class="grid lg:grid-cols-3 gap-8 items-stretch">
-                    <div class="p-10 rounded-[2rem] bg-white border border-gray-100 flex flex-col shadow-sm hover:shadow-xl transition-all duration-500">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Essential</h3>
-                        <div class="text-4xl font-black text-black mb-6">15 000 <span class="text-lg font-medium text-slate-400">Kč</span></div>
-                        <p class="text-slate-500 text-sm mb-8">Ideální pro živnostníky, kteří chtějí okamžitě zvýšit svou profesionalitu.</p>
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> One-page landing page</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Mobilní optimalizace</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Základní SEO</li>
-                        </ul>
-                        <a href="#kontakt" class="w-full py-4 text-center border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all">Začít projekt</a>
+                    <div>
+                        <input type="email" placeholder="Email" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
-
-                    <div class="gradient-border-card p-10 flex flex-col scale-105 z-10">
-                        <div class="absolute top-4 right-8 bg-gold-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest">Nejoblíbenější</div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Business Elite</h3>
-                        <div class="text-4xl font-black text-black mb-6">35 000 <span class="text-lg font-medium text-slate-400">Kč</span></div>
-                        <p class="text-slate-500 text-sm mb-8">Kompletní digitální stroj na zakázky pro rostoucí firmy.</p>
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Strukturovaný web (do 5 sekcí)</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Animace na míru (Apple style)</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Copywriting s důrazem na prodej</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Analytika & Google Indexace</li>
-                        </ul>
-                        <a href="#kontakt" class="w-full py-4 text-center bg-black text-white rounded-full font-bold hover:bg-gold-600 transition-all shadow-lg shadow-gold-500/20">Chci tento web</a>
+                    <div>
+                        <textarea rows="4" placeholder="O čem budeme mluvit?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
-
-                    <div class="p-10 rounded-[2rem] bg-white border border-gray-100 flex flex-col shadow-sm hover:shadow-xl transition-all duration-500">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Partnerství</h3>
-                        <div class="text-4xl font-black text-black mb-6">1 500 <span class="text-lg font-medium text-slate-400">Kč / měs.</span></div>
-                        <p class="text-slate-500 text-sm mb-8">Vše v ceně. Žádné velké počáteční náklady. Postaráme se o vše.</p>
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Web bez vstupního poplatku</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Hosting & Správa v ceně</li>
-                            <li class="flex items-center gap-3 text-sm font-bold text-slate-700"><svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Pravidelné aktualizace</li>
-                        </ul>
-                        <a href="#kontakt" class="w-full py-4 text-center border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all">Pronajmout web</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="kontakt" class="py-32 px-6 reveal-section relative">
-            <div class="max-w-4xl mx-auto bg-white rounded-[3rem] p-8 md:p-16 border border-gray-100 shadow-2xl relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold-100 rounded-full blur-3xl opacity-50"></div>
-                
-                <div class="relative z-10 text-center mb-12">
-                    <h2 class="text-4xl font-black text-slate-900 mb-4">Pojďme postavit něco velkého.</h2>
-                    <p class="text-slate-500 font-medium">Ozvěte se nám a my vám do 24 hodin pošleme návrh strategie.</p>
-                </div>
-
-                <form class="grid md:grid-cols-2 gap-6 relative z-10">
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-2">Jméno</label>
-                        <input type="text" placeholder="Jan Novák" class="w-full px-6 py-4 bg-slate-50 border border-transparent rounded-2xl focus:border-gold-500 focus:bg-white transition-all outline-none font-medium">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-2">E-mail</label>
-                        <input type="email" placeholder="jan@firma.cz" class="w-full px-6 py-4 bg-slate-50 border border-transparent rounded-2xl focus:border-gold-500 focus:bg-white transition-all outline-none font-medium">
-                    </div>
-                    <div class="md:col-span-2 space-y-2">
-                        <label class="text-xs font-bold uppercase tracking-widest text-slate-400 ml-2">O čem budeme mluvit?</label>
-                        <textarea rows="4" placeholder="Chci nový web, který mi pomůže s..." class="w-full px-6 py-4 bg-slate-50 border border-transparent rounded-2xl focus:border-gold-500 focus:bg-white transition-all outline-none font-medium"></textarea>
-                    </div>
-                    <div class="md:col-span-2 mt-4">
-                        <button type="submit" class="w-full py-5 bg-black text-white rounded-2xl font-black text-lg hover:bg-gold-600 transition-all shadow-xl hover:shadow-gold-500/20 active:scale-95">
-                            Odeslat nezávaznou poptávku
-                        </button>
-                    </div>
+                    <button class="w-full py-4 bg-[#C5A059] text-black font-bold rounded-2xl hover:bg-white transition-colors shadow-lg shadow-[#C5A059]/20 magnetic-btn">
+                        Odeslat nezávaznou poptávku
+                    </button>
                 </form>
             </div>
         </section>
+
+        <footer class="py-20 text-xs text-gray-500 border-t border-white/10 bg-[#000]">
+            <div class="max-w-[1260px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p>Copyright © 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition">Instagram</a>
+                    <a href="#" class="hover:text-white transition">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition">Dribbble</a>
+                </div>
+            </div>
+        </footer>
+
     </main>
 
-    <footer class="bg-white border-t border-gray-100 py-12 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-2xl font-extrabold tracking-tighter text-black">LUMINA<span class="text-gold-500">.</span></div>
-            <div class="flex gap-8 text-sm font-bold text-slate-400">
-                <a href="#" class="hover:text-gold-600 transition-colors">LinkedIn</a>
-                <a href="#" class="hover:text-gold-600 transition-colors">Instagram</a>
-                <a href="#" class="hover:text-gold-600 transition-colors">Dribbble</a>
-            </div>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">© 2026 LUMINA Digital Agency. Všechna práva vyhrazena.</p>
-        </div>
-    </footer>
-
-    <img src="" alt="Preview" class="reveal-img-preview" id="reveal-img">
-
     <script>
-        // --- SCROLL REVEAL ENGINE ---
-        const observerOptions = { threshold: 0.15 };
+        lucide.createIcons();
+
+        // 1. FADE IN OBSERVER
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // 2. VIDEO SCROLL LOGIC
+        const videoSection = document.querySelector('.scroll-video-container');
+        const video = document.getElementById('apple-video');
+        const overlay1 = document.getElementById('overlay-1');
+        const overlay2 = document.getElementById('overlay-2');
+        
+        if(videoSection && video) {
+            window.addEventListener('scroll', () => {
+                const rect = videoSection.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const sectionHeight = videoSection.offsetHeight;
+                
+                if(rect.top <= 0 && rect.bottom >= 0) {
+                    const progress = Math.abs(rect.top) / (sectionHeight - windowHeight);
+                    if(video.duration) video.currentTime = video.duration * progress;
+
+                    if(progress > 0.2 && progress < 0.45) overlay1.classList.add('visible');
+                    else overlay1.classList.remove('visible');
+
+                    if(progress > 0.55 && progress < 0.8) overlay2.classList.add('visible');
+                    else overlay2.classList.remove('visible');
                 }
             });
-        }, observerOptions);
+        }
 
-        document.querySelectorAll('.reveal-section').forEach(section => observer.observe(section));
-
-        // --- SPOTLIGHT MOUSE TRACKING ---
-        document.querySelectorAll('.spotlight-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
-
-        // --- 3D TILT EFFECT ---
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 15;
-                const rotateY = (centerX - x) / 15;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-            });
-        });
-
-        // --- IMAGE REVEAL LIST SCRIPT ---
+        // 3. IMAGE REVEAL LIST LOGIC
         const revealItems = document.querySelectorAll('.reveal-item');
         const revealImg = document.getElementById('reveal-img');
 
@@ -695,24 +541,42 @@
                 revealImg.classList.remove('active');
             });
             item.addEventListener('mousemove', (e) => {
-                // Smooth follow with offset
-                const x = e.clientX + 30;
-                const y = e.clientY - 110;
+                const x = e.clientX;
+                const y = e.clientY;
                 revealImg.style.left = `${x}px`;
                 revealImg.style.top = `${y}px`;
             });
         });
 
-        // --- STICKY HEADER SCROLL ---
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('py-2', 'bg-white/95');
-                header.classList.remove('py-0');
-            } else {
-                header.classList.remove('py-2', 'bg-white/95');
-            }
+        // 4. MOUSE TRACKING GLOW (BENTO GRID)
+        const bentoContainer = document.getElementById('bento-container');
+        if(bentoContainer) {
+            bentoContainer.onmousemove = e => {
+                for(const card of document.getElementsByClassName("bento-item")) {
+                    const rect = card.getBoundingClientRect(),
+                          x = e.clientX - rect.left,
+                          y = e.clientY - rect.top;
+
+                    card.style.setProperty("--mouse-x", `${x}px`);
+                    card.style.setProperty("--mouse-y", `${y}px`);
+                }
+            };
+        }
+
+        // 5. MAGNETIC BUTTONS
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`; // Plynulý posun
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
         });
+
     </script>
 </body>
 </html>
