@@ -34,25 +34,25 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. M2 CUSTOM NAV (CENTERED & STYLED) --- */
+        /* --- 1. M2 CUSTOM NAV --- */
         .m2-nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
             padding: 0 40px; 
             height: 120px; 
             z-index: 9999;
-            /* Glass effect background */
-            background: rgba(0, 0, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.8);
             border-bottom: 1px solid rgba(197, 160, 89, 0.2);
             color: white;
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Left Logo - Center Nav - Right CTA */
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
         }
 
-        /* Nav Links Styling */
+        /* Nav Links Styling (RESTORED EFFECT) */
         .nav-center {
             display: flex;
             gap: 40px;
@@ -116,6 +116,39 @@
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
+        /* MOBILE MENU STYLES */
+        @media (max-width: 1024px) {
+            .m2-nav {
+                height: 90px;
+                padding: 0 20px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .nav-center, .nav-cta { display: none; }
+            .m2-nav img { height: 60px; width: auto; }
+        }
+
+        #mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(20px);
+            z-index: 9998;
+            display: flex; flex-direction: column; justify-content: center; items-center: center;
+            transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.open { transform: translateY(0); }
+        
+        .mobile-link {
+            font-size: 2rem; font-weight: 700; color: white; margin: 15px 0;
+            opacity: 0; transform: translateY(20px); transition: all 0.3s ease;
+        }
+        #mobile-menu.open .mobile-link { opacity: 1; transform: translateY(0); }
+        #mobile-menu.open .mobile-link:nth-child(1) { transition-delay: 0.1s; }
+        #mobile-menu.open .mobile-link:nth-child(2) { transition-delay: 0.15s; }
+        #mobile-menu.open .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+        #mobile-menu.open .mobile-link:nth-child(4) { transition-delay: 0.25s; }
+        #mobile-menu.open .mobile-link:nth-child(5) { transition-delay: 0.3s; }
+
+
         /* --- 2. HERO SECTION & VIDEO --- */
         .hero-video-bg {
             position: absolute;
@@ -126,18 +159,26 @@
             filter: grayscale(100%) contrast(1.2);
         }
         
+        @media (max-width: 768px) {
+            .hero-video-bg {
+                opacity: 0.7;
+            }
+        }
+        
         .hero-content {
             position: relative;
             z-index: 10;
+            padding: 0 20px;
         }
 
         .hero-text {
-            font-size: clamp(48px, 8vw, 96px);
-            line-height: 1.05;
+            font-size: clamp(36px, 8vw, 96px);
+            line-height: 1.1;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: white;
             text-shadow: 0 0 40px rgba(0,0,0,0.9);
+            word-wrap: break-word;
         }
         
         .text-shimmer {
@@ -153,140 +194,58 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* --- 3. CTA BUTTON SHIMMER (2.5s infinite) --- */
+        /* --- 3. CTA BUTTONS --- */
         .btn-shimmer {
-            position: relative;
-            overflow: hidden;
-            background: rgba(197, 160, 89, 0.15);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            border-radius: 9999px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 1;
+            position: relative; overflow: hidden;
+            background: rgba(197, 160, 89, 0.15); border: 1px solid var(--gold); color: var(--gold);
+            border-radius: 9999px; font-weight: 600; transition: all 0.3s ease; z-index: 1;
         }
-
         .btn-shimmer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: none;
-            animation: btn-shimmer-anim 2.5s infinite;
-            z-index: -1;
+            transition: none; animation: btn-shimmer-anim 2.5s infinite; z-index: -1;
         }
-
         @keyframes btn-shimmer-anim {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
+            0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
         }
-
-        .btn-shimmer:hover {
-            background: white !important;
-            color: black !important;
-            border-color: white !important;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
+        .btn-shimmer:hover { background: white !important; color: black !important; border-color: white !important; box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
         
-        /* Zlatá varianta (Primární CTA) */
-        .btn-shimmer-filled {
-            background: var(--gold);
-            color: black;
-            border: 1px solid var(--gold);
-        }
-        .btn-shimmer-filled:hover {
-            background: white !important;
-            color: black !important;
-            border-color: white !important;
-        }
+        .btn-shimmer-filled { background: var(--gold); color: black; border: 1px solid var(--gold); }
+        .btn-shimmer-filled:hover { background: white !important; color: black !important; border-color: white !important; }
 
-        /* Šedobílá varianta (Sekundární CTA) */
         .btn-ghost {
-            background: rgba(255, 255, 255, 0.05);
-            color: #e5e5e5;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 9999px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05); color: #e5e5e5;
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 9999px; font-weight: 500; transition: all 0.3s ease;
         }
-        .btn-ghost:hover {
-            background: white;
-            color: black;
-            border-color: white;
-        }
+        .btn-ghost:hover { background: white; color: black; border-color: white; }
 
         /* --- 4. GRADIENT BORDER CARD --- */
         .gradient-border-card {
-            position: relative;
-            background: #1c1c1e;
-            border-radius: 28px;
-            z-index: 1;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            position: relative; background: #1c1c1e; border-radius: 28px; z-index: 1; overflow: hidden; transition: transform 0.3s ease;
         }
         .gradient-border-card::before {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: conic-gradient(transparent, transparent, var(--gold), var(--gold-light), var(--gold), transparent, transparent);
-            animation: rotate 4s linear infinite;
-            z-index: -2;
+            animation: rotate 4s linear infinite; z-index: -2;
         }
         .gradient-border-card::after {
-            content: "";
-            position: absolute;
-            inset: 2px;
-            background: #151516;
-            border-radius: 26px;
-            z-index: -1;
+            content: ""; position: absolute; inset: 2px; background: #151516; border-radius: 26px; z-index: -1;
         }
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .gradient-border-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25);
-        }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .gradient-border-card:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25); }
 
         /* --- 5. SMOOTH VIDEO SCROLL --- */
-        .scroll-video-container {
-            height: 300vh;
-            position: relative;
-            background: var(--bg);
-        }
-        .scroll-video-sticky {
-            position: sticky; 
-            top: 0; 
-            height: 100vh; 
-            width: 100%;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden;
-        }
+        .scroll-video-container { height: 300vh; position: relative; background: var(--bg); }
+        .scroll-video-sticky { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .scroll-video-sticky video {
-            width: 80%; 
-            max-width: var(--global-content-max-width);
-            border-radius: var(--product-viewer-ref-border-radius);
-            box-shadow: 0 0 100px rgba(197, 160, 89, 0.1);
-            opacity: 0.6;
-            filter: grayscale(100%);
+            width: 80%; max-width: var(--global-content-max-width); border-radius: var(--product-viewer-ref-border-radius);
+            box-shadow: 0 0 100px rgba(197, 160, 89, 0.1); opacity: 0.6; filter: grayscale(100%);
         }
         .video-overlay-text {
-            position: absolute;
-            font-size: clamp(3rem, 6vw, 6rem);
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 10px 30px rgba(0,0,0,1);
-            opacity: 0; 
-            transform: scale(0.9);
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            text-align: center;
-            width: 100%;
-            pointer-events: none;
-            z-index: 20;
+            position: absolute; font-size: clamp(2rem, 5vw, 6rem); /* Smaller min font for mobile */
+            font-weight: 800; color: white; text-shadow: 0 10px 30px rgba(0,0,0,1);
+            opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center; width: 100%; pointer-events: none; z-index: 20; padding: 0 20px;
         }
         .video-overlay-text.visible { opacity: 1; transform: scale(1); }
 
@@ -296,12 +255,9 @@
             max-width: var(--global-content-max-width); margin: 0 auto; padding: 4rem 20px;
         }
         .bento-item {
-            background: rgba(21, 21, 22, 0.6);
-            border-radius: 28px; padding: 40px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            transition: transform 0.3s ease; min-height: 400px;
-            position: relative; overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(21, 21, 22, 0.6); border-radius: 28px; padding: 30px; /* Reduced padding for mobile */
+            display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; min-height: 400px;
+            position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
         }
         .bento-grid:hover .bento-item::after { opacity: 1; }
         .bento-item::before {
@@ -315,19 +271,17 @@
         .bento-item:hover::before { opacity: 1; }
         .bento-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
         .bento-span-2 { grid-column: span 2; }
-        @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; } .bento-span-2 { grid-column: span 1; } }
+        @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; padding: 2rem 20px; } .bento-span-2 { grid-column: span 1; } }
 
         /* --- 7. PRICING GRID --- */
         .pricing-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-            max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px;
-            align-items: center;
+            max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px; align-items: center;
         }
         @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
         
         .pricing-card {
-            background: #151516; border-radius: 28px; padding: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #151516; border-radius: 28px; padding: 40px; border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s ease; position: relative; overflow: hidden; height: 100%;
         }
         .pricing-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.1); }
@@ -337,25 +291,13 @@
         .reveal-item:hover { background: linear-gradient(90deg, rgba(197, 160, 89, 0.05), transparent); border-color: rgba(197, 160, 89, 0.3); padding-left: 20px; }
         .reveal-img-preview {
             position: fixed; pointer-events: none; z-index: 50; width: 320px; height: 220px; object-fit: cover;
-            border-radius: 12px; opacity: 0; transform: scale(0.8) translate(-50%, -50%);
-            transition: opacity 0.3s, transform 0.3s; top: 0; left: 0;
+            border-radius: 12px; opacity: 0; transform: scale(0.8) translate(-50%, -50%); transition: opacity 0.3s, transform 0.3s; top: 0; left: 0;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2);
         }
         .reveal-img-preview.active { opacity: 1; transform: scale(1) translate(-50%, -50%); }
 
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
         .fade-in.active { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 1024px) {
-            .m2-nav {
-                height: 100px;
-                padding: 0 20px;
-                grid-template-columns: auto 1fr auto;
-            }
-            .nav-center { display: none; }
-            .nav-cta { display: none; }
-            /* Simple mobile menu toggle logic would go here if needed, keeping it simple for now based on desktop request */
-        }
 
     </style>
 </head>
@@ -364,22 +306,39 @@
     <!-- NAV -->
     <nav class="m2-nav">
         <!-- LOGO IMAGE -->
-        <a href="#" class="block">
+        <a href="#" class="block z-50 relative">
             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
         </a>
         
-        <!-- CENTER LINKS (DESKTOP) -->
-        <div class="nav-center hidden md:flex">
+        <!-- CENTER LINKS (DESKTOP - RESTORED EFFECT) -->
+        <div class="nav-center hidden lg:flex">
             <a href="#sluzby" class="nav-link">Expertíza</a>
             <a href="#prace" class="nav-link">Projekty</a>
             <a href="#pricing" class="nav-link">Investice</a>
         </div>
 
         <!-- RIGHT CTA (DESKTOP) -->
-        <a href="#kontakt" class="nav-cta hidden md:block">
+        <a href="#kontakt" class="nav-cta hidden lg:block">
             Konzultace
         </a>
+
+        <!-- MOBILE HAMBURGER BUTTON -->
+        <button id="menu-btn" class="lg:hidden z-50 text-white p-2">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
     </nav>
+
+    <!-- MOBILE OVERLAY MENU -->
+    <div id="mobile-menu">
+        <a href="#sluzby" class="mobile-link hover:text-gold transition">Expertíza</a>
+        <a href="#prace" class="mobile-link hover:text-gold transition">Projekty</a>
+        <a href="#pricing" class="mobile-link hover:text-gold transition">Investice</a>
+        <a href="#kontakt" class="mobile-link hover:text-gold transition">Kontakt</a>
+        <div class="mt-8 flex gap-6 mobile-link">
+            <a href="https://www.instagram.com/m2digitalagencycz" target="_blank"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+            <a href="https://www.facebook.com/m2digitalagencycz" target="_blank"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+        </div>
+    </div>
 
     <main>
 
@@ -390,8 +349,9 @@
                 <source src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/videohero.mp4" type="video/mp4">
             </video>
             
-            <!-- Dark Overlay -->
+            <!-- Dark Overlay with extra gradient for text readability -->
             <div class="absolute inset-0 bg-black/60 z-0"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
 
             <div class="hero-content">
                 <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
@@ -424,9 +384,9 @@
             </div>
         </section>
 
-        <!-- 3. CASE STUDIES -->
+        <!-- 3. CASE STUDIES (Max width reduced to 5xl for better centering) -->
         <section id="prace" class="py-32 bg-[#050505] border-t border-white/5">
-            <div class="max-w-[1260px] mx-auto px-6 mb-16 flex items-end justify-between">
+            <div class="max-w-5xl mx-auto px-6 mb-16 flex items-end justify-between">
                 <div>
                     <h2 class="text-xs font-mono text-[#C5A059] uppercase tracking-widest mb-4">Portfolio</h2>
                     <h3 class="text-4xl md:text-5xl font-bold text-white">Vybrané projekty</h3>
@@ -434,7 +394,7 @@
                 <span class="hidden md:block text-xs text-gray-500 uppercase tracking-widest">Najeďte pro náhled</span>
             </div>
             
-            <div class="max-w-[1260px] mx-auto">
+            <div class="max-w-5xl mx-auto px-6">
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">01</span>
@@ -614,7 +574,7 @@
                     <div>
                         <textarea rows="4" placeholder="O čem budeme mluvit?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
-                    <button class="w-full py-4 btn-shimmer-filled rounded-2xl font-bold">
+                    <button class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold">
                         Odeslat nezávaznou poptávku
                     </button>
                 </form>
@@ -701,6 +661,25 @@
                     card.style.setProperty("--mouse-y", `${y}px`);
                 }
             };
+        }
+
+        // 5. MOBILE MENU LOGIC
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                // Optional: Change icon or animate burger
+            });
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
+            });
         }
     </script>
 </body>
