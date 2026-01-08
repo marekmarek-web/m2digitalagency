@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M² Digital Agency | Budoucnost patří odvážným</title>
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/M2_logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -41,7 +41,8 @@
             padding: 0 40px; 
             height: 120px; 
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.8);
+            /* Stronger Glass Effect */
+            background: rgba(0, 0, 0, 0.6); 
             border-bottom: 1px solid rgba(197, 160, 89, 0.2);
             color: white;
             display: grid;
@@ -94,13 +95,13 @@
             left: 0;
         }
 
-        /* Nav CTA Button */
+        /* Nav CTA Button (UPDATED: Gold filled style, no shimmer) */
         .nav-cta {
             justify-self: end;
             padding: 12px 28px;
-            background: transparent;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: var(--gold); /* Gold Background */
+            color: black; /* Black Text */
+            border: 1px solid var(--gold);
             border-radius: 999px;
             font-weight: 600;
             font-size: 14px;
@@ -110,9 +111,9 @@
         }
 
         .nav-cta:hover {
-            background: var(--gold);
+            background: white;
             color: black;
-            border-color: var(--gold);
+            border-color: white;
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
@@ -123,6 +124,7 @@
                 padding: 0 20px;
                 display: flex;
                 justify-content: space-between;
+                background: rgba(0, 0, 0, 0.85); 
             }
             .nav-center, .nav-cta { display: none; }
             .m2-nav img { height: 60px; width: auto; }
@@ -130,7 +132,7 @@
 
         #mobile-menu {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.98); backdrop-filter: blur(20px);
             z-index: 9998;
             display: flex; flex-direction: column; justify-content: center; items-center: center;
             transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -169,10 +171,16 @@
             position: relative;
             z-index: 10;
             padding: 0 20px;
+            /* Added margin top to push content down from header */
+            margin-top: 8rem; 
+        }
+        @media (min-width: 768px) {
+            .hero-content { margin-top: 10rem; }
         }
 
         .hero-text {
-            font-size: clamp(36px, 8vw, 96px);
+            /* Adjusted font size to prevent being too large. Reduced upper bound from 96px to 64px */
+            font-size: clamp(32px, 5vw, 64px);
             line-height: 1.1;
             font-weight: 800;
             letter-spacing: -0.02em;
@@ -234,20 +242,50 @@
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .gradient-border-card:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25); }
 
-        /* --- 5. SMOOTH VIDEO SCROLL --- */
-        .scroll-video-container { height: 300vh; position: relative; background: var(--bg); }
-        .scroll-video-sticky { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .scroll-video-sticky video {
-            width: 80%; max-width: var(--global-content-max-width); border-radius: var(--product-viewer-ref-border-radius);
-            box-shadow: 0 0 100px rgba(197, 160, 89, 0.1); opacity: 0.6; filter: grayscale(100%);
+        /* --- 5. EXPANDING SHOWREEL (SCROLLYTELLING UPGRADE) --- */
+        .scroll-video-container {
+            height: 250vh; /* Scroll space */
+            position: relative;
+            background: var(--bg);
         }
+        .scroll-video-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        /* New Wrapper for Scaling Effect */
+        .video-scale-wrapper {
+            width: 70%; /* Start small */
+            height: 70%;
+            border-radius: 40px; /* Start round */
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 100px rgba(197, 160, 89, 0.1);
+            transform-origin: center center;
+            will-change: width, height, border-radius;
+        }
+        .video-scale-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.8;
+        }
+        
         .video-overlay-text {
-            position: absolute; font-size: clamp(2rem, 5vw, 6rem); /* Smaller min font for mobile */
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: clamp(2.5rem, 6vw, 6rem);
             font-weight: 800; color: white; text-shadow: 0 10px 30px rgba(0,0,0,1);
-            opacity: 0; transform: scale(0.9); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transition: opacity 0.5s ease;
             text-align: center; width: 100%; pointer-events: none; z-index: 20; padding: 0 20px;
         }
-        .video-overlay-text.visible { opacity: 1; transform: scale(1); }
+        .video-overlay-text.visible { opacity: 1; }
 
         /* --- 6. BENTO GRID --- */
         .bento-grid {
@@ -305,9 +343,9 @@
 
     <!-- NAV -->
     <nav class="m2-nav">
-        <!-- LOGO IMAGE (Zvětšeno na h-28 = cca 112px, s invert filtrem) -->
+        <!-- LOGO IMAGE -->
         <a href="#" class="block z-50 relative">
-            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
+            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
         </a>
         
         <!-- CENTER LINKS (DESKTOP - RESTORED EFFECT) -->
@@ -319,7 +357,7 @@
 
         <!-- RIGHT CTA (DESKTOP) -->
         <a href="#kontakt" class="nav-cta hidden lg:block">
-            Konzultace
+            Nezávazná konzultace
         </a>
 
         <!-- MOBILE HAMBURGER BUTTON -->
@@ -355,12 +393,14 @@
 
             <div class="hero-content">
                 <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
-                    Budoucnost patří <br>
-                    <span class="text-shimmer">odvážným.</span>
+                    Prémiový web, který buduje důvěru. <br>
+                    <span class="text-shimmer">A je připravený na růst.</span>
                 </h1>
                 
                 <p class="text-xl text-gray-200 max-w-2xl mx-auto fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
-                    Nenechte zákazníky odejít ke konkurenci. Tvoříme prémiové weby a strategie, které budují důvěru a zvyšují váš obrat.
+                    <strong>Navrhneme a postavíme rychlý web se SEO základem, který z vás udělá profesionální volbu.</strong>
+                    <br><br>
+                    Zakázky negarantuje žádný web sám o sobě – my vám dodáme pevný základ, na který se dá navázat reklamou i obsahem.
                 </p>
                 
                 <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center fade-in" style="transition-delay: 0.3s;">
@@ -369,22 +409,26 @@
                     
                     <!-- Secondary CTA (Grey-White Style) -->
                     <a href="#prace" class="px-8 py-3.5 btn-ghost rounded-full">
-                        Ukázat výsledky
+                        Ukázat projekty
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- 2. SCROLLYTELLING VIDEO -->
+        <!-- 2. SCROLLYTELLING VIDEO (EXPANDING SHOWREEL) -->
         <section class="scroll-video-container">
             <div class="scroll-video-sticky">
-                <video muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4" class="opacity-60"></video>
-                <h2 class="video-overlay-text" id="overlay-1">Precizní inženýrství</h2>
-                <h2 class="video-overlay-text" id="overlay-2">Dokonalý detail</h2>
+                <!-- Wrapper for scaling effect -->
+                <div class="video-scale-wrapper" id="video-wrapper">
+                    <video muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4"></video>
+                    <!-- Overlays -->
+                    <h2 class="video-overlay-text" id="overlay-1">Precizní systém</h2>
+                    <h2 class="video-overlay-text" id="overlay-2">Detail, který prodává</h2>
+                </div>
             </div>
         </section>
 
-        <!-- 3. CASE STUDIES (Max width reduced to 5xl for better centering) -->
+        <!-- 3. CASE STUDIES (Centered & Narrower) -->
         <section id="prace" class="py-32 bg-[#050505] border-t border-white/5">
             <div class="max-w-5xl mx-auto px-6 mb-16 flex items-end justify-between">
                 <div>
@@ -395,35 +439,38 @@
             </div>
             
             <div class="max-w-5xl mx-auto px-6">
+                <!-- Item 1 -->
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">01</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Prémiové interiéry</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Interiéry & řemesla</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web a design</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web + struktura nabídky</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
 
+                <!-- Item 2 -->
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">02</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Architektura a reality</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Reality & služby</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Identita značky</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Brand + konverzní stránky</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
 
+                <!-- Item 3 -->
                 <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">03</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právní služby</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právo & B2B</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Firemní web</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Důvěryhodnost + SEO základ</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
@@ -432,63 +479,63 @@
             <img src="" alt="Project Preview" class="reveal-img-preview" id="reveal-img">
         </section>
 
-        <!-- 4. BENTO GRID -->
+        <!-- 4. BENTO GRID (Updated Content) -->
         <section id="sluzby" class="py-32 bg-[#000]">
             <div class="max-w-[1260px] mx-auto px-6 mb-16 text-center md:text-left">
                 <h2 class="text-5xl font-semibold tracking-tight text-white mb-4">Nestavíme jen weby.</h2>
-                <p class="text-gray-400 text-xl">Stavíme vaše digitální aktiva.</p>
+                <p class="text-gray-400 text-xl">Stavíme digitální základ, který vydrží – a dá se škálovat.</p>
             </div>
 
             <div class="bento-grid" id="bento-container">
-                <!-- Large Item -->
+                <!-- Large Item (Strategie) -->
                 <div class="bento-item bento-span-2 group">
                     <div class="bento-content">
                         <div class="relative z-10">
                             <span class="text-xs font-bold text-[#C5A059] uppercase mb-2 block">Strategie</span>
-                            <h3 class="text-4xl font-semibold text-white mb-4">Strategie, která prodává</h3>
-                            <p class="text-gray-400 max-w-md">Váš brand není jen logo. Definujeme vaši unikátní pozici na trhu a psychologii prodeje.</p>
+                            <h3 class="text-4xl font-semibold text-white mb-4">Struktura, která dává smysl</h3>
+                            <p class="text-gray-400 max-w-md">Dobrý web není o efektech. Je o jasné nabídce, správném pořadí informací a cestě, která návštěvníka dovede ke kontaktu. Navrhneme strukturu, texty a CTA tak, aby působily jistě a srozumitelně.</p>
                         </div>
                         <div class="mt-4">
-                            <button class="px-6 py-2 border border-white/20 rounded-full text-sm text-white hover:bg-white hover:text-black transition">Více o strategii</button>
+                            <button class="px-6 py-2 border border-white/20 rounded-full text-sm text-white hover:bg-white hover:text-black transition">Jak probíhá spolupráce</button>
                         </div>
                     </div>
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-[#C5A059]/20 to-transparent rounded-full blur-3xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
                 </div>
 
-                <!-- Small Item -->
+                <!-- Small Item (Měření) -->
                 <div class="bento-item text-center">
                     <div class="bento-content items-center justify-center">
                         <i data-lucide="bar-chart-2" class="w-16 h-16 text-gray-500 mb-6 group-hover:text-[#C5A059] transition-colors"></i>
-                        <h3 class="text-3xl font-semibold text-white mb-2">Analytika</h3>
-                        <p class="text-gray-500 font-medium">Rozhodování na základě dat</p>
+                        <h3 class="text-3xl font-semibold text-white mb-2">Měření</h3>
+                        <p class="text-gray-500 font-medium">Aby web nebyl jen pocit.</p>
                     </div>
                 </div>
 
-                <!-- Small Item -->
+                <!-- Small Item (Technologie) -->
                 <div class="bento-item">
                     <div class="bento-content">
                         <div class="mb-4">
                             <span class="text-xs font-bold text-[#C5A059] uppercase">Technologie</span>
-                            <h3 class="text-2xl font-semibold mt-2 text-white">Bez kompromisů</h3>
+                            <h3 class="text-2xl font-semibold mt-2 text-white">Rychlost a čistý kód</h3>
                         </div>
                         <div class="mt-auto text-gray-400 text-sm">
-                            Rychlost načítání pod 100ms. Struktura přátelská pro SEO.
+                            Lehká struktura, rychlé načítání, technický základ pro SEO. Bez zbytečných pluginů a kompromisů.
                         </div>
                     </div>
                 </div>
 
-                <!-- Large Item -->
+                <!-- Large Item (Design) -->
                 <div class="bento-item bento-span-2 overflow-hidden relative group">
                     <div class="absolute inset-0 bg-gradient-to-r from-[#C5A059]/10 to-transparent opacity-50 group-hover:opacity-100 transition duration-500"></div>
                     <div class="bento-content">
                         <div class="relative z-10 flex flex-col h-full justify-between">
                             <div>
                                 <span class="text-xs font-bold text-[#C5A059] uppercase">Design</span>
-                                <h3 class="text-3xl font-semibold mt-2 text-white">Design pro konverze</h3>
+                                <h3 class="text-3xl font-semibold mt-2 text-white">Design, který budí důvěru</h3>
                             </div>
                             <div class="flex justify-between items-end">
                                 <div class="text-gray-400 max-w-md">
-                                    Navrhujeme intuitivní cesty, které návštěvníka hladce provedou od prvního kliknutí až k objednávce.
+                                    Prémiový vizuál a typografie, které zvedají důvěryhodnost. Navigace a sekce poskládané tak, aby se lidé rychle zorientovali a udělali další krok.
                                 </div>
                                 <button class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition">
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -503,22 +550,24 @@
         <!-- 5. PRICING -->
         <section id="pricing" class="py-32 bg-[#000]">
             <div class="text-center mb-16 px-6">
-                <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4">Investice do růstu.</h2>
-                <p class="text-gray-400">Transparentní ceny. Žádné skryté poplatky.</p>
+                <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4">Investice do profesionálního dojmu.</h2>
+                <p class="text-gray-400">Transparentně. S jasným rozsahem. Bez slibů zázraků.</p>
             </div>
 
             <div class="pricing-grid">
                 <!-- Card 1 -->
                 <div class="pricing-card">
                     <h3 class="text-xl font-bold text-white mb-2">Start</h3>
-                    <div class="text-4xl font-bold text-[#C5A059] mb-6">15 000 <span class="text-lg text-gray-500">Kč</span></div>
-                    <p class="text-gray-400 text-sm mb-8">Pro živnostníky, kteří chtějí okamžitě zvýšit profesionalitu.</p>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-2">15 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-xs text-gray-500 mb-6 font-medium uppercase tracking-wide">Pro ty, kteří chtějí rychle vypadat profesionálně.</p>
+                    <p class="text-gray-400 text-sm mb-8">Pro živnostníky a malé firmy. Jednostránkový web se SEO základem a měřením.</p>
                     <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Jednostránkový web</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Jednostránkový web (do 6 sekcí)</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Optimalizace pro mobily</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO (on-page)</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Napojení na GA4 + Search Console</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat</a>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat Start</a>
                 </div>
 
                 <!-- Card 2 -->
@@ -526,27 +575,100 @@
                     <div class="absolute top-4 right-8 bg-[#C5A059] text-black text-[10px] font-bold px-3 py-1 rounded-full tracking-widest">NEJOBLÍBENĚJŠÍ</div>
                     <h3 class="text-2xl font-bold text-white mb-2 mt-2">Partnerství</h3>
                     <div class="text-5xl font-bold text-[#C5A059] mb-6">1 500 <span class="text-lg text-gray-500">Kč/měs</span></div>
-                    <p class="text-gray-300 text-sm mb-8">Pronájem webu. Vše v ceně, bez velkých počátečních nákladů.</p>
+                    <p class="text-gray-300 text-sm mb-4">Web na pronájem. Ideální, když chcete web bez velkého vstupu a zároveň ho mít průběžně v dobré kondici.</p>
+                    
+                    <!-- Disclaimer -->
+                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 mb-6">
+                        <p class="text-[11px] text-gray-400 leading-tight">
+                            <span class="text-[#C5A059] font-bold">Upozornění:</span> Neobsahuje reklamu ani garanci zakázek – obsahuje web, provoz a základní SEO.
+                        </p>
+                    </div>
+
                     <ul class="space-y-4 mb-8 text-sm text-white font-medium">
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupních poplatků</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Hosting v ceně</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Pravidelné aktualizace</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Technická podpora</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupních nákladů</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Hosting + SSL v ceně</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Technická správa a aktualizace</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní on-page SEO + měření</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> 1× měsíčně drobná úprava (do 20 min)</li>
+                        <li class="flex gap-3 text-gray-500 text-xs mt-2 pl-7">Min. spolupráce 12 měsíců</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled rounded-full font-bold">Vybrat</a>
+                    <!-- Added btn-shimmer class here -->
+                    <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled btn-shimmer rounded-full font-bold">Vybrat Partnerství</a>
                 </div>
 
                 <!-- Card 3 -->
                 <div class="pricing-card">
                     <h3 class="text-xl font-bold text-white mb-2">Byznys</h3>
-                    <div class="text-4xl font-bold text-[#C5A059] mb-6">35 000 <span class="text-lg text-gray-500">Kč</span></div>
-                    <p class="text-gray-400 text-sm mb-8">Kompletní digitální stroj na zakázky pro rostoucí firmy.</p>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-2">35 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-xs text-gray-500 mb-6 font-medium uppercase tracking-wide">Pro rostoucí firmy, které chtějí víc než vizitku.</p>
+                    <p class="text-gray-400 text-sm mb-8">Kompletní web s promyšlenou strukturou, texty a prvky, které podporují poptávky.</p>
                     <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web do 5 sekcí</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Animace na míru</li>
-                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Tvorba textů</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web do 5 podstránek / sekcí</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Návrh struktury + konverzní prvky</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Texty připravené pro web</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> SEO základ + měření</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat</a>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat Byznys</a>
+                </div>
+            </div>
+
+            <!-- MINI FAQ SECTION -->
+            <div class="max-w-3xl mx-auto mt-24 px-6">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">Časté otázky</h3>
+                <div class="space-y-4">
+                    
+                    <!-- FAQ Item 1 -->
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Garantujete zakázky?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Negarantujeme. Web je základ. Výsledky závisí na nabídce, konkurenci a návštěvnosti (SEO/reklama). Dodáme ale web, který je na růst připravený.
+                        </div>
+                    </details>
+
+                    <!-- FAQ Item 2 -->
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Za jak dlouho budete hotovi?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Typicky 7–14 dní od dodání podkladů a schválení struktury.
+                        </div>
+                    </details>
+
+                    <!-- FAQ Item 3 -->
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Co je součástí partnerství za 1 500 Kč/měs?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Web, provoz, technická správa, SEO základ, měření a drobná měsíční úprava.
+                        </div>
+                    </details>
+
+                    <!-- FAQ Item 4 -->
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Co není v ceně?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Placená reklama, rozsáhlý copywriting bez limitu, velké redesigny a dlouhé úpravy obsahu.
+                        </div>
+                    </details>
+
                 </div>
             </div>
         </section>
@@ -560,34 +682,54 @@
                 </div>
                 
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit něco velkého.</h2>
-                    <p class="text-gray-400">Ozvěte se nám. Do 24 hodin pošleme návrh strategie.</p>
+                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit web, který bude působit jistě.</h2>
+                    <p class="text-gray-400">Napište nám pár informací. Do 24 hodin se ozveme s návrhem dalšího postupu.</p>
                 </div>
 
                 <form class="space-y-6">
                     <div>
-                        <input type="text" placeholder="Jméno" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="text" placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <input type="email" placeholder="Email" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="email" placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <textarea rows="4" placeholder="O čem budeme mluvit?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
+                        <textarea rows="4" placeholder="Co děláte a co od webu očekáváte? (město, služby, cílový zákazník)" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
                     <!-- CTA TLAČÍTKO V KONTAKTU - STEJNÉ JAKO V HERO -->
-                    <button class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
-                        Odeslat nezávaznou poptávku
-                    </button>
+                    <div>
+                        <button class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
+                            Odeslat nezávaznou poptávku
+                        </button>
+                        <p class="text-xs text-gray-500 mt-4 text-center">Odpovídáme do 1 pracovního dne. Bez spamu.</p>
+                    </div>
                 </form>
             </div>
         </section>
 
-        <footer class="py-20 text-xs text-gray-500 border-t border-white/10 bg-[#000]">
-            <div class="max-w-[1260px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p>Copyright © 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
-                <div class="flex gap-6">
-                    <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+        <footer class="py-12 border-t border-white/10 bg-[#000] text-sm">
+            <div class="max-w-[1260px] mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-2 text-gray-400">
+                    <a href="tel:+420778511166" class="hover:text-[#C5A059] transition-colors">+420 778 511 166</a>
+                    <a href="mailto:kontakt@m2digitalagency.cz" class="hover:text-[#C5A059] transition-colors">kontakt@m2digitalagency.cz</a>
+                </div>
+
+                <!-- Legal Links -->
+                <div class="flex gap-6 text-gray-500">
+                    <a href="#" class="hover:text-white transition">Cookies</a>
+                    <a href="#" class="hover:text-white transition">Ochrana osobních údajů</a>
+                    <a href="#kontakt" class="hover:text-white transition">Kontakt</a>
+                </div>
+
+                <!-- Socials & Copyright -->
+                <div class="flex flex-col items-end gap-4">
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="text-gray-500 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="text-gray-500 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    </div>
+                    <p class="text-xs text-gray-600">© 2026 M² Digital Agency.</p>
                 </div>
             </div>
         </footer>
@@ -605,26 +747,52 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // 2. VIDEO SCROLL LOGIC
+        // 2. VIDEO SCROLL LOGIC - SCALING EFFECT
         const videoSection = document.querySelector('.scroll-video-container');
+        const videoWrapper = document.getElementById('video-wrapper');
         const overlay1 = document.getElementById('overlay-1');
         const overlay2 = document.getElementById('overlay-2');
         
-        if(videoSection) {
+        if(videoSection && videoWrapper) {
             window.addEventListener('scroll', () => {
                 const rect = videoSection.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
                 const sectionHeight = videoSection.offsetHeight;
                 
-                // Only animate text based on scroll, let video play normally
+                // Logic: Video starts small, scales to full screen
+                // rect.top is 0 when the sticky section hits the top
                 if(rect.top <= 0 && rect.bottom >= 0) {
+                    // Normalize progress from 0 (start) to 1 (end of section)
                     const progress = Math.abs(rect.top) / (sectionHeight - windowHeight);
                     
+                    // Scaling: Start at 0.7, grow to 1.0 within first 40% of scroll
+                    let scale = 0.7 + (progress * 1.5); 
+                    if(scale > 1) scale = 1;
+                    
+                    let width = 70 + (progress * 100);
+                    if(width > 100) width = 100;
+                    
+                    let height = 70 + (progress * 100);
+                    if(height > 100) height = 100;
+
+                    let radius = 40 - (progress * 100);
+                    if(radius < 0) radius = 0;
+
+                    videoWrapper.style.width = `${width}%`;
+                    videoWrapper.style.height = `${height}%`;
+                    videoWrapper.style.borderRadius = `${radius}px`;
+
+                    // Overlays
                     if(progress > 0.2 && progress < 0.45) overlay1.classList.add('visible');
                     else overlay1.classList.remove('visible');
 
                     if(progress > 0.55 && progress < 0.8) overlay2.classList.add('visible');
                     else overlay2.classList.remove('visible');
+                } else if(rect.top > 0) {
+                    // Reset if scrolled back up
+                    videoWrapper.style.width = '70%';
+                    videoWrapper.style.height = '70%';
+                    videoWrapper.style.borderRadius = '40px';
                 }
             });
         }
