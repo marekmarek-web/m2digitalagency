@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M² Digital Agency | Budoucnost patří odvážným</title>
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/M2_logo.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -345,7 +345,7 @@
     <nav class="m2-nav">
         <!-- LOGO IMAGE -->
         <a href="#" class="block z-50 relative">
-            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/M2_logo_cele.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
+            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-28 w-auto invert">
         </a>
         
         <!-- CENTER LINKS (DESKTOP - RESTORED EFFECT) -->
@@ -676,13 +676,13 @@
         <!-- CONTACT -->
         <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
             <div class="max-w-xl mx-auto px-6">
-                <!-- LOGO NAD FORMULÁŘEM (Zvětšeno na h-40 = cca 160px, s invert filtrem) -->
+                <!-- LOGO NAD FORMULÁŘEM -->
                 <div class="flex justify-center mb-8">
                     <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-40 opacity-80 invert">
                 </div>
                 
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit web, který bude působit jistě.</h2>
+                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit něco velkého.</h2>
                     <p class="text-gray-400">Napište nám pár informací. Do 24 hodin se ozveme s návrhem dalšího postupu.</p>
                 </div>
 
@@ -707,29 +707,71 @@
             </div>
         </section>
 
-        <footer class="py-12 border-t border-white/10 bg-[#000] text-sm">
-            <div class="max-w-[1260px] mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-                
-                <!-- Contact Info -->
-                <div class="flex flex-col gap-2 text-gray-400">
-                    <a href="tel:+420778511166" class="hover:text-[#C5A059] transition-colors">+420 778 511 166</a>
-                    <a href="mailto:kontakt@m2digitalagency.cz" class="hover:text-[#C5A059] transition-colors">kontakt@m2digitalagency.cz</a>
-                </div>
-
-                <!-- Legal Links -->
-                <div class="flex gap-6 text-gray-500">
-                    <a href="#" class="hover:text-white transition">Cookies</a>
-                    <a href="#" class="hover:text-white transition">Ochrana osobních údajů</a>
-                    <a href="#kontakt" class="hover:text-white transition">Kontakt</a>
-                </div>
-
-                <!-- Socials & Copyright -->
-                <div class="flex flex-col items-end gap-4">
-                    <div class="flex gap-4">
-                        <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="text-gray-500 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                        <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="text-gray-500 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+        <!-- PREMIUM FOOTER -->
+        <footer class="bg-[#020202] border-t border-white/10 pt-20 pb-10">
+            <div class="max-w-[1260px] mx-auto px-6">
+                <div class="grid md:grid-cols-4 gap-12 mb-16">
+                    
+                    <!-- Brand Column -->
+                    <div class="col-span-1 md:col-span-2">
+                        <a href="#" class="block mb-6">
+                            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-12 opacity-90 invert">
+                        </a>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-6">
+                            Digitální agentura zaměřená na výsledky. Tvoříme weby a strategie, které posouvají vaše podnikání vpřed.
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C5A059] hover:text-black text-gray-400 transition-all duration-300">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C5A059] hover:text-black text-gray-400 transition-all duration-300">
+                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-xs text-gray-600">© 2026 M² Digital Agency.</p>
+
+                    <!-- Menu Column -->
+                    <div>
+                        <h4 class="text-white font-bold mb-6 text-lg">Navigace</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="#" class="hover:text-[#C5A059] transition-colors inline-block">Domů</a></li>
+                            <li><a href="#sluzby" class="hover:text-[#C5A059] transition-colors inline-block">Služby</a></li>
+                            <li><a href="#prace" class="hover:text-[#C5A059] transition-colors inline-block">Portfolio</a></li>
+                            <li><a href="#pricing" class="hover:text-[#C5A059] transition-colors inline-block">Investice</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Column -->
+                    <div>
+                        <h4 class="text-white font-bold mb-6 text-lg">Kontakt</h4>
+                        <ul class="space-y-4 text-sm text-gray-400">
+                            <li>
+                                <a href="mailto:kontakt@m2digitalagency.cz" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
+                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                        <i data-lucide="mail" class="w-4 h-4 text-[#C5A059]"></i>
+                                    </div>
+                                    kontakt@m2digitalagency.cz
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+420778511166" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
+                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                        <i data-lucide="phone" class="w-4 h-4 text-[#C5A059]"></i>
+                                    </div>
+                                    +420 778 511 166
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Copyright Row -->
+                <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+                    <p>&copy; 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-gray-400 transition-colors">Ochrana osobních údajů</a>
+                        <a href="#" class="hover:text-gray-400 transition-colors">Cookies</a>
+                    </div>
                 </div>
             </div>
         </footer>
