@@ -165,15 +165,35 @@
 
     <!-- NAV -->
     <nav class="m2-nav">
+        <!-- LOGO IMAGE (Změněno na logo_M.png a h-16) -->
         <a href="index.html" class="block z-50 relative">
             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-16 w-auto invert">
         </a>
         
         <div class="nav-center hidden lg:flex">
-            <a href="index.html#sluzby" class="nav-link">Expertíza</a>
-            <a href="index.html#prace" class="nav-link">Projekty</a>
-            <a href="index.html#pricing" class="nav-link" style="color: var(--gold);">Investice</a>
+            <a href="https://www.m2digitalagency.cz/#sluzby" class="nav-link">Expertíza</a>
+            <a href="https://www.m2digitalagency.cz/#prace" class="nav-link">Projekty</a>
+            <a href="https://www.m2digitalagency.cz/#pricing" class="nav-link" style="color: var(--gold);">Investice</a>
         </div>
+
+        <a href="#kontakt" class="nav-cta hidden lg:block">Nezávazná konzultace</a>
+
+        <button id="menu-btn" class="lg:hidden z-50 text-white p-2">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu">
+        <a href="https://www.m2digitalagency.cz/" class="mobile-link hover:text-gold transition">Domů</a>
+        <a href="https://www.m2digitalagency.cz/#sluzby" class="mobile-link hover:text-gold transition">Expertíza</a>
+        <a href="#cenik" class="mobile-link hover:text-gold transition text-gold">Ceník</a>
+        <a href="#kontakt" class="mobile-link hover:text-gold transition">Kontakt</a>
+        <div class="mt-8 flex gap-6 mobile-link">
+            <a href="https://www.instagram.com/m2digitalagencycz" target="_blank"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+            <a href="https://www.facebook.com/m2digitalagencycz" target="_blank"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+        </div>
+    </div>
 
         <a href="#kontakt" class="nav-cta hidden lg:block">Nezávazná konzultace</a>
 
@@ -497,31 +517,34 @@
         <!-- CONTACT -->
         <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
             <div class="max-w-xl mx-auto px-6">
-                <!-- LOGO NAD FORMULÁŘEM -->
+                <!-- LOGO -->
                 <div class="flex justify-center mb-8">
-                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-30 opacity-80 invert">
+                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-40 opacity-80 invert">
                 </div>
                 
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit web, který bude působit jistě.</h2>
-                    <p class="text-gray-400">Napište nám pár informací. Do 24 hodin se ozveme s návrhem dalšího postupu.</p>
+                    <h2 class="text-3xl font-bold text-white mb-4">Máte zájem o web?</h2>
+                    <p class="text-gray-400">Napište nám. Nezávazně probereme vaše možnosti a doporučíme nejlepší řešení.</p>
                 </div>
 
-                <form class="space-y-6">
+                <form id="contact-form" class="space-y-6">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Poptávka: Tvorba webu (Ceník)">
+
                     <div>
-                        <input type="text" placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="text" name="name" required placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <input type="email" placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="email" name="email" required placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <textarea rows="4" placeholder="Co děláte a co od webu očekáváte? (město, služby, cílový zákazník)" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
+                        <textarea name="message" required rows="4" placeholder="O čem je vaše podnikání?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
                     <div>
-                        <button class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
+                        <button type="submit" class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
                             Odeslat nezávaznou poptávku
                         </button>
-                        <p class="text-xs text-gray-500 mt-4 text-center">Odpovídáme do 1 pracovního dne. Bez spamu.</p>
+                        <p class="text-xs text-gray-500 mt-4 text-center">Odpovídáme do 24 hodin.</p>
                     </div>
                 </form>
             </div>
@@ -534,8 +557,9 @@
                     
                     <!-- Brand Column -->
                     <div class="col-span-1 md:col-span-2">
+                        <!-- LOGO FOOTER (Změněno na h-16) -->
                         <a href="index.html" class="block mb-6">
-                            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-16 opacity-90 invert">
+                            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-16 opacity-90 invert">
                         </a>
                         <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-6">
                             Digitální agentura zaměřená na výsledky. Tvoříme weby a strategie, které posouvají vaše podnikání vpřed.
@@ -554,9 +578,9 @@
                     <div>
                         <h4 class="text-white font-bold mb-6 text-lg">Navigace</h4>
                         <ul class="space-y-3 text-sm text-gray-400">
-                            <li><a href="index.html" class="hover:text-[#C5A059] transition-colors inline-block">Domů</a></li>
-                            <li><a href="index.html#sluzby" class="hover:text-[#C5A059] transition-colors inline-block">Služby</a></li>
-                            <li><a href="index.html#prace" class="hover:text-[#C5A059] transition-colors inline-block">Portfolio</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/" class="hover:text-[#C5A059] transition-colors inline-block">Domů</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/#sluzby" class="hover:text-[#C5A059] transition-colors inline-block">Služby</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/#prace" class="hover:text-[#C5A059] transition-colors inline-block">Portfolio</a></li>
                             <li><a href="#cenik" class="hover:text-[#C5A059] transition-colors inline-block">Ceník webů</a></li>
                         </ul>
                     </div>
@@ -589,8 +613,8 @@
                 <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
                     <p>&copy; 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
                     <div class="flex gap-6">
-                        <a href="#" class="hover:text-gray-400 transition-colors">Ochrana osobních údajů</a>
-                        <a href="#" class="hover:text-gray-400 transition-colors">Cookies</a>
+                        <a href="https://www.m2digitalagency.cz/gdpr" class="hover:text-gray-400 transition-colors">Ochrana osobních údajů</a>
+                        <a href="https://www.m2digitalagency.cz/cookies" class="hover:text-gray-400 transition-colors">Cookies</a>
                     </div>
                 </div>
             </div>
@@ -613,34 +637,50 @@
             menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
             mobileLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.remove('open'); }); });
         }
+
+        // FORM SUBMISSION (FETCH)
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const button = contactForm.querySelector('button[type="submit"]');
+                const originalText = button.innerText;
+
+                button.disabled = true;
+                button.innerText = "Odesílám...";
+
+                const formData = new FormData(contactForm);
+                
+                try {
+                    const response = await fetch("https://formsubmit.co/ajax/kontakt@m2digitalagency.cz", {
+                        method: "POST",
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(Object.fromEntries(formData))
+                    });
+
+                    if (response.ok) {
+                        button.innerText = "Úspěšně odesláno!";
+                        button.style.backgroundColor = "#4ade80"; // Green hint
+                        contactForm.reset();
+                        setTimeout(() => {
+                            button.disabled = false;
+                            button.innerText = originalText;
+                            button.style.backgroundColor = ""; // Reset color
+                        }, 5000);
+                    } else {
+                        button.innerText = "Chyba. Zkuste to prosím znovu.";
+                        button.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    button.innerText = "Chyba připojení.";
+                    button.disabled = false;
+                }
+            });
+        }
     </script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"FAQPage",
-  "mainEntity":[
-    {
-      "@type":"Question",
-      "name":"Garantujete zakázky?",
-      "acceptedAnswer":{"@type":"Answer","text":"Negarantujeme. Web je základ – výsledky ovlivňuje nabídka, konkurence a návštěvnost (SEO/reklama). My dodáme technicky správný a důvěryhodný web připravený na růst."}
-    },
-    {
-      "@type":"Question",
-      "name":"Jak rychle můžete web spustit?",
-      "acceptedAnswer":{"@type":"Answer","text":"Obvykle 7–14 dní od dodání podkladů a schválení struktury."}
-    },
-    {
-      "@type":"Question",
-      "name":"Co když nemám texty nebo fotky?",
-      "acceptedAnswer":{"@type":"Answer","text":"Navrhneme strukturu a připravíme texty v rozsahu balíčku. Fotky lze dodat vlastní, nebo použít kvalitní stock."}
-    },
-    {
-      "@type":"Question",
-      "name":"Co přesně je SEO základ?",
-      "acceptedAnswer":{"@type":"Answer","text":"Technické a on-page nastavení: struktura nadpisů, title/meta, indexace, sitemap, rychlost, základní měření (GA4/GSC)."}
-    }
-  ]
-}
-</script>
 </body>
 </html>
