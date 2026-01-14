@@ -591,7 +591,7 @@
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO (on-page)</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Napojení na GA4 + Search Console</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat Start</a>
+                    <button onclick="openModal('Start')" class="block w-full py-3 text-center btn-shimmer">Vybrat Start</button>
                 </div>
 
                 <!-- Karta 2: Partnerství (Zvýrazněná) -->
@@ -617,7 +617,7 @@
                         <li class="flex gap-3 text-gray-500 text-xs mt-2 pl-7">Min. spolupráce 12 měsíců</li>
                     </ul>
                     
-                    <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled btn-shimmer rounded-full font-bold">Vybrat Partnerství</a>
+                    <button onclick="openModal('Partnerství')" class="block w-full py-4 text-center btn-shimmer-filled btn-shimmer rounded-full font-bold">Vybrat Partnerství</button>
                 </div>
 
                 <!-- Karta 3: Byznys -->
@@ -632,7 +632,7 @@
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Texty připravené pro web</li>
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> SEO základ + měření</li>
                     </ul>
-                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat Byznys</a>
+                    <button onclick="openModal('Byznys')" class="block w-full py-3 text-center btn-shimmer">Vybrat Byznys</button>
                 </div>
             </div>
 
@@ -810,11 +810,115 @@
             </div>
         </footer>
 
+        <!-- MODÁLNÍ OKNO PRO OBJEDNÁVKU BALÍČKU -->
+        <div id="order-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center px-4">
+            <!-- Pozadí (backdrop) -->
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop" onclick="closeModal()"></div>
+            
+            <!-- Obsah modálu -->
+            <div class="relative bg-[#151516] border border-[#C5A059]/30 rounded-3xl p-8 max-w-lg w-full transform scale-95 opacity-0 transition-all duration-300 shadow-2xl shadow-[#C5A059]/10" id="modal-content">
+                <!-- Zavírací tlačítko -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <!-- Hlavička -->
+                <div class="text-center mb-8">
+                    <span class="text-[#C5A059] text-xs font-bold uppercase tracking-widest mb-2 block">Nezávazná poptávka</span>
+                    <h3 class="text-2xl font-bold text-white">Balíček <span id="modal-package-name" class="text-[#C5A059]">Start</span></h3>
+                    <p class="text-gray-400 text-sm mt-2">Vyplňte údaje a my se vám ozveme s dalším postupem.</p>
+                </div>
+
+                <!-- Formulář -->
+                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Děkujeme za poptávku. Brzy se vám ozveme.'); closeModal();">
+                    <input type="hidden" id="package-input" name="package">
+                    
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase font-semibold mb-1 ml-2">Jméno a příjmení</label>
+                        <input type="text" required class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase font-semibold mb-1 ml-2">E-mail</label>
+                        <input type="email" required class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase font-semibold mb-1 ml-2">Telefon (nepovinné)</label>
+                        <input type="tel" class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase font-semibold mb-1 ml-2">Současný web (pokud máte)</label>
+                        <input type="url" placeholder="https://" class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase font-semibold mb-1 ml-2">Poznámka (nepovinné)</label>
+                        <textarea rows="2" class="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black shadow-[0_0_20px_rgba(197,160,89,0.3)]">
+                            Odeslat nezávaznou poptávku
+                        </button>
+                    </div>
+
+                    <p class="text-[10px] text-gray-600 text-center mt-4">
+                        Odesláním souhlasíte se zpracováním osobních údajů a <a href="http://m2digitalagency.cz/obchodni-podminky" target="_blank" class="text-gray-500 underline hover:text-[#C5A059]">obchodními podmínkami</a>.
+                    </p>
+                </form>
+            </div>
+        </div>
+
     </main>
 
     <script>
         // Inicializace ikonek
         lucide.createIcons();
+
+        // --- MODÁLNÍ OKNO LOGIKA ---
+        const modal = document.getElementById('order-modal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContent = document.getElementById('modal-content');
+        const modalPackageName = document.getElementById('modal-package-name');
+        const packageInput = document.getElementById('package-input');
+
+        function openModal(packageName) {
+            // Nastavení textu a hodnoty
+            modalPackageName.textContent = packageName;
+            packageInput.value = packageName;
+
+            // Zobrazení modálu
+            modal.classList.remove('hidden');
+            
+            // Animace (malé zpoždění pro CSS transition)
+            setTimeout(() => {
+                modalBackdrop.classList.remove('opacity-0');
+                modalContent.classList.remove('opacity-0', 'scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            // Animace zmizení
+            modalBackdrop.classList.add('opacity-0');
+            modalContent.classList.add('opacity-0', 'scale-95');
+            modalContent.classList.remove('scale-100');
+
+            // Skrytí po animaci (300ms odpovídá duration-300 v CSS)
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Zavření modálu klávesou ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
 
         // Animace příletu prvků při skrolování (Fade in)
         const observer = new IntersectionObserver((entries) => {
