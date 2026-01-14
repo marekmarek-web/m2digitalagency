@@ -1,1 +1,582 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M² Development | Architektura pro život</title>
+    <meta name="description" content="Development, správa a investice do nemovitostí. Projekty, které dávají smysl.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ikony Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fonts: Playfair Display & Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            --bg-body: #F4F4F2; /* Stone */
+            --bg-dark: #121212;
+            --text-main: #1A1A1A;
+            --text-light: #F4F4F2;
+            --accent: #A0522D; /* Copper/Sienna */
+            --cursor-size: 20px;
+        }
+        
+        body { 
+            font-family: 'Manrope', sans-serif; 
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor for custom one */
+        }
+
+        /* --- Custom Cursor --- */
+        #cursor {
+            position: fixed; top: 0; left: 0;
+            width: var(--cursor-size); height: var(--cursor-size);
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        #cursor.hovered {
+            width: 50px; height: 50px;
+            background-color: rgba(160, 82, 45, 0.1);
+            border-color: var(--accent);
+        }
+        #cursor.play-cursor {
+            width: 80px; height: 80px;
+            background-color: var(--accent);
+            border-color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            mix-blend-mode: normal; /* Normal blend mode for readability */
+        }
+        #cursor.play-cursor::after {
+            content: 'PLAY'; color: white; font-size: 10px; letter-spacing: 2px; font-weight: bold;
+        }
+
+        @media (hover: none) {
+            #cursor { display: none; }
+            body { cursor: auto; }
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4, .display-font { font-family: 'Playfair Display', serif; }
+
+        /* --- Grain Overlay --- */
+        .grain-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; opacity: 0.4;
+        }
+
+        /* --- Project Card --- */
+        .project-card .video-container {
+            opacity: 0; transition: opacity 0.6s ease-in-out;
+            position: absolute; inset: 0; z-index: 10;
+        }
+        /* Removed automatic hover opacity to handle via JS class for sync */
+        .project-card.playing .video-container { opacity: 1; }
+        .project-card:hover .static-img { transform: scale(1.03); }
+        .static-img { transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 1; }
+
+        /* --- Persona Toggle Switch --- */
+        .persona-btn {
+            position: relative; padding-bottom: 2px;
+            color: rgba(255,255,255,0.5); transition: color 0.3s;
+        }
+        .persona-btn.active { color: white; }
+        .persona-btn::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+            background: white; transition: width 0.3s ease;
+        }
+        .persona-btn.active::after { width: 100%; }
+
+        /* --- Scrollytelling Curtain --- */
+        .scrolly-container { position: relative; }
+        .scrolly-sticky {
+            position: sticky; top: 0; height: 100vh;
+            display: flex; align-items: center;
+        }
+        .step-content {
+            opacity: 0.2; transition: all 0.6s ease; transform: translateY(20px); border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem;
+        }
+        .step-content.active {
+            opacity: 1; transform: translateY(0); border-left: 2px solid var(--accent);
+        }
+
+        /* --- Signature Animation --- */
+        .signature-path {
+            stroke-dasharray: 1000; stroke-dashoffset: 1000;
+            animation: sign 3s ease forwards; animation-play-state: paused;
+        }
+        .signature-container:hover .signature-path { animation-play-state: running; }
+        @keyframes sign { to { stroke-dashoffset: 0; } }
+
+        /* --- Navigation --- */
+        .nav-link { 
+            position: relative; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; font-weight: 600;
+        }
+        .nav-link::before {
+            content: ''; position: absolute; top: 50%; left: -15px; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease;
+        }
+        .nav-link:hover::before { width: 10px; }
+        .nav-link:hover { color: var(--accent); }
+
+        /* --- Fade In Up Animation --- */
+        .reveal-up {
+            opacity: 0; transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Reduced Motion --- */
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-smooth { scroll-behavior: auto; }
+            *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-[#A0522D] selection:text-white">
+
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor"></div>
+
+    <!-- GRAIN OVERLAY -->
+    <div class="grain-overlay"></div>
+
+    <!-- NAVIGATION -->
+    <header class="fixed top-0 w-full z-40 transition-all duration-300 bg-[#F4F4F2]/90 backdrop-blur-md border-b border-black/5" id="main-header">
+        <div class="max-w-[1600px] mx-auto px-6 h-24 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-none-target group" onclick="window.scrollTo(0,0)" data-hover-class="hovered">
+                <div class="w-10 h-10 bg-[#1A1A1A] text-[#F4F4F2] flex items-center justify-center rounded-sm">
+                    <span class="display-font font-bold text-xl italic">M²</span>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-bold tracking-wide uppercase text-sm font-manrope">Development</span>
+                    <span class="text-[10px] text-[#A0522D] uppercase tracking-widest font-manrope">Real Estate Group</span>
+                </div>
+            </div>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden lg:flex gap-12">
+                <a href="#home" class="nav-link cursor-none-target" data-hover-class="hovered">Domů</a>
+                <a href="#projects" class="nav-link cursor-none-target" data-hover-class="hovered">Projekty</a>
+                <a href="#process" class="nav-link cursor-none-target" data-hover-class="hovered">Proces</a>
+                <a href="#about" class="nav-link cursor-none-target" data-hover-class="hovered">O nás</a>
+                <a href="#contact" class="nav-link text-[#A0522D] cursor-none-target" data-hover-class="hovered">Kontakt</a>
+            </nav>
+
+            <!-- Mobile Trigger -->
+            <button class="lg:hidden p-2 cursor-none-target" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" data-hover-class="hovered">
+                <i data-lucide="menu" class="w-6 h-6 text-[#1A1A1A]"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#F4F4F2] z-50 hidden flex-col justify-center items-center space-y-8 p-6">
+            <button onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="absolute top-8 right-8">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <a href="#home" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="display-font text-4xl text-[#1A1A1A]">Domů</a>
+            <a href="#projects" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="display-font text-4xl text-[#1A1A1A]">Projekty</a>
+            <a href="#process" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="display-font text-4xl text-[#1A1A1A]">Proces</a>
+            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="display-font text-4xl text-[#A0522D]">Kontakt</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (Interactive) -->
+    <section id="home" class="relative h-screen w-full overflow-hidden bg-[#121212] pt-24 text-white">
+        <!-- Interactive Persona Toggle -->
+        <div class="absolute top-32 left-6 md:left-12 z-20 flex gap-6 text-sm uppercase tracking-widest font-bold">
+            <button class="persona-btn active cursor-none-target" onclick="setPersona('developer')" data-hover-class="hovered">Developer</button>
+            <button class="persona-btn cursor-none-target" onclick="setPersona('investor')" data-hover-class="hovered">Investor</button>
+            <button class="persona-btn cursor-none-target" onclick="setPersona('owner')" data-hover-class="hovered">Majitel</button>
+        </div>
+
+        <div class="h-full w-full relative">
+            <!-- Video Background -->
+            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <source src="https://videos.pexels.com/video-files/5045617/5045617-hd_1920_1080_30fps.mp4" type="video/mp4">
+            </video>
+            
+            <div class="absolute inset-0 bg-gradient-to-r from-[#121212] via-[#121212]/50 to-transparent w-full md:w-3/4"></div>
+
+            <div class="relative z-10 h-full max-w-[1600px] mx-auto px-6 flex flex-col justify-center">
+                <div class="max-w-3xl transition-all duration-500" id="hero-content">
+                    <span class="inline-block py-1 px-3 border border-white/20 rounded-full text-white/80 text-[10px] font-bold tracking-[0.2em] uppercase mb-8">
+                        Est. 2010 • Prague
+                    </span>
+                    <h1 class="display-font text-6xl md:text-8xl leading-[1] mb-8" id="hero-title">
+                        Prostory,<br>které definují <br><span class="text-[#A0522D] italic">budoucnost.</span>
+                    </h1>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-lg mb-12 border-l-2 border-[#A0522D] pl-6 font-light" id="hero-desc">
+                        Vyhledáváme příležitosti, připravujeme projekty a realizujeme nemovitosti s důrazem na kvalitu, dlouhodobost a transparentní proces.
+                    </p>
+                    <div class="flex items-center gap-6">
+                        <a href="#projects" class="h-14 px-8 bg-white text-black flex items-center gap-3 rounded-sm hover:bg-[#A0522D] hover:text-white transition-colors duration-300 uppercase tracking-wider text-xs font-bold cursor-none-target" data-hover-class="hovered" id="hero-cta-1">
+                            Naše projekty
+                        </a>
+                        <a href="#contact" class="h-14 px-8 border border-white/30 text-white flex items-center rounded-sm hover:border-white transition-colors duration-300 uppercase tracking-wider text-xs font-bold cursor-none-target" data-hover-class="hovered">
+                            Kontaktovat
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Hint -->
+            <div class="absolute bottom-8 left-6 md:left-12 flex items-center gap-4 animate-pulse text-white/50">
+                <span class="text-[10px] uppercase tracking-widest">Scroll</span>
+                <div class="h-[1px] w-12 bg-white/50"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROOF / NUMBERS (Clean) -->
+    <div class="bg-[#F4F4F2] border-b border-[#A0522D]/20 py-20 px-6">
+        <div class="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div>
+                <span class="display-font text-4xl md:text-5xl text-[#1A1A1A] block mb-2">15+</span>
+                <span class="text-xs uppercase tracking-widest text-[#666666]">Let zkušeností</span>
+            </div>
+            <div>
+                <span class="display-font text-4xl md:text-5xl text-[#1A1A1A] block mb-2">4.5mld</span>
+                <span class="text-xs uppercase tracking-widest text-[#666666]">Hodnota portfolia</span>
+            </div>
+            <div>
+                <span class="display-font text-4xl md:text-5xl text-[#1A1A1A] block mb-2">24</span>
+                <span class="text-xs uppercase tracking-widest text-[#666666]">Realizovaných projektů</span>
+            </div>
+            <div>
+                <span class="display-font text-4xl md:text-5xl text-[#1A1A1A] block mb-2">100%</span>
+                <span class="text-xs uppercase tracking-widest text-[#666666]">Obsazenost</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECTS (Hover -> Video + Play Cursor) -->
+    <section id="projects" class="bg-white py-32">
+        <div class="max-w-[1600px] mx-auto px-6">
+            <div class="flex justify-between items-end mb-20">
+                <div>
+                    <span class="text-[#A0522D] font-bold uppercase tracking-widest text-xs mb-4 block">Portfolio</span>
+                    <h2 class="display-font text-5xl md:text-6xl text-[#1A1A1A]">Vybrané realizace</h2>
+                </div>
+            </div>
+
+            <div class="space-y-32">
+                <!-- Project 1 -->
+                <div class="group project-card grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative overflow-hidden aspect-[4/3] rounded-sm cursor-none-target" data-hover-class="play-cursor">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop" class="static-img w-full h-full object-cover" alt="Rezidence Riverside">
+                        <div class="video-container">
+                            <video muted loop playsinline poster="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover">
+                                <source src="https://videos.pexels.com/video-files/7515865/7515865-hd_1920_1080_30fps.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="lg:pl-12">
+                        <span class="text-[#A0522D] text-xs font-bold uppercase tracking-widest mb-2 block">Rezidenční • Praha</span>
+                        <h3 class="display-font text-5xl mb-6">Rezidence Riverside</h3>
+                        <p class="text-[#666666] leading-relaxed mb-8 max-w-md">Luxusní bydlení přímo na nábřeží Vltavy. Projekt kombinuje výjimečnou architekturu s intimním prostředím.</p>
+                        <div class="grid grid-cols-2 gap-8 mb-10 border-t border-black/5 pt-8">
+                            <div><span class="block text-3xl font-light text-[#1A1A1A] display-font">24</span><span class="text-xs uppercase text-[#999] tracking-widest">Jednotek</span></div>
+                            <div><span class="block text-3xl font-light text-[#1A1A1A] display-font">2024</span><span class="text-xs uppercase text-[#999] tracking-widest">Rok</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group project-card grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="lg:pr-12 order-2 lg:order-1 lg:text-right">
+                        <span class="text-[#A0522D] text-xs font-bold uppercase tracking-widest mb-2 block">Komerční • Brno</span>
+                        <h3 class="display-font text-5xl mb-6">Administrativa Centrum</h3>
+                        <p class="text-[#666666] leading-relaxed mb-8 max-w-md ml-auto">Sídlo budoucnosti. Inteligentní budova s certifikací LEED Platinum.</p>
+                        <div class="grid grid-cols-2 gap-8 mb-10 border-t border-black/5 pt-8 justify-end ml-auto max-w-md">
+                            <div><span class="block text-3xl font-light text-[#1A1A1A] display-font">4.5k</span><span class="text-xs uppercase text-[#999] tracking-widest">m²</span></div>
+                            <div><span class="block text-3xl font-light text-[#1A1A1A] display-font">Q3 25</span><span class="text-xs uppercase text-[#999] tracking-widest">Dokončení</span></div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden aspect-[4/3] rounded-sm order-1 lg:order-2 cursor-none-target" data-hover-class="play-cursor">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" class="static-img w-full h-full object-cover" alt="Kanceláře">
+                        <div class="video-container">
+                            <video muted loop playsinline poster="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover">
+                                <source src="https://videos.pexels.com/video-files/5927697/5927697-hd_1920_1080_30fps.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCROLLYTELLING PROCESS (Curtain Reveal) -->
+    <section id="process" class="bg-[#121212] text-white relative">
+        <div class="scrolly-container h-[400vh]" id="process-wrapper">
+            <div class="scrolly-sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+                
+                <!-- Dynamic Background -->
+                <div class="absolute inset-0 z-0">
+                    <img id="process-bg" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover opacity-20 transition-all duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#121212] via-[#121212]/80 to-transparent"></div>
+                </div>
+
+                <div class="relative z-10 w-full max-w-[1400px] px-6 grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div class="hidden lg:block pt-20">
+                        <span class="text-[#A0522D] font-bold uppercase tracking-widest text-xs mb-4 block">Timeline</span>
+                        <h2 class="display-font text-6xl md:text-8xl leading-tight">Jak tvoříme<br>hodnoty</h2>
+                    </div>
+                    
+                    <div class="space-y-16">
+                        <!-- Step 1 -->
+                        <div class="step-content active" data-bg="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop">
+                            <span class="text-[#A0522D] text-xs font-mono mb-2 block">01</span>
+                            <h3 class="display-font text-3xl mb-4">Analýza a prověření</h3>
+                            <p class="text-gray-400 font-light leading-relaxed">Důkladná due diligence. Právní, technické a ekonomické posouzení každé příležitosti.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="step-content" data-bg="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop">
+                            <span class="text-[#A0522D] text-xs font-mono mb-2 block">02</span>
+                            <h3 class="display-font text-3xl mb-4">Návrh a rozpočet</h3>
+                            <p class="text-gray-400 font-light leading-relaxed">Spolupráce s architekty. Vytvoření proveditelného harmonogramu a transparentního rozpočtu.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="step-content" data-bg="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop">
+                            <span class="text-[#A0522D] text-xs font-mono mb-2 block">03</span>
+                            <h3 class="display-font text-3xl mb-4">Realizace a dohled</h3>
+                            <p class="text-gray-400 font-light leading-relaxed">Řízení stavby s důrazem na detail a kvalitu materiálů. Pravidelný reporting investorům.</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="step-content" data-bg="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop">
+                            <span class="text-[#A0522D] text-xs font-mono mb-2 block">04</span>
+                            <h3 class="display-font text-3xl mb-4">Předání a správa</h3>
+                            <p class="text-gray-400 font-light leading-relaxed">Kolaudací to nekončí. Zajišťujeme efektivní facility management a nájemní vztahy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST / ABOUT (Light) -->
+    <section id="about" class="bg-[#F4F4F2] py-32">
+        <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <span class="text-[#A0522D] font-bold uppercase tracking-widest text-xs mb-4 block">Filozofie</span>
+                <h2 class="display-font text-5xl mb-12 text-[#1A1A1A]">Stavíme na důvěře</h2>
+                <div class="space-y-8">
+                    <div class="flex flex-col gap-2">
+                        <h4 class="font-bold text-lg text-[#1A1A1A]">Dlouhodobost</h4>
+                        <p class="text-sm text-[#666666]">Nestavíme pro rychlý zisk, ale pro trvalou hodnotu.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <h4 class="font-bold text-lg text-[#1A1A1A]">Transparentnost</h4>
+                        <p class="text-sm text-[#666666]">Pravidelný reporting a jasná komunikace v každé fázi.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <h4 class="font-bold text-lg text-[#1A1A1A]">Kvalita</h4>
+                        <p class="text-sm text-[#666666]">Spolupracujeme s top architekty a prověřenými dodavateli.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl relative z-10" alt="Tým">
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="display-font text-4xl text-center mb-16 text-[#1A1A1A]">Otázky & Odpovědi</h2>
+            <div class="space-y-4">
+                <details class="group bg-[#F4F4F2] p-6 cursor-pointer cursor-none-target" data-hover-class="hovered">
+                    <summary class="flex justify-between items-center font-bold text-[#1A1A1A] list-none">
+                        Jak vybíráte projekty?
+                        <i data-lucide="plus" class="w-5 h-5 text-[#A0522D] group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-[#666666] text-sm leading-relaxed">
+                        Zaměřujeme se na lokality s potenciálem růstu a objekty, kterým můžeme přidat hodnotu kvalitní rekonstrukcí nebo novým konceptem využití.
+                    </div>
+                </details>
+                <details class="group bg-[#F4F4F2] p-6 cursor-pointer cursor-none-target" data-hover-class="hovered">
+                    <summary class="flex justify-between items-center font-bold text-[#1A1A1A] list-none">
+                        Děláte i rekonstrukce?
+                        <i data-lucide="plus" class="w-5 h-5 text-[#A0522D] group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-[#666666] text-sm leading-relaxed">
+                        Ano, rekonstrukce historických domů jsou naší vášní. Ctíme genius loci a vracíme budovám jejich původní lesk.
+                    </div>
+                </details>
+                <details class="group bg-[#F4F4F2] p-6 cursor-pointer cursor-none-target" data-hover-class="hovered">
+                    <summary class="flex justify-between items-center font-bold text-[#1A1A1A] list-none">
+                        Jak probíhá spolupráce?
+                        <i data-lucide="plus" class="w-5 h-5 text-[#A0522D] group-open:rotate-45 transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-[#666666] text-sm leading-relaxed">
+                        Vše začíná osobní schůzkou. Pokud jste investor, probereme vaši strategii. Pokud majitel nemovitosti, navrhneme možnosti rozvoje.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT LETTER STYLE -->
+    <section id="contact" class="bg-[#e8e6e1] py-32 text-[#1A1A1A] relative overflow-hidden">
+        <div class="max-w-2xl mx-auto px-6 text-center relative z-10 cursor-none-target signature-container" data-hover-class="hovered">
+            <span class="text-[#A0522D] font-bold uppercase tracking-widest text-xs mb-6 block">Kontakt</span>
+            <h2 class="display-font text-5xl md:text-6xl mb-12">Pozvánka k dialogu</h2>
+            <p class="text-lg text-[#444] mb-12 font-serif italic leading-relaxed">
+                "Věříme, že výjimečné projekty vznikají z výjimečných partnerství. Rádi s vámi probereme vaše vize u kávy v našem showroomu."
+            </p>
+            
+            <div class="space-y-4 mb-16 text-sm tracking-wide font-bold uppercase">
+                <a href="mailto:info@m2development.cz" class="block hover:text-[#A0522D] transition">info@m2development.cz</a>
+                <a href="tel:+420222333444" class="block hover:text-[#A0522D] transition">+420 222 333 444</a>
+                <p>Karolinská 661/4, Praha 8</p>
+            </div>
+
+            <!-- SVG Signature Animation -->
+            <div class="w-48 mx-auto text-[#1A1A1A]">
+               <svg viewBox="0 0 200 100" fill="none" stroke="currentColor" stroke-width="2" class="signature-path">
+                   <path d="M10,80 Q50,10 80,80 T150,50" />
+                   <path d="M20,60 Q60,90 100,60" />
+               </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#1A1A1A] text-white py-12 border-t border-white/10">
+        <div class="max-w-[1600px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <p>&copy; 2026 M² Development.</p>
+            <p>Design by <a href="https://www.m2digitalagency.cz/" class="text-white hover:text-[#A0522D] transition cursor-none-target" data-hover-class="hovered">M² Digital Agency</a></p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        lucide.createIcons();
+
+        // 1. Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('[data-hover-class]').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add(el.dataset.hoverClass));
+            el.addEventListener('mouseleave', () => cursor.classList.remove(el.dataset.hoverClass));
+        });
+
+        // 2. Video Hover Logic (Explicit Play)
+        document.querySelectorAll('.project-card').forEach(card => {
+            const video = card.querySelector('video');
+            if(video) {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('playing');
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Ignorujeme chybu přerušení (AbortError), která vzniká při rychlém pohybu myši
+                        });
+                    }
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('playing');
+                    video.pause();
+                });
+            }
+        });
+
+        // 3. Persona Switcher
+        const contentMap = {
+            'developer': {
+                title: 'Prostory,<br>které definují <br><span class="text-[#A0522D] italic">budoucnost.</span>',
+                desc: 'Vyhledáváme příležitosti, připravujeme projekty a realizujeme nemovitosti s důrazem na kvalitu, dlouhodobost a transparentní proces.',
+                cta: 'Naše projekty',
+                url: '#projects'
+            },
+            'investor': {
+                title: 'Zhodnocení,<br>které má <br><span class="text-[#A0522D] italic">reálný základ.</span>',
+                desc: 'Stabilní výnosy z prémiových nemovitostí. Nabízíme transparentní reporting a partnerství založené na důvěře a číslech.',
+                cta: 'Investiční příležitosti',
+                url: '#contact'
+            },
+            'owner': {
+                title: 'Péče,<br>která chrání <br><span class="text-[#A0522D] italic">hodnotu.</span>',
+                desc: 'Komplexní správa, technický dozor a nájemní management bez starostí. Váš majetek v rukou profesionálů.',
+                cta: 'Správa nemovitostí',
+                url: '#services'
+            }
+        };
+
+        function setPersona(type) {
+            document.querySelectorAll('.persona-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const content = contentMap[type];
+            const container = document.getElementById('hero-content');
+            
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('hero-title').innerHTML = content.title;
+                document.getElementById('hero-desc').innerHTML = content.desc;
+                const cta = document.getElementById('hero-cta-1');
+                cta.innerText = content.cta;
+                cta.href = content.url;
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        // 4. Scrollytelling Logic
+        const wrapper = document.getElementById('process-wrapper');
+        const bgImage = document.getElementById('process-bg');
+        const steps = document.querySelectorAll('.step-content');
+
+        if (wrapper) {
+            window.addEventListener('scroll', () => {
+                const rect = wrapper.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top <= 0 && rect.bottom >= 0) {
+                    const progress = Math.abs(rect.top) / (wrapper.offsetHeight - windowHeight);
+                    
+                    steps.forEach((step, index) => {
+                        const threshold = index * 0.25;
+                        if (progress >= threshold && progress < threshold + 0.25) {
+                            step.classList.add('active');
+                            const newSrc = step.dataset.bg;
+                            if (bgImage.src !== newSrc) bgImage.src = newSrc;
+                        } else {
+                            step.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        // 5. Reveal Animations
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+
+    </script>
+</body>
+</html>
