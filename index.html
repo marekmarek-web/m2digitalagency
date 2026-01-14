@@ -5,30 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M² Digital Agency | Budoucnost patří odvážným</title>
     
-    <!-- OPEN GRAPH / FACEBOOK & LINKEDIN -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.m2digitalagency.cz/">
-    <meta property="og:title" content="M² Digital Agency | Budoucnost patří odvážným">
-    <meta property="og:description" content="Navrhneme a postavíme rychlý web se SEO základem, který z vás udělá profesionální volbu. Digitální agentura zaměřená na výsledky.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/og.png">
-
-    <!-- TWITTER -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="M² Digital Agency | Budoucnost patří odvážným">
-    <meta name="twitter:description" content="Navrhneme a postavíme rychlý web se SEO základem, který z vás udělá profesionální volbu.">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/og.png">
-
-    <!-- FAVICON -->
+    <!-- Ikonka v záložce -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png">
     
+    <!-- Tailwind CSS a externí knihovny -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <!-- Fonty (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+        /* Nastavení barev a globálních proměnných */
         :root {
             --bg: #000000;
             --text: #f5f5f7;
@@ -37,7 +27,6 @@
             --gold-light: #F9F1D8;
             
             --global-content-max-width: 1260px;
-            --product-viewer-ref-border-radius: 28px;
         }
 
         body {
@@ -48,26 +37,25 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. M2 CUSTOM NAV --- */
+        /* --- Navigace (Glassmorphism efekt) --- */
         .m2-nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
             padding: 0 40px; 
             height: 120px; 
             z-index: 9999;
-            /* Stronger Glass Effect */
-            background: rgba(0, 0, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.6); /* Průhledné pozadí */
             border-bottom: 1px solid rgba(197, 160, 89, 0.2);
             color: white;
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px); /* Rozostření za navigací */
             -webkit-backdrop-filter: blur(20px);
             transition: all 0.3s ease;
         }
 
-        /* Nav Links Styling (RESTORED EFFECT) */
+        /* Odkazy uprostřed menu */
         .nav-center {
             display: flex;
             gap: 40px;
@@ -93,6 +81,7 @@
             color: var(--gold);
         }
 
+        /* Zlatá čára pod odkazem při hoveru */
         .nav-link::after {
             content: '';
             position: absolute;
@@ -109,14 +98,14 @@
             left: 0;
         }
 
-        /* Nav CTA Button (UPDATED: Gold filled style, no shimmer) */
+        /* CTA tlačítko vpravo nahoře */
         .nav-cta {
             justify-self: end;
             padding: 12px 28px;
-            background: var(--gold); /* Gold Background */
-            color: black; /* Black Text */
+            background: var(--gold);
+            color: black;
             border: 1px solid var(--gold);
-            border-radius: 9999px;
+            border-radius: 999px;
             font-weight: 600;
             font-size: 14px;
             text-transform: uppercase;
@@ -131,7 +120,7 @@
             box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
         }
 
-        /* MOBILE MENU STYLES */
+        /* Úpravy pro mobilní zařízení */
         @media (max-width: 1024px) {
             .m2-nav {
                 height: 90px;
@@ -144,6 +133,7 @@
             .m2-nav img { height: 60px; width: auto; }
         }
 
+        /* Mobilní menu - overlay */
         #mobile-menu {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: rgba(0,0,0,0.98); backdrop-filter: blur(20px);
@@ -158,6 +148,7 @@
             opacity: 0; transform: translateY(20px); transition: all 0.3s ease;
         }
         #mobile-menu.open .mobile-link { opacity: 1; transform: translateY(0); }
+        /* Postupné načítání položek menu */
         #mobile-menu.open .mobile-link:nth-child(1) { transition-delay: 0.1s; }
         #mobile-menu.open .mobile-link:nth-child(2) { transition-delay: 0.15s; }
         #mobile-menu.open .mobile-link:nth-child(3) { transition-delay: 0.2s; }
@@ -165,7 +156,7 @@
         #mobile-menu.open .mobile-link:nth-child(5) { transition-delay: 0.3s; }
 
 
-        /* --- 2. HERO SECTION & VIDEO --- */
+        /* --- Hero sekce a video pozadí --- */
         .hero-video-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -185,7 +176,6 @@
             position: relative;
             z-index: 10;
             padding: 0 20px;
-            /* Added margin top to push content down from header */
             margin-top: 8rem; 
         }
         @media (min-width: 768px) {
@@ -193,7 +183,6 @@
         }
 
         .hero-text {
-            /* Adjusted font size to prevent being too large. Reduced upper bound from 96px to 64px */
             font-size: clamp(32px, 5vw, 64px);
             line-height: 1.1;
             font-weight: 800;
@@ -203,6 +192,7 @@
             word-wrap: break-word;
         }
         
+        /* Efekt odlesku na textu */
         .text-shimmer {
             background: linear-gradient(to right, #9ca3af 20%, #C5A059 45%, #fff 50%, #C5A059 55%, #9ca3af 80%);
             background-size: 200% auto;
@@ -216,7 +206,7 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* --- 3. CTA BUTTONS --- */
+        /* --- Tlačítka s animací --- */
         .btn-shimmer {
             position: relative; overflow: hidden;
             background: rgba(197, 160, 89, 0.15); border: 1px solid var(--gold); color: var(--gold);
@@ -241,24 +231,26 @@
         }
         .btn-ghost:hover { background: white; color: black; border-color: white; }
 
-        /* --- 4. GRADIENT BORDER CARD --- */
+        /* --- Karty s gradientním rámečkem (Ceník - Partnerství) --- */
         .gradient-border-card {
             position: relative; background: #1c1c1e; border-radius: 28px; z-index: 1; overflow: hidden; transition: transform 0.3s ease;
         }
+        /* Rotující gradient na pozadí */
         .gradient-border-card::before {
             content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: conic-gradient(transparent, transparent, var(--gold), var(--gold-light), var(--gold), transparent, transparent);
             animation: rotate 4s linear infinite; z-index: -2;
         }
+        /* Překrytí vnitřku karty */
         .gradient-border-card::after {
             content: ""; position: absolute; inset: 2px; background: #151516; border-radius: 26px; z-index: -1;
         }
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .gradient-border-card:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25); }
 
-        /* --- 5. EXPANDING SHOWREEL (SCROLLYTELLING UPGRADE) --- */
+        /* --- Scrollytelling sekce (Zvětšující se video) --- */
         .scroll-video-container {
-            height: 250vh; /* Scroll space */
+            height: 250vh; /* Délka scrollování */
             position: relative;
             background: var(--bg);
         }
@@ -272,11 +264,12 @@
             justify-content: center;
             overflow: hidden;
         }
-        /* New Wrapper for Scaling Effect */
+        
+        /* Wrapper, který mění velikost */
         .video-scale-wrapper {
-            width: 70%; /* Start small */
+            width: 70%; 
             height: 70%;
-            border-radius: 40px; /* Start round */
+            border-radius: 40px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 0 100px rgba(197, 160, 89, 0.1);
@@ -301,16 +294,17 @@
         }
         .video-overlay-text.visible { opacity: 1; }
 
-        /* --- 6. BENTO GRID --- */
+        /* --- Bento Grid --- */
         .bento-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
             max-width: var(--global-content-max-width); margin: 0 auto; padding: 4rem 20px;
         }
         .bento-item {
-            background: rgba(21, 21, 22, 0.6); border-radius: 28px; padding: 30px; /* Reduced padding for mobile */
+            background: rgba(21, 21, 22, 0.6); border-radius: 28px; padding: 30px; 
             display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s ease; min-height: 400px;
             position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
         }
+        /* Efekt při najetí myší (Glow) */
         .bento-grid:hover .bento-item::after { opacity: 1; }
         .bento-item::before {
             content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.5s ease;
@@ -325,7 +319,7 @@
         .bento-span-2 { grid-column: span 2; }
         @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; padding: 2rem 20px; } .bento-span-2 { grid-column: span 1; } }
 
-        /* --- 7. PRICING GRID --- */
+        /* --- Ceník --- */
         .pricing-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
             max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px; align-items: center;
@@ -338,9 +332,11 @@
         }
         .pricing-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.1); }
 
-        /* --- 8. REVEAL LIST --- */
+        /* --- Seznam projektů (Reveal effect) --- */
         .reveal-item { border-bottom: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; position: relative; }
         .reveal-item:hover { background: linear-gradient(90deg, rgba(197, 160, 89, 0.05), transparent); border-color: rgba(197, 160, 89, 0.3); padding-left: 20px; }
+        
+        /* Plovoucí náhled obrázku */
         .reveal-img-preview {
             position: fixed; pointer-events: none; z-index: 50; width: 320px; height: 220px; object-fit: cover;
             border-radius: 12px; opacity: 0; transform: scale(0.8) translate(-50%, -50%); transition: opacity 0.3s, transform 0.3s; top: 0; left: 0;
@@ -348,6 +344,7 @@
         }
         .reveal-img-preview.active { opacity: 1; transform: scale(1) translate(-50%, -50%); }
 
+        /* Fade-in animace pro elementy */
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
         .fade-in.active { opacity: 1; transform: translateY(0); }
 
@@ -355,32 +352,32 @@
 </head>
 <body>
 
-    <!-- NAV -->
+    <!-- Navigace -->
     <nav class="m2-nav">
-        <!-- LOGO IMAGE (Změněno na logo_M.png a h-16) -->
+        <!-- Logo -->
         <a href="https://www.m2digitalagency.cz/" class="block z-50 relative">
             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-16 w-auto invert">
         </a>
         
-        <!-- CENTER LINKS (DESKTOP) -->
+        <!-- Menu odkazy (Desktop) -->
         <div class="nav-center hidden lg:flex">
             <a href="#sluzby" class="nav-link">Expertíza</a>
             <a href="#prace" class="nav-link">Projekty</a>
             <a href="#pricing" class="nav-link">Investice</a>
         </div>
 
-        <!-- RIGHT CTA (DESKTOP) -->
+        <!-- Pravé tlačítko (CTA) -->
         <a href="#kontakt" class="nav-cta hidden lg:block">
             Nezávazná konzultace
         </a>
 
-        <!-- MOBILE HAMBURGER BUTTON -->
+        <!-- Hamburger pro mobil -->
         <button id="menu-btn" class="lg:hidden z-50 text-white p-2">
             <i data-lucide="menu" class="w-8 h-8"></i>
         </button>
     </nav>
 
-    <!-- MOBILE OVERLAY MENU -->
+    <!-- Mobilní menu (vysouvací overlay) -->
     <div id="mobile-menu">
         <a href="#sluzby" class="mobile-link hover:text-gold transition">Expertíza</a>
         <a href="#prace" class="mobile-link hover:text-gold transition">Projekty</a>
@@ -394,14 +391,14 @@
 
     <main>
 
-        <!-- HERO -->
+        <!-- Hero sekce s videem -->
         <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
-            <!-- BACKGROUND VIDEO (GitHub Raw Source) -->
+            <!-- Video pozadí -->
             <video autoplay muted loop playsinline class="hero-video-bg">
                 <source src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/videohero.mp4" type="video/mp4">
             </video>
             
-            <!-- Dark Overlay with extra gradient for text readability -->
+            <!-- Tmavý overlay pro čitelnost textu -->
             <div class="absolute inset-0 bg-black/60 z-0"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
 
@@ -413,39 +410,36 @@
                 
                 <p class="text-xl text-gray-200 max-w-2xl mx-auto fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
                     <strong>Navrhneme a postavíme rychlý web se SEO základem, který z vás udělá profesionální volbu.</strong>
+                    <br><br>
+                    Zakázky negarantuje žádný web sám o sobě – my vám dodáme pevný základ, na který se dá navázat reklamou i obsahem.
                 </p>
                 
                 <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center fade-in" style="transition-delay: 0.3s;">
-                    <!-- Primary CTA (Gold Shimmer) -->
+                    <!-- Hlavní tlačítko -->
                     <a href="#kontakt" class="px-8 py-3.5 btn-shimmer-filled btn-shimmer rounded-full text-black">Nezávazná poptávka</a>
                     
-                    <!-- Secondary CTA (Grey-White Style) -->
+                    <!-- Sekundární tlačítko -->
                     <a href="#prace" class="px-8 py-3.5 btn-ghost rounded-full">
                         Ukázat projekty
                     </a>
                 </div>
-
-                <!-- DISCLAIMER / NOTE (Moved & Styled) -->
-                <p class="mt-8 text-xs text-gray-400 max-w-xl mx-auto fade-in leading-relaxed opacity-80" style="transition-delay: 0.4s;">
-                    Zakázky negarantuje žádný web sám o sobě – my vám dodáme pevný základ, na který se dá navázat reklamou i obsahem.
-                </p>
             </div>
         </section>
 
-        <!-- 2. SCROLLYTELLING VIDEO (EXPANDING SHOWREEL) -->
+        <!-- Scrollytelling video (Zvětšování) -->
         <section class="scroll-video-container">
             <div class="scroll-video-sticky">
-                <!-- Wrapper for scaling effect -->
+                <!-- Kontejner pro škálování videa -->
                 <div class="video-scale-wrapper" id="video-wrapper">
                     <video muted playsinline loop autoplay src="https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4"></video>
-                    <!-- Overlays -->
+                    <!-- Textové overlaye -->
                     <h2 class="video-overlay-text" id="overlay-1">Precizní systém</h2>
                     <h2 class="video-overlay-text" id="overlay-2">Detail, který prodává</h2>
                 </div>
             </div>
         </section>
 
-        <!-- 3. CASE STUDIES (Centered & Narrower) -->
+        <!-- Sekce Vybrané projekty -->
         <section id="prace" class="py-32 bg-[#050505] border-t border-white/5">
             <div class="max-w-5xl mx-auto px-6 mb-16 flex items-end justify-between">
                 <div>
@@ -456,47 +450,60 @@
             </div>
             
             <div class="max-w-5xl mx-auto px-6">
-                <!-- Item 1 -->
-                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1000&auto=format&fit=crop">
+                <!-- Projekt 1: Aurora -->
+                <a href="https://www.m2digitalagency.cz/demo/aurora/" target="_blank" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/demo_aurora.png">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">01</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Interiéry & řemesla</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Aurora Capital</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Web + struktura nabídky</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Investiční fondy</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
 
-                <!-- Item 2 -->
-                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1000&auto=format&fit=crop">
+                <!-- Projekt 2: Účtárna -->
+                <a href="https://www.m2digitalagency.cz/demo/uctarna/" target="_blank" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/demo_uctarna.png">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">02</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Reality & služby</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Účtárna Profi</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Brand + konverzní stránky</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Weby pro podnikatele</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
 
-                <!-- Item 3 -->
-                <a href="#" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop">
+                <!-- Projekt 3: Realty -->
+                <a href="https://www.m2digitalagency.cz/demo/realty/" target="_blank" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/demo_realty.png">
                     <div class="flex items-baseline gap-8">
                         <span class="font-mono text-sm text-[#C5A059]">03</span>
-                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Právo & B2B</h3>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">M2 Realty</h3>
                     </div>
                     <div class="flex items-center gap-4 mt-4 md:mt-0">
-                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Důvěryhodnost + SEO základ</span>
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Realitní & developerské projekty</span>
+                        <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
+                    </div>
+                </a>
+
+                <!-- Projekt 4: Marek -->
+                <a href="https://www.marek-marek.cz/" target="_blank" class="reveal-item group flex flex-col md:flex-row justify-between md:items-baseline py-10" data-img="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/demo_marek.png">
+                    <div class="flex items-baseline gap-8">
+                        <span class="font-mono text-sm text-[#C5A059]">04</span>
+                        <h3 class="text-3xl md:text-5xl font-bold text-gray-400 group-hover:text-white transition-all">Marek Finance</h3>
+                    </div>
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <span class="text-xs font-mono text-gray-500 uppercase group-hover:text-[#C5A059] transition-colors">Weby pro finanční poradce</span>
                         <i data-lucide="arrow-up-right" class="w-6 h-6 text-gray-600 group-hover:text-white transition-transform duration-300"></i>
                     </div>
                 </a>
             </div>
             
+            <!-- Element pro plovoucí obrázek -->
             <img src="" alt="Project Preview" class="reveal-img-preview" id="reveal-img">
         </section>
 
-        <!-- 4. BENTO GRID (Updated Content) -->
+        <!-- Služby - Bento Grid -->
         <section id="sluzby" class="py-32 bg-[#000]">
             <div class="max-w-[1260px] mx-auto px-6 mb-16 text-center md:text-left">
                 <h2 class="text-5xl font-semibold tracking-tight text-white mb-4">Nestavíme jen weby.</h2>
@@ -504,7 +511,7 @@
             </div>
 
             <div class="bento-grid" id="bento-container">
-                <!-- Large Item (Strategie) -->
+                <!-- Velká karta (Strategie) -->
                 <div class="bento-item bento-span-2 group">
                     <div class="bento-content">
                         <div class="relative z-10">
@@ -519,7 +526,7 @@
                     <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-[#C5A059]/20 to-transparent rounded-full blur-3xl group-hover:opacity-100 opacity-50 transition-opacity"></div>
                 </div>
 
-                <!-- Small Item (Měření) -->
+                <!-- Malá karta (Měření) -->
                 <div class="bento-item text-center">
                     <div class="bento-content items-center justify-center">
                         <i data-lucide="bar-chart-2" class="w-16 h-16 text-gray-500 mb-6 group-hover:text-[#C5A059] transition-colors"></i>
@@ -528,7 +535,7 @@
                     </div>
                 </div>
 
-                <!-- Small Item (Technologie) -->
+                <!-- Malá karta (Technologie) -->
                 <div class="bento-item">
                     <div class="bento-content">
                         <div class="mb-4">
@@ -541,7 +548,7 @@
                     </div>
                 </div>
 
-                <!-- Large Item (Design) -->
+                <!-- Velká karta (Design) -->
                 <div class="bento-item bento-span-2 overflow-hidden relative group">
                     <div class="absolute inset-0 bg-gradient-to-r from-[#C5A059]/10 to-transparent opacity-50 group-hover:opacity-100 transition duration-500"></div>
                     <div class="bento-content">
@@ -564,7 +571,7 @@
             </div>
         </section>
 
-        <!-- 5. PRICING -->
+        <!-- Ceník -->
         <section id="pricing" class="py-32 bg-[#000]">
             <div class="text-center mb-16 px-6">
                 <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4">Investice do profesionálního dojmu.</h2>
@@ -572,7 +579,7 @@
             </div>
 
             <div class="pricing-grid">
-                <!-- Card 1 -->
+                <!-- Karta 1: Start -->
                 <div class="pricing-card">
                     <h3 class="text-xl font-bold text-white mb-2">Start</h3>
                     <div class="text-4xl font-bold text-[#C5A059] mb-2">15 000 <span class="text-lg text-gray-500">Kč</span></div>
@@ -587,14 +594,14 @@
                     <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer">Vybrat Start</a>
                 </div>
 
-                <!-- Card 2 -->
+                <!-- Karta 2: Partnerství (Zvýrazněná) -->
                 <div class="gradient-border-card p-10 flex flex-col scale-105 z-10">
                     <div class="absolute top-4 right-8 bg-[#C5A059] text-black text-[10px] font-bold px-3 py-1 rounded-full tracking-widest">NEJOBLÍBENĚJŠÍ</div>
                     <h3 class="text-2xl font-bold text-white mb-2 mt-2">Partnerství</h3>
                     <div class="text-5xl font-bold text-[#C5A059] mb-6">1 500 <span class="text-lg text-gray-500">Kč/měs</span></div>
                     <p class="text-gray-300 text-sm mb-4">Web na pronájem. Ideální, když chcete web bez velkého vstupu a zároveň ho mít průběžně v dobré kondici.</p>
                     
-                    <!-- Disclaimer -->
+                    <!-- Upozornění -->
                     <div class="bg-white/5 p-3 rounded-lg border border-white/10 mb-6">
                         <p class="text-[11px] text-gray-400 leading-tight">
                             <span class="text-[#C5A059] font-bold">Upozornění:</span> Neobsahuje reklamu ani garanci zakázek – obsahuje web, provoz a základní SEO.
@@ -609,11 +616,11 @@
                         <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> 1× měsíčně drobná úprava (do 20 min)</li>
                         <li class="flex gap-3 text-gray-500 text-xs mt-2 pl-7">Min. spolupráce 12 měsíců</li>
                     </ul>
-                    <!-- Added btn-shimmer class here -->
+                    
                     <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled btn-shimmer rounded-full font-bold">Vybrat Partnerství</a>
                 </div>
 
-                <!-- Card 3 -->
+                <!-- Karta 3: Byznys -->
                 <div class="pricing-card">
                     <h3 class="text-xl font-bold text-white mb-2">Byznys</h3>
                     <div class="text-4xl font-bold text-[#C5A059] mb-2">35 000 <span class="text-lg text-gray-500">Kč</span></div>
@@ -629,12 +636,12 @@
                 </div>
             </div>
 
-            <!-- MINI FAQ SECTION -->
+            <!-- Časté dotazy (FAQ) -->
             <div class="max-w-3xl mx-auto mt-24 px-6">
                 <h3 class="text-2xl font-bold text-white mb-8 text-center">Časté otázky</h3>
                 <div class="space-y-4">
                     
-                    <!-- FAQ Item 1 -->
+                    <!-- Otázka 1 -->
                     <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
                         <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
                             <span>Garantujete zakázky?</span>
@@ -647,7 +654,7 @@
                         </div>
                     </details>
 
-                    <!-- FAQ Item 2 -->
+                    <!-- Otázka 2 -->
                     <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
                         <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
                             <span>Za jak dlouho budete hotovi?</span>
@@ -660,7 +667,7 @@
                         </div>
                     </details>
 
-                    <!-- FAQ Item 3 -->
+                    <!-- Otázka 3 -->
                     <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
                         <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
                             <span>Co je součástí partnerství za 1 500 Kč/měs?</span>
@@ -673,7 +680,7 @@
                         </div>
                     </details>
 
-                    <!-- FAQ Item 4 -->
+                    <!-- Otázka 4 -->
                     <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
                         <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
                             <span>Co není v ceně?</span>
@@ -690,36 +697,32 @@
             </div>
         </section>
 
-        <!-- CONTACT -->
+        <!-- Kontaktní formulář -->
         <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
             <div class="max-w-xl mx-auto px-6">
-                <!-- LOGO NAD FORMULÁŘEM (Zvětšeno na h-40 = cca 160px, s invert filtrem) -->
+                <!-- Logo -->
                 <div class="flex justify-center mb-8">
-                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-40 opacity-80 invert">
+                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-28 opacity-80 invert">
                 </div>
                 
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit web, který bude působit jistě.</h2>
+                    <h2 class="text-3xl font-bold text-white mb-4">Pojďme postavit něco velkého.</h2>
                     <p class="text-gray-400">Napište nám pár informací. Do 24 hodin se ozveme s návrhem dalšího postupu.</p>
                 </div>
 
-                <form id="contact-form" class="space-y-6">
-                    <!-- Hidden Captcha for FormSubmit -->
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="Nová poptávka z webu M2 Agency">
-
+                <form class="space-y-6">
                     <div>
-                        <input type="text" name="name" required placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="text" placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <input type="email" name="email" required placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                        <input type="email" placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
                     </div>
                     <div>
-                        <textarea name="message" required rows="4" placeholder="Co děláte a co od webu očekáváte? (město, služby, cílový zákazník)" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
+                        <textarea rows="4" placeholder="Co děláte a co od webu očekáváte? (město, služby, cílový zákazník)" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
                     </div>
-                    <!-- CTA TLAČÍTKO V KONTAKTU - STEJNÉ JAKO V HERO -->
+                    
                     <div>
-                        <button type="submit" class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black transition-all">
+                        <button class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
                             Odeslat nezávaznou poptávku
                         </button>
                         <p class="text-xs text-gray-500 mt-4 text-center">Odpovídáme do 1 pracovního dne. Bez spamu.</p>
@@ -728,17 +731,18 @@
             </div>
         </section>
 
-        <footer class="py-20 text-xs text-gray-500 border-t border-white/10 bg-[#000]">
+        <!-- Patička -->
+        <footer class="bg-[#020202] border-t border-white/10 pt-20 pb-10">
             <div class="max-w-[1260px] mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    <!-- Brand Column -->
+                <div class="grid md:grid-cols-5 gap-12 mb-16">
+                    
+                    <!-- Logo a socky -->
                     <div class="col-span-1 md:col-span-2">
-                        <!-- LOGO FOOTER (Změněno na h-16) -->
                         <a href="index.html" class="block mb-6">
                             <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-16 opacity-90 invert">
                         </a>
                         <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-6">
-                            Digitální agentura zaměřená na výsledky. Tvoříme weby a strategie, které posouvají vaše podnikání vpřed.
+                            Digitální agentura pro moderní dobu. Navrhujeme a stavíme špičkové weby, které z vás udělají profesionála na první pohled.
                         </p>
                         <div class="flex gap-4">
                             <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C5A059] hover:text-black text-gray-400 transition-all duration-300">
@@ -750,7 +754,7 @@
                         </div>
                     </div>
 
-                    <!-- Menu Column -->
+                    <!-- Navigace -->
                     <div>
                         <h4 class="text-white font-bold mb-6 text-lg">Navigace</h4>
                         <ul class="space-y-3 text-sm text-gray-400">
@@ -760,14 +764,24 @@
                             <li><a href="#pricing" class="hover:text-[#C5A059] transition-colors inline-block">Investice</a></li>
                         </ul>
                     </div>
+                    
+                    <!-- Odkazy na služby -->
+                    <div>
+                        <h4 class="text-white font-bold mb-6 text-lg">Služby</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="https://www.m2digitalagency.cz/tvorba-webu-cena/" class="hover:text-[#C5A059] transition-colors inline-block">Ceník webů</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/web-pro-zivnostniky/" class="hover:text-[#C5A059] transition-colors inline-block">Web pro živnostníky</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/web-na-pronajem/" class="hover:text-[#C5A059] transition-colors inline-block">Web na pronájem</a></li>
+                        </ul>
+                    </div>
 
-                    <!-- Contact Column -->
+                    <!-- Kontakt -->
                     <div>
                         <h4 class="text-white font-bold mb-6 text-lg">Kontakt</h4>
                         <ul class="space-y-4 text-sm text-gray-400">
                             <li>
                                 <a href="mailto:kontakt@m2digitalagency.cz" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
-                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                    <div class="w-8 h-8 flex-shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
                                         <i data-lucide="mail" class="w-4 h-4 text-[#C5A059]"></i>
                                     </div>
                                     kontakt@m2digitalagency.cz
@@ -775,7 +789,7 @@
                             </li>
                             <li>
                                 <a href="tel:+420778511166" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
-                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                    <div class="w-8 h-8 flex-shrink-0 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
                                         <i data-lucide="phone" class="w-4 h-4 text-[#C5A059]"></i>
                                     </div>
                                     +420 778 511 166
@@ -785,7 +799,7 @@
                     </div>
                 </div>
 
-                <!-- Copyright Row -->
+                <!-- Copyright a GDPR -->
                 <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
                     <p>&copy; 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
                     <div class="flex gap-6">
@@ -799,9 +813,10 @@
     </main>
 
     <script>
+        // Inicializace ikonek
         lucide.createIcons();
 
-        // 1. FADE IN OBSERVER
+        // Animace příletu prvků při skrolování (Fade in)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
@@ -809,7 +824,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // 2. VIDEO SCROLL LOGIC - SCALING EFFECT
+        // Logika pro zvětšování videa při skrolování (Scrollytelling)
         const videoSection = document.querySelector('.scroll-video-container');
         const videoWrapper = document.getElementById('video-wrapper');
         const overlay1 = document.getElementById('overlay-1');
@@ -821,13 +836,12 @@
                 const windowHeight = window.innerHeight;
                 const sectionHeight = videoSection.offsetHeight;
                 
-                // Logic: Video starts small, scales to full screen
-                // rect.top is 0 when the sticky section hits the top
+                // Pokud je sekce viditelná (začátek scrollování)
                 if(rect.top <= 0 && rect.bottom >= 0) {
-                    // Normalize progress from 0 (start) to 1 (end of section)
+                    // Spočítáme progress (0 až 1)
                     const progress = Math.abs(rect.top) / (sectionHeight - windowHeight);
                     
-                    // Scaling: Start at 0.7, grow to 1.0 within first 40% of scroll
+                    // Zvětšujeme od 70% do 100%
                     let scale = 0.7 + (progress * 1.5); 
                     if(scale > 1) scale = 1;
                     
@@ -837,6 +851,7 @@
                     let height = 70 + (progress * 100);
                     if(height > 100) height = 100;
 
+                    // Zmenšujeme zaoblení rohů
                     let radius = 40 - (progress * 100);
                     if(radius < 0) radius = 0;
 
@@ -844,14 +859,15 @@
                     videoWrapper.style.height = `${height}%`;
                     videoWrapper.style.borderRadius = `${radius}px`;
 
-                    // Overlays
+                    // Zobrazování textů podle pozice
                     if(progress > 0.2 && progress < 0.45) overlay1.classList.add('visible');
                     else overlay1.classList.remove('visible');
 
                     if(progress > 0.55 && progress < 0.8) overlay2.classList.add('visible');
                     else overlay2.classList.remove('visible');
+
                 } else if(rect.top > 0) {
-                    // Reset if scrolled back up
+                    // Reset, pokud vyjedeme nahoru
                     videoWrapper.style.width = '70%';
                     videoWrapper.style.height = '70%';
                     videoWrapper.style.borderRadius = '40px';
@@ -859,7 +875,7 @@
             });
         }
 
-        // 3. IMAGE REVEAL LIST LOGIC
+        // Zobrazování náhledů projektů pod myší
         const revealItems = document.querySelectorAll('.reveal-item');
         const revealImg = document.getElementById('reveal-img');
 
@@ -879,7 +895,7 @@
             });
         });
 
-        // 4. MOUSE TRACKING GLOW (BENTO GRID)
+        // Efekt záře (glow) v bento gridu podle pozice myši
         const bentoContainer = document.getElementById('bento-container');
         if(bentoContainer) {
             bentoContainer.onmousemove = e => {
@@ -894,57 +910,21 @@
             };
         }
 
-        // 5. MOBILE MENU LOGIC
+        // Ovládání mobilního menu (otevřít/zavřít)
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
         if (menuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
-            mobileLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.remove('open'); }); });
-        }
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
 
-        // 6. FORM SUBMISSION (FETCH)
-        const contactForm = document.getElementById('contact-form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const button = contactForm.querySelector('button[type="submit"]');
-                const originalText = button.innerText;
-
-                button.disabled = true;
-                button.innerText = "Odesílám...";
-
-                const formData = new FormData(contactForm);
-                
-                try {
-                    const response = await fetch("https://formsubmit.co/ajax/kontakt@m2digitalagency.cz", {
-                        method: "POST",
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(Object.fromEntries(formData))
-                    });
-
-                    if (response.ok) {
-                        button.innerText = "Úspěšně odesláno!";
-                        button.style.backgroundColor = "#4ade80"; // Green hint
-                        contactForm.reset();
-                        setTimeout(() => {
-                            button.disabled = false;
-                            button.innerText = originalText;
-                            button.style.backgroundColor = ""; // Reset color
-                        }, 5000);
-                    } else {
-                        button.innerText = "Chyba. Zkuste to prosím znovu.";
-                        button.disabled = false;
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    button.innerText = "Chyba připojení.";
-                    button.disabled = false;
-                }
+            // Zavřít menu po kliknutí na odkaz
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
             });
         }
     </script>
