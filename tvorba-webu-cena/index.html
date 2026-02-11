@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="cs" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO META -->
+    <title>Cena tvorby webu | Kolik stojí kvalitní web? | M² Agency</title>
+    <meta name="description" content="Kolik stojí tvorba webu v roce 2026? Transparentní ceník, rozdíly mezi levným a kvalitním řešením a proč se investice do profesionálního webu vyplatí.">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #000000;
+            --text: #f5f5f7;
+            --gray: #86868b;
+            --gold: #C5A059;
+            --gold-light: #F9F1D8;
+            
+            --global-content-max-width: 1260px;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- NAV --- */
+        .m2-nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 0 40px; height: 120px; z-index: 9999;
+            background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            color: white; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: all 0.3s ease;
+        }
+        .nav-center {
+            display: flex; gap: 40px; background: rgba(255, 255, 255, 0.03); padding: 12px 30px;
+            border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+        }
+        .nav-link {
+            font-size: 15px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #ccc;
+            text-decoration: none; position: relative; transition: color 0.3s ease;
+        }
+        .nav-link:hover { color: var(--gold); }
+        .nav-cta {
+            justify-self: end; padding: 12px 28px; background: var(--gold); color: black; border: 1px solid var(--gold);
+            border-radius: 999px; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        .nav-cta:hover { background: white; color: black; border-color: white; box-shadow: 0 0 15px rgba(197, 160, 89, 0.3); }
+
+        /* --- HERO --- */
+        .hero-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+            opacity: 0.3; filter: grayscale(100%) contrast(1.1);
+        }
+        .hero-content { position: relative; z-index: 10; padding: 0 20px; margin-top: 8rem; }
+        .hero-text {
+            font-size: clamp(32px, 5vw, 64px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em;
+            color: white; text-shadow: 0 0 40px rgba(0,0,0,0.9); word-wrap: break-word;
+        }
+        .text-shimmer {
+            background: linear-gradient(to right, #9ca3af 20%, #C5A059 45%, #fff 50%, #C5A059 55%, #9ca3af 80%);
+            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: shimmer 2.5s linear infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+        /* --- BUTTONS --- */
+        .btn-shimmer {
+            position: relative; overflow: hidden; background: rgba(197, 160, 89, 0.15); border: 1px solid var(--gold);
+            color: var(--gold); border-radius: 9999px; font-weight: 600; transition: all 0.3s ease; z-index: 1;
+        }
+        .btn-shimmer::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: none; animation: btn-shimmer-anim 2.5s infinite; z-index: -1;
+        }
+        @keyframes btn-shimmer-anim { 0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; } }
+        .btn-shimmer:hover { background: white !important; color: black !important; border-color: white !important; }
+        
+        .btn-shimmer-filled { background: var(--gold); color: black; border: 1px solid var(--gold); }
+        .btn-shimmer-filled:hover { background: white !important; color: black !important; border-color: white !important; }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05); color: #e5e5e5;
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 9999px; font-weight: 500; transition: all 0.3s ease;
+        }
+        .btn-ghost:hover { background: white; color: black; border-color: white; }
+
+
+        /* --- PRICING GRID --- */
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            max-width: var(--global-content-max-width); margin: 0 auto; padding: 2rem 20px;
+            align-items: flex-start; /* Změna z center na flex-start pro lepší zarovnání */
+        }
+        .pricing-card {
+            background: #151516; border-radius: 28px; padding: 40px; border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease; position: relative; overflow: hidden; height: 100%; display: flex; flex-direction: column;
+        }
+        .pricing-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px -10px rgba(197, 160, 89, 0.1); }
+        
+        /* --- GRADIENT BORDER CARD --- */
+        .gradient-border-card {
+            position: relative; background: #1c1c1e; border-radius: 28px; z-index: 1; overflow: hidden; transition: transform 0.3s ease; height: 100%; display: flex; flex-direction: column;
+        }
+        .gradient-border-card::before {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, var(--gold), var(--gold-light), var(--gold), transparent, transparent);
+            animation: rotate 4s linear infinite; z-index: -2;
+        }
+        .gradient-border-card::after {
+            content: ""; position: absolute; inset: 2px; background: #151516; border-radius: 26px; z-index: -1;
+        }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .gradient-border-card:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 30px 60px -10px rgba(197, 160, 89, 0.25); }
+
+
+        /* --- COMPARISON TABLE --- */
+        .comparison-table {
+            width: 100%; border-collapse: separate; border-spacing: 0; color: #f5f5f7;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .comparison-table th { background: rgba(255,255,255,0.05); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--gold); }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .m2-nav { height: 90px; padding: 0 20px; display: flex; justify-content: space-between; background: rgba(0, 0, 0, 0.85); }
+            .nav-center, .nav-cta { display: none; }
+            .m2-nav img { height: 60px; width: auto; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 14px; }
+            .comparison-table th, .comparison-table td { padding: 15px 10px; }
+        }
+        
+        #mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 9998;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateY(-100%); transition: transform 0.4s;
+        }
+        #mobile-menu.open { transform: translateY(0); }
+        .mobile-link { font-size: 2rem; font-weight: 700; color: white; margin: 15px 0; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+        .fade-in.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="m2-nav">
+        <!-- LOGO IMAGE (Změněno na logo_M.png a h-16) -->
+        <a href="../index.html" class="block z-50 relative">
+            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M.png" alt="M2 Digital Agency" class="h-16 w-auto invert">
+        </a>
+        
+        <div class="nav-center hidden lg:flex">
+            <a href="https://www.m2digitalagency.cz/#sluzby" class="nav-link">Expertíza</a>
+            <a href="https://www.m2digitalagency.cz/#prace" class="nav-link">Projekty</a>
+            <a href="https://www.m2digitalagency.cz/#pricing" class="nav-link" style="color: var(--gold);">Investice</a>
+        </div>
+
+        <a href="#kontakt" class="nav-cta hidden lg:block">Nezávazná konzultace</a>
+
+        <button id="menu-btn" class="lg:hidden z-50 text-white p-2">
+            <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu">
+        <a href="../index.html" class="mobile-link hover:text-gold transition">Domů</a>
+        <a href="https://www.m2digitalagency.cz/#sluzby" class="mobile-link hover:text-gold transition">Expertíza</a>
+        <a href="#cenik" class="mobile-link hover:text-gold transition text-gold">Ceník</a>
+        <a href="#kontakt" class="mobile-link hover:text-gold transition">Kontakt</a>
+        <div class="mt-8 flex gap-6 mobile-link">
+            <a href="https://www.instagram.com/m2digitalagencycz" target="_blank"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+            <a href="https://www.facebook.com/m2digitalagencycz" target="_blank"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+        </div>
+    </div>
+
+    <main>
+        <!-- HERO -->
+        <section class="h-[70vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+            <!-- Abstract Technology Background -->
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop" class="hero-video-bg" alt="Analytics Graph">
+            
+            <div class="absolute inset-0 bg-black/80 z-0"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
+
+            <div class="hero-content">
+                <h1 class="hero-text mb-8 fade-in" style="transition-delay: 0.1s;">
+                    Kolik stojí web? <br>
+                    <span class="text-shimmer">A proč se nevyplatí šetřit.</span>
+                </h1>
+                
+                <p class="text-xl text-gray-200 max-w-2xl mx-auto fade-in leading-relaxed font-light" style="transition-delay: 0.2s;">
+                    Cena webu není jen číslo. Je to investice do vašeho digitálního obchodníka.
+                    Podívejte se, co tvoří cenu kvalitního webu a jaký je rozdíl mezi "levným" a "dobrým".
+                </p>
+                
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center fade-in" style="transition-delay: 0.3s;">
+                    <a href="#cenik" class="px-8 py-3.5 btn-shimmer-filled btn-shimmer rounded-full text-black">Zobrazit ceník</a>
+                    <a href="#kontakt" class="px-8 py-3.5 rounded-full border border-white/20 text-white hover:bg-white/10 transition">Nezávazná konzultace</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VALUE SECTION (THE "WHY") - UPDATED WITH IMAGE -->
+        <section class="py-24 bg-[#000]">
+            <div class="max-w-[1260px] mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-white mb-6">Levný vs. Dobrý web</h2>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                        Můžete mít web za 5 tisíc od studenta, nebo za 50 tisíc od agentury. Na první pohled vypadají podobně. Ale ten rozdíl poznáte, když začnete web používat pro byznys.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-900/20 flex items-center justify-center flex-shrink-0 text-red-500 font-bold">X</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Levný web</h4>
+                                <p class="text-sm text-gray-500">Pomalý, šablona stažená z internetu, texty si píšete sami, nikdo vás nenajde na Googlu. Po roce ho musíte předělat.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-green-900/20 flex items-center justify-center flex-shrink-0 text-green-500 font-bold">✓</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Dobrý web (M²)</h4>
+                                <p class="text-sm text-gray-500">Rychlý, struktura navržená pro prodej, texty od copywritera, základní SEO. Web, který roste s vámi a vydělává.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IMAGE CARD REPLACEMENT -->
+                <div class="relative h-[450px] rounded-3xl overflow-hidden border border-white/10 group shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop" 
+                         alt="Tým pracující na webu" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <i data-lucide="trending-up" class="w-10 h-10 text-[#C5A059] mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">Kvalita, která je vidět</h3>
+                        <p class="text-gray-300">Profesionální web není náklad, ale investice, která se vrací v podobě důvěry klientů a vyšších konverzí.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARKET OVERVIEW -->
+        <section class="py-24 bg-[#050505] border-t border-white/5">
+            <div class="max-w-[1260px] mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-white mb-4">Rychlý přehled tržních cen</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Orientační rozpětí na trhu. Záleží na rozsahu, podkladech a cílech. Nejde o garanci, ale o mapu, abyste věděli, v jakých vodách se pohybujete.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Item 1 -->
+                    <div class="p-6 rounded-2xl border border-white/10 bg-[#151516] hover:border-[#C5A059]/30 transition-colors group">
+                        <div class="mb-4 p-3 bg-white/5 rounded-lg w-fit group-hover:bg-[#C5A059]/10 transition-colors"><i data-lucide="layout" class="w-6 h-6 text-[#C5A059]"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Jednostránkový web</h3>
+                        <div class="text-[#C5A059] font-mono text-sm mb-3">Typicky 15k – 30k Kč</div>
+                        <p class="text-sm text-gray-400 leading-relaxed">Když chcete být rychle online, vypadat profesionálně a sbírat kontakty (landing page).</p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="p-6 rounded-2xl border border-white/10 bg-[#151516] hover:border-[#C5A059]/30 transition-colors group">
+                        <div class="mb-4 p-3 bg-white/5 rounded-lg w-fit group-hover:bg-[#C5A059]/10 transition-colors"><i data-lucide="layers" class="w-6 h-6 text-[#C5A059]"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Malý web</h3>
+                        <div class="text-[#C5A059] font-mono text-sm mb-3">Typicky 30k – 60k Kč</div>
+                        <p class="text-sm text-gray-400 leading-relaxed">3–5 podstránek. Když potřebujete detailněji popsat služby, přidat reference, FAQ a o nás.</p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="p-6 rounded-2xl border border-white/10 bg-[#151516] hover:border-[#C5A059]/30 transition-colors group">
+                        <div class="mb-4 p-3 bg-white/5 rounded-lg w-fit group-hover:bg-[#C5A059]/10 transition-colors"><i data-lucide="cpu" class="w-6 h-6 text-[#C5A059]"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">Web na míru</h3>
+                        <div class="text-[#C5A059] font-mono text-sm mb-3">Od 60k – 150k+ Kč</div>
+                        <p class="text-sm text-gray-400 leading-relaxed">Složitější struktura, různé cílové skupiny, integrace systémů, vlastní animace a více obsahu.</p>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="p-6 rounded-2xl border border-white/10 bg-[#151516] hover:border-[#C5A059]/30 transition-colors group">
+                        <div class="mb-4 p-3 bg-white/5 rounded-lg w-fit group-hover:bg-[#C5A059]/10 transition-colors"><i data-lucide="shopping-bag" class="w-6 h-6 text-[#C5A059]"></i></div>
+                        <h3 class="text-lg font-bold text-white mb-2">E-shop</h3>
+                        <div class="text-[#C5A059] font-mono text-sm mb-3">Od 80k – 300k+ Kč</div>
+                        <p class="text-sm text-gray-400 leading-relaxed">Řešení katalogu, košíku, platební brány, dopravy, skladového hospodářství a produktů.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICE FACTORS (SPLIT LAYOUT WITH IMAGE) -->
+        <section class="py-24 bg-[#000]">
+            <div class="max-w-[1260px] mx-auto px-6">
+                
+                <div class="grid lg:grid-cols-2 gap-16 items-start">
+                    <!-- Left: Sticky Image -->
+                    <div class="relative sticky top-32">
+                        <h2 class="text-4xl font-bold text-white mb-8">Co ovlivňuje cenu tvorby webu nejvíc?</h2>
+                        <div class="relative h-[500px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                             <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=2670&auto=format&fit=crop" 
+                                  alt="Plánování webu" 
+                                  class="absolute inset-0 w-full h-full object-cover opacity-70">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                             <div class="absolute bottom-8 left-8">
+                                 <p class="text-white text-lg font-medium">Každý detail se počítá. Od struktury po finální kód.</p>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Factors List -->
+                    <div class="space-y-10 pt-4">
+                        <!-- Factor 1 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">01</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">Rozsah</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Je rozdíl, zda stavíme jednu "dlouhou" stránku, nebo strukturovaný web s 20 podstránkami a jazykovými mutacemi. Každá unikátní šablona stránky zvyšuje náročnost na design i kódování.</p>
+                            </div>
+                        </div>
+
+                        <!-- Factor 2 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">02</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">Texty a obsah</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Dodáte hotové texty, nebo je píšeme my? Copywriting je časově náročná disciplína, která zásadně ovlivňuje cenu i obchodní výsledky webu. Kvalitní texty prodávají.</p>
+                            </div>
+                        </div>
+
+                        <!-- Factor 3 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">03</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">Fotky a branding</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Máte vlastní profesionální fotky a logo? Nebo budeme vybírat z fotobank, případně vytvářet vizuální identitu od nuly? Originální vizuál zvyšuje důvěryhodnost.</p>
+                            </div>
+                        </div>
+
+                        <!-- Factor 4 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">04</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">Funkce a integrace</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Složité formuláře, rezervační systémy, kalkulačky, napojení na CRM nebo ceníky. Každá funkce navíc znamená hodiny vývoje a testování.</p>
+                            </div>
+                        </div>
+
+                        <!-- Factor 5 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">05</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">SEO</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Základní technické (on-page) SEO děláme vždy v ceně. Dlouhodobá práce na obsahu, klíčových slovech a linkbuildingu je ale samostatná investice.</p>
+                            </div>
+                        </div>
+
+                        <!-- Factor 6 -->
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 text-[#C5A059] border border-white/10 font-mono text-sm">06</div>
+                            <div>
+                                <h4 class="text-white font-bold mb-2 text-lg">Správa a provoz</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed">Kdo se o web stará po spuštění? Hosting, aktualizace systému, zálohování a drobné úpravy. To jsou náklady na provoz, které často nabízíme formou paušálu.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="cenik" class="py-32 bg-[#050505] border-t border-white/5">
+            <div class="text-center mb-16 px-6">
+                <h2 class="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4">Investice do profesionálního dojmu.</h2>
+                <p class="text-gray-400">Transparentně. S jasným rozsahem. Bez slibů zázraků.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Card 1 -->
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold text-white mb-2">Start</h3>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-2">15 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-xs text-gray-500 mb-6 font-medium uppercase tracking-wide">Pro ty, kteří chtějí rychle vypadat profesionálně.</p>
+                    <p class="text-gray-400 text-sm mb-8">Pro živnostníky a malé firmy. Jednostránkový web se SEO základem a měřením.</p>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Jednostránkový web (do 6 sekcí)</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Optimalizace pro mobily</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní SEO (on-page)</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Napojení na GA4 + Search Console</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer mt-auto">Vybrat Start</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="gradient-border-card p-10 flex flex-col scale-105 z-10">
+                    <div class="absolute top-4 right-8 bg-[#C5A059] text-black text-[10px] font-bold px-3 py-1 rounded-full tracking-widest">NEJOBLÍBENĚJŠÍ</div>
+                    <h3 class="text-2xl font-bold text-white mb-2 mt-2">Partnerství</h3>
+                    <div class="text-5xl font-bold text-[#C5A059] mb-6">1 500 <span class="text-lg text-gray-500">Kč/měs</span></div>
+                    <p class="text-gray-300 text-sm mb-4">Web na pronájem. Ideální, když chcete web bez velkého vstupu a zároveň ho mít průběžně v dobré kondici.</p>
+                    
+                    <!-- Disclaimer -->
+                    <div class="bg-white/5 p-3 rounded-lg border border-white/10 mb-6">
+                        <p class="text-[11px] text-gray-400 leading-tight">
+                            <span class="text-[#C5A059] font-bold">Upozornění:</span> Neobsahuje reklamu ani garanci zakázek – obsahuje web, provoz a základní SEO.
+                        </p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8 text-sm text-white font-medium flex-grow">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web bez vstupních nákladů</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Hosting + SSL v ceně</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Technická správa a aktualizace</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Základní on-page SEO + měření</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> 1× měsíčně drobná úprava (do 20 min)</li>
+                        <li class="flex gap-3 text-gray-500 text-xs mt-2 pl-7">Min. spolupráce 12 měsíců</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-4 text-center btn-shimmer-filled rounded-full font-bold mt-auto">Vybrat Partnerství</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold text-white mb-2">Byznys</h3>
+                    <div class="text-4xl font-bold text-[#C5A059] mb-2">35 000 <span class="text-lg text-gray-500">Kč</span></div>
+                    <p class="text-xs text-gray-500 mb-6 font-medium uppercase tracking-wide">Pro rostoucí firmy, které chtějí víc než vizitku.</p>
+                    <p class="text-gray-400 text-sm mb-8">Kompletní web s promyšlenou strukturou, texty a prvky, které podporují poptávky.</p>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Web do 5 podstránek / sekcí</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Návrh struktury + konverzní prvky</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> Texty připravené pro web</li>
+                        <li class="flex gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C5A059]"></i> SEO základ + měření</li>
+                    </ul>
+                    <a href="#kontakt" class="block w-full py-3 text-center btn-shimmer mt-auto">Vybrat Byznys</a>
+                </div>
+            </div>
+
+            <!-- MINI FAQ SECTION -->
+            <div class="max-w-3xl mx-auto mt-24 px-6">
+                <h3 class="text-2xl font-bold text-white mb-8 text-center">Časté otázky</h3>
+                <div class="space-y-4">
+                    
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Garantujete zakázky?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Negarantujeme. Web je základ. Výsledky závisí na nabídce, konkurenci a návštěvnosti (SEO/reklama). Dodáme ale web, který je na růst připravený.
+                        </div>
+                    </details>
+
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Za jak dlouho budete hotovi?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Typicky 7–14 dní od dodání podkladů a schválení struktury.
+                        </div>
+                    </details>
+
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Co je součástí partnerství za 1 500 Kč/měs?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Web, provoz, technická správa, SEO základ, měření a drobná měsíční úprava.
+                        </div>
+                    </details>
+
+                    <details class="group bg-[#151516] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 open:border-[#C5A059]/30">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer list-none text-white font-medium hover:text-[#C5A059] transition-colors">
+                            <span>Co není v ceně?</span>
+                            <span class="transform transition-transform group-open:rotate-180 text-[#C5A059]"><i data-lucide="chevron-down" class="w-5 h-5"></i></span>
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+                            Placená reklama, rozsáhlý copywriting bez limitu, velké redesigny a dlouhé úpravy obsahu.
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="kontakt" class="py-32 bg-[#050505] border-t border-white/10">
+            <div class="max-w-xl mx-auto px-6">
+                <!-- LOGO -->
+                <div class="flex justify-center mb-8">
+                    <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-40 opacity-80 invert">
+                </div>
+                
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Získejte nabídku na míru</h2>
+                    <p class="text-gray-400">Vyplňte formulář – do 24 hodin vás kontaktujeme s konkrétním návrhem a cenou.</p>
+                </div>
+
+                <form action="https://formsubmit.co/kontakt@m2digitalagency.cz" method="POST" class="space-y-6">
+                    <input type="hidden" name="_subject" value="Poptávka: Tvorba webu (Ceník)">
+                    <input type="hidden" name="_next" value="https://www.m2digitalagency.cz/tvorba-webu-cena/?sent=1">
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <div>
+                        <input type="text" name="name" required placeholder="Jméno a příjmení" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+                    <div>
+                        <input type="email" name="email" required placeholder="E-mail" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition">
+                    </div>
+                    <div>
+                        <textarea name="message" required rows="4" placeholder="O čem je vaše podnikání a co od webu potřebujete?" class="w-full bg-[#151516] border border-white/10 rounded-2xl px-6 py-4 text-white focus:border-[#C5A059] focus:outline-none transition"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full py-4 btn-shimmer-filled btn-shimmer rounded-full font-bold text-black hover:text-black">
+                            Chci nezávaznou nabídku
+                        </button>
+                        <p class="text-xs text-gray-500 mt-4 text-center">Odpovídáme do 1 pracovního dne. Bez spamu.</p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- PREMIUM FOOTER -->
+        <footer class="bg-[#020202] border-t border-white/10 pt-20 pb-10">
+            <div class="max-w-[1260px] mx-auto px-6">
+                <div class="grid md:grid-cols-4 gap-12 mb-16">
+                    
+                    <!-- Brand Column -->
+                    <div class="col-span-1 md:col-span-2">
+                        <!-- LOGO FOOTER (Změněno na h-16) -->
+                        <a href="../index.html" class="block mb-6">
+                            <img src="https://raw.githubusercontent.com/marekmarek-web/m2digitalagency/main/images/logo_M_cele.png" alt="M2 Digital Agency" class="h-16 opacity-90 invert">
+                        </a>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-sm mb-6">
+                            Digitální agentura zaměřená na výsledky. Tvoříme weby a strategie, které posouvají vaše podnikání vpřed.
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="https://www.instagram.com/m2digitalagencycz" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C5A059] hover:text-black text-gray-400 transition-all duration-300">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.facebook.com/m2digitalagencycz" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C5A059] hover:text-black text-gray-400 transition-all duration-300">
+                                <i data-lucide="facebook" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Menu Column -->
+                    <div>
+                        <h4 class="text-white font-bold mb-6 text-lg">Navigace</h4>
+                        <ul class="space-y-3 text-sm text-gray-400">
+                            <li><a href="../index.html" class="hover:text-[#C5A059] transition-colors inline-block">Domů</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/#sluzby" class="hover:text-[#C5A059] transition-colors inline-block">Služby</a></li>
+                            <li><a href="https://www.m2digitalagency.cz/#prace" class="hover:text-[#C5A059] transition-colors inline-block">Portfolio</a></li>
+                            <li><a href="#cenik" class="hover:text-[#C5A059] transition-colors inline-block">Ceník webů</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Column -->
+                    <div>
+                        <h4 class="text-white font-bold mb-6 text-lg">Kontakt</h4>
+                        <ul class="space-y-4 text-sm text-gray-400">
+                            <li>
+                                <a href="mailto:kontakt@m2digitalagency.cz" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
+                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                        <i data-lucide="mail" class="w-4 h-4 text-[#C5A059]"></i>
+                                    </div>
+                                    kontakt@m2digitalagency.cz
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+420778511166" class="hover:text-[#C5A059] transition-colors flex items-center gap-3 group">
+                                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#C5A059]/20 transition-colors">
+                                        <i data-lucide="phone" class="w-4 h-4 text-[#C5A059]"></i>
+                                    </div>
+                                    +420 778 511 166
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Copyright Row -->
+                <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+                    <p>&copy; 2026 M² Digital Agency. Všechna práva vyhrazena.</p>
+                    <div class="flex gap-6">
+                        <a href="https://www.m2digitalagency.cz/gdpr" class="hover:text-gray-400 transition-colors">Ochrana osobních údajů</a>
+                        <a href="https://www.m2digitalagency.cz/cookies" class="hover:text-gray-400 transition-colors">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('open'); });
+            mobileLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.remove('open'); }); });
+        }
+
+    </script>
+</body>
+</html>

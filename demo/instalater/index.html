@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novák Instalatérství | Praha a okolí</title>
+    <meta name="description" content="Profesionální instalatérské služby v Praze. Havárie, montáže, rekonstrukce. Rychlý výjezd a férové jednání.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ikony Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Font Inter & Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0284c7; /* Sky 600 */
+            --text-dark: #0f172a;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-font-smoothing: antialiased; 
+            color: #334155;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Manrope', sans-serif;
+        }
+        
+        /* Animace přechodu stránek */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-white flex flex-col min-h-screen">
+
+    <!-- DEMO DISCLAIMER -->
+    <div class="bg-slate-900 text-slate-400 text-[10px] py-1.5 text-center tracking-widest uppercase font-bold border-b border-slate-800">
+        Ukázkový projekt – demo web pro řemeslníka od M² Digital Agency
+    </div>
+
+    <!-- HEADER / NAVIGACE -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="router('home')">
+                <div class="bg-sky-600 text-white p-2.5 rounded-xl transition duration-300 shadow-lg shadow-sky-600/20">
+                    <i data-lucide="wrench" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold leading-none text-slate-900 tracking-tight">NOVÁK</h1>
+                    <p class="text-[11px] text-slate-500 uppercase tracking-[0.15em] font-semibold mt-0.5">Instalatérství</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex gap-10">
+                <button onclick="router('home')" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900 transition" id="nav-home">Domů</button>
+                <button onclick="router('services')" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900 transition" id="nav-services">Služby</button>
+                <button onclick="router('pricing')" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900 transition" id="nav-pricing">Ceník</button>
+                <button onclick="router('references')" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900 transition" id="nav-references">Realizace</button>
+                <button onclick="router('contact')" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900 transition" id="nav-contact">Kontakt</button>
+            </nav>
+
+            <!-- CTA & Mobile -->
+            <div class="flex items-center gap-4">
+                <a href="tel:+420123456789" class="hidden sm:flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-full font-bold transition text-sm shadow-lg shadow-sky-600/20">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    <span>777 888 999</span>
+                </a>
+                <button class="md:hidden text-slate-900 p-2" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-24 left-0 w-full bg-white border-b border-slate-100 shadow-2xl flex-col p-6 space-y-4 z-50">
+            <button onclick="router('home'); toggleMobileMenu()" class="block w-full text-left font-bold text-lg text-slate-800">Domů</button>
+            <button onclick="router('services'); toggleMobileMenu()" class="block w-full text-left font-bold text-lg text-slate-800">Služby</button>
+            <button onclick="router('pricing'); toggleMobileMenu()" class="block w-full text-left font-bold text-lg text-slate-800">Ceník</button>
+            <button onclick="router('references'); toggleMobileMenu()" class="block w-full text-left font-bold text-lg text-slate-800">Realizace</button>
+            <button onclick="router('contact'); toggleMobileMenu()" class="block w-full text-left font-bold text-lg text-slate-800">Kontakt</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow">
+
+        <!-- === PAGE: HOME (LANDING) === -->
+        <section id="home" class="page-section active">
+            
+            <!-- HERO -->
+            <div class="relative bg-slate-900 h-[650px] flex items-center overflow-hidden">
+                <div class="absolute inset-0">
+                    <img src="https://images.unsplash.com/photo-1584622050111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover opacity-30" alt="Detail moderní koupelny">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent"></div>
+                
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-10">
+                    <div class="max-w-3xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 backdrop-blur-sm text-sky-400 text-xs font-bold uppercase tracking-widest mb-8">
+                            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                            Dostupní v Praze a okolí
+                        </div>
+                        <h1 class="text-5xl lg:text-7xl font-extrabold text-white tracking-tight mb-8 leading-tight">
+                            Instalatérské práce <br>
+                            <span class="text-sky-500">bez kompromisů.</span>
+                        </h1>
+                        <p class="text-lg text-slate-300 mb-10 leading-relaxed max-w-2xl font-light">
+                            Řešíme havárie vody, výměny baterií i kompletní rozvody s důrazem na detail a čistotu. 
+                            Férová cena domluvená předem.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-5">
+                            <a href="tel:+420123456789" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-4 rounded-full font-bold text-center transition shadow-[0_0_20px_rgba(14,165,233,0.3)] flex items-center justify-center gap-2">
+                                <i data-lucide="phone-call" class="w-5 h-5"></i>
+                                Zavolat ihned
+                            </a>
+                            <button onclick="router('contact')" class="bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-full font-bold text-center transition backdrop-blur-md">
+                                Nezávazná poptávka
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BENEFITS -->
+            <div class="py-16 bg-white relative -mt-10 z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-50 flex items-start gap-5 hover:-translate-y-1 transition duration-300">
+                            <div class="bg-sky-50 p-4 rounded-xl text-sky-600 shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Dojezd do 60 minut</h3>
+                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">V rámci Prahy garantujeme rychlý příjezd k akutním haváriím.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-50 flex items-start gap-5 hover:-translate-y-1 transition duration-300">
+                            <div class="bg-sky-50 p-4 rounded-xl text-sky-600 shrink-0">
+                                <i data-lucide="wallet" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Cena předem</h3>
+                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Žádná nemilá překvapení. Vždy víte, kolik za práci zaplatíte.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-50 flex items-start gap-5 hover:-translate-y-1 transition duration-300">
+                            <div class="bg-sky-50 p-4 rounded-xl text-sky-600 shrink-0">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Pořádek a záruka</h3>
+                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Pracujeme čistě. Po práci vždy uklidíme a ručíme za kvalitu.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICES PREVIEW -->
+            <div class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div class="max-w-2xl">
+                        <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-2 block">Naše služby</span>
+                        <h2 class="text-4xl font-extrabold text-slate-900">S čím vám pomůžeme?</h2>
+                    </div>
+                    <button onclick="router('services')" class="text-slate-900 font-bold hover:text-sky-600 flex items-center gap-2 transition group">
+                        Všechny služby <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer shadow-lg" onclick="router('services')">
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Opravy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <div class="bg-white/10 backdrop-blur-md w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4 border border-white/20">
+                                <i data-lucide="droplet" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Havárie a opravy</h3>
+                            <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                Rychlá lokalizace úniků, čištění odpadů a akutní opravy.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer shadow-lg" onclick="router('services')">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Montáže">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <div class="bg-white/10 backdrop-blur-md w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4 border border-white/20">
+                                <i data-lucide="settings" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Montáže a výměny</h3>
+                            <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                Baterie, toalety, sprchy, bojlery a spotřebiče.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer shadow-lg" onclick="router('services')">
+                        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Rekonstrukce">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <div class="bg-white/10 backdrop-blur-md w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4 border border-white/20">
+                                <i data-lucide="home" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Rekonstrukce</h3>
+                            <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                Kompletní rozvody vody a odpadů pro kuchyně i koupelny.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROCESS (Static for clarity) -->
+            <div class="py-24 bg-slate-50 border-y border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div>
+                            <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-2 block">Proces</span>
+                            <h2 class="text-4xl font-extrabold text-slate-900 mb-8">Jak probíhá spolupráce?</h2>
+                            <div class="space-y-10">
+                                <div class="flex gap-6 group">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-slate-200 text-slate-400 flex items-center justify-center font-bold group-hover:border-sky-600 group-hover:text-sky-600 transition duration-300 bg-white">1</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-slate-900 mb-2">Zavoláte / vyplníte poptávku</h4>
+                                        <p class="text-slate-600 leading-relaxed">Popíšete problém, případně pošlete fotku. Jsme na příjmu a reagujeme rychle.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-6 group">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-slate-200 text-slate-400 flex items-center justify-center font-bold group-hover:border-sky-600 group-hover:text-sky-600 transition duration-300 bg-white">2</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-slate-900 mb-2">Domluvíme termín + cenu</h4>
+                                        <p class="text-slate-600 leading-relaxed">Navrhneme nejbližší možný čas a řekneme vám orientační cenu předem.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-6 group">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-slate-200 text-slate-400 flex items-center justify-center font-bold group-hover:border-sky-600 group-hover:text-sky-600 transition duration-300 bg-white">3</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-slate-900 mb-2">Provedeme práci + úklid</h4>
+                                        <p class="text-slate-600 leading-relaxed">Přijedeme včas, opravíme, uklidíme po sobě a vystavíme doklad.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-slate-200 rounded-[2rem] transform rotate-3"></div>
+                            <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?q=80&w=1000&auto=format&fit=crop" class="relative rounded-2xl shadow-2xl w-full object-cover h-[500px]" alt="Instalatér při práci">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="py-24 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-12 text-center">Časté otázky</h2>
+                <div class="space-y-4">
+                    <details class="bg-white border border-slate-100 rounded-2xl overflow-hidden group shadow-sm">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 list-none hover:bg-slate-50 transition">
+                            Jak rychle přijedete?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
+                            V případě havárie se snažíme dorazit do 60 minut v rámci Prahy. U běžných zakázek obvykle do 24-48 hodin.
+                        </div>
+                    </details>
+                    <details class="bg-white border border-slate-100 rounded-2xl overflow-hidden group shadow-sm">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 list-none hover:bg-slate-50 transition">
+                            Kolik to bude stát?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
+                            Cenu se snažíme odhadnout už po telefonu. Přesnou částku vám řekneme na místě před zahájením práce. Výjezd po Praze stojí od 500 Kč.
+                        </div>
+                    </details>
+                    <details class="bg-white border border-slate-100 rounded-2xl overflow-hidden group shadow-sm">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 list-none hover:bg-slate-50 transition">
+                            Děláte i o víkendu?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
+                            Ano, havarijní službu držíme i o víkendech a svátcích. U běžných montáží preferujeme pracovní dny, ale lze se domluvit.
+                        </div>
+                    </details>
+                    <details class="bg-white border border-slate-100 rounded-2xl overflow-hidden group shadow-sm">
+                        <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 list-none hover:bg-slate-50 transition">
+                            Jaké značky montujete?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-50 pt-4">
+                            Pracujeme s ověřenými značkami jako Geberit, Hansgrohe, Grohe, Ravak, Jika a další. Umíme ale namontovat i vybavení, které si koupíte sami.
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- CTA BAND -->
+            <div class="bg-slate-900 py-24 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                    <h2 class="text-4xl font-extrabold text-white mb-6">Máte problém s vodou nebo odpadem?</h2>
+                    <p class="text-slate-400 mb-10 text-xl font-light">Nečekejte, až se to zhorší. Zavolejte nám a vyřešíme to.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-6">
+                        <a href="tel:+420123456789" class="inline-flex items-center justify-center gap-3 bg-sky-600 hover:bg-sky-500 text-white px-10 py-5 rounded-full font-bold text-lg transition shadow-2xl hover:translate-y-[-2px]">
+                            <i data-lucide="phone" class="w-6 h-6"></i>
+                            +420 123 456 789
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PAGE: SERVICES === -->
+        <section id="services" class="page-section">
+            <div class="bg-slate-50 py-20 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-3 block">Expertíza</span>
+                    <h1 class="text-5xl font-extrabold text-slate-900">Naše služby</h1>
+                    <p class="text-slate-500 mt-4 text-xl font-light max-w-2xl mx-auto">Kompletní instalatérský servis pro domácnosti i firmy.</p>
+                </div>
+            </div>
+            
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+                <!-- Service Block 1 -->
+                <div class="flex flex-col md:flex-row gap-16 items-center">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1000&auto=format&fit=crop" class="rounded-3xl shadow-2xl" alt="Oprava havárie">
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-sky-100 w-12 h-12 rounded-xl flex items-center justify-center text-sky-600 mb-6">
+                            <i data-lucide="droplet" class="w-6 h-6"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6">Havárie a akutní opravy</h2>
+                        <p class="text-slate-600 mb-8 leading-relaxed text-lg">
+                            Prasklá voda, ucpaný záchod nebo neodtékající dřez? Tyto situace vyžadují rychlý zásah. Disponujeme profesionální technikou na čištění odpadů a detekci úniků.
+                        </p>
+                        <ul class="space-y-4 text-slate-700">
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Strojní čištění odpadů</li>
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Opravy prasklého potrubí</li>
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Výměna rohových ventilů</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Service Block 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-16 items-center">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=1000&auto=format&fit=crop" class="rounded-3xl shadow-2xl" alt="Montáž koupelny">
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-sky-100 w-12 h-12 rounded-xl flex items-center justify-center text-sky-600 mb-6">
+                            <i data-lucide="settings" class="w-6 h-6"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6">Montáže a kompletace</h2>
+                        <p class="text-slate-600 mb-8 leading-relaxed text-lg">
+                            Zařizujete novou koupelnu nebo kuchyň? Postaráme se o odbornou montáž sanity a spotřebičů. Správná instalace je klíčem k dlouhé životnosti.
+                        </p>
+                        <ul class="space-y-4 text-slate-700">
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Montáž WC (závěsné i kombi)</li>
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Instalace vodovodních baterií</li>
+                            <li class="flex items-center gap-3"><div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></div> Zapojení praček a myček</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 py-16 text-center">
+                <button onclick="router('contact')" class="bg-slate-900 hover:bg-slate-800 text-white px-10 py-4 rounded-full font-bold transition shadow-lg">
+                    Poptat služby
+                </button>
+            </div>
+        </section>
+
+        <!-- === PAGE: PRICING === -->
+        <section id="pricing" class="page-section">
+            <div class="bg-slate-50 py-20 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-3 block">Transparentnost</span>
+                    <h1 class="text-5xl font-extrabold text-slate-900">Ceník služeb</h1>
+                    <p class="text-slate-500 mt-4 text-xl font-light">Férové ceny bez skrytých poplatků.</p>
+                </div>
+            </div>
+
+            <div class="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-sky-50 border border-sky-100 p-6 rounded-2xl mb-12 text-sm text-sky-900 flex gap-4 items-start shadow-sm">
+                    <i data-lucide="info" class="w-6 h-6 flex-shrink-0 text-sky-600"></i>
+                    <p class="leading-relaxed">Ceny jsou orientační – vždy potvrzujeme předem podle rozsahu práce a specifik situace. Nejsme plátci DPH.</p>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+                    <div class="divide-y divide-slate-100">
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Výjezd (Praha)</h3>
+                                <p class="text-sm text-slate-500 mt-1">Doprava po Praze a paušál za přistavení vozu</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 500 Kč</div>
+                        </div>
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Hodinová sazba</h3>
+                                <p class="text-sm text-slate-500 mt-1">První hodina se účtuje celá, pak po 30 min.</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 650 Kč/h</div>
+                        </div>
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Drobná oprava</h3>
+                                <p class="text-sm text-slate-500 mt-1">Výměna těsnění, dotažení spojů (do 30 min)</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 400 Kč</div>
+                        </div>
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Výměna vodovodní baterie</h3>
+                                <p class="text-sm text-slate-500 mt-1">Demontáž staré + montáž nové</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 800 Kč</div>
+                        </div>
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Výměna WC</h3>
+                                <p class="text-sm text-slate-500 mt-1">Klasické kombi WC (práce)</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 1 500 Kč</div>
+                        </div>
+                        <!-- Item -->
+                        <div class="p-8 flex justify-between items-center hover:bg-slate-50 transition">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-lg">Strojní čištění odpadu</h3>
+                                <p class="text-sm text-slate-500 mt-1">Cena za běžný bytový odpad (dřez, vana)</p>
+                            </div>
+                            <div class="text-right font-bold text-sky-600 text-xl">od 1 200 Kč</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <p class="text-slate-500 mb-6">Potřebujete přesnou kalkulaci na větší projekt?</p>
+                    <button onclick="router('contact')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-800 transition">Napište nám</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PAGE: REFERENCES === -->
+        <section id="references" class="page-section">
+            <div class="bg-slate-50 py-20 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-3 block">Portfolio</span>
+                    <h1 class="text-5xl font-extrabold text-slate-900">Realizace</h1>
+                    <p class="text-slate-500 mt-4 text-xl font-light">Ukázky naší práce mluví za nás.</p>
+                </div>
+            </div>
+
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery Item -->
+                    <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer h-80">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-110" alt="Ref 1">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                            <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">Praha 4</span>
+                            <h3 class="text-white font-bold text-xl">Rekonstrukce koupelny</h3>
+                        </div>
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer h-80">
+                        <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-110" alt="Ref 2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                            <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">Praha 6</span>
+                            <h3 class="text-white font-bold text-xl">Výměna sprchového koutu</h3>
+                        </div>
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer h-80">
+                        <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-110" alt="Ref 3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                            <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">Praha 9</span>
+                            <h3 class="text-white font-bold text-xl">Instalace bojleru</h3>
+                        </div>
+                    </div>
+                     <!-- Gallery Item -->
+                     <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer h-80">
+                        <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-110" alt="Ref 4">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                            <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">Praha 2</span>
+                            <h3 class="text-white font-bold text-xl">Oprava odpadu</h3>
+                        </div>
+                    </div>
+                    <!-- Gallery Item -->
+                    <div class="group relative overflow-hidden rounded-3xl shadow-lg cursor-pointer h-80">
+                        <img src="https://images.unsplash.com/photo-1631613661158-b61846b03698?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition transform duration-700 group-hover:scale-110" alt="Ref 5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-8">
+                            <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">Hostivice</span>
+                            <h3 class="text-white font-bold text-xl">Montáž sanity</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PAGE: CONTACT === -->
+        <section id="contact" class="page-section">
+            <div class="bg-slate-50 py-20 border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <span class="text-sky-600 font-bold uppercase tracking-widest text-xs mb-3 block">Kontakt</span>
+                    <h1 class="text-5xl font-extrabold text-slate-900">Napište nám</h1>
+                    <p class="text-slate-500 mt-4 text-xl font-light">Jsme tu pro vás. Reagujeme obratem.</p>
+                </div>
+            </div>
+
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Contact Info -->
+                    <div>
+                        <div class="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 mb-8">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-8">Kontaktní údaje</h3>
+                            <div class="space-y-8">
+                                <div class="flex items-start gap-5">
+                                    <div class="bg-sky-50 p-4 rounded-2xl text-sky-600 shrink-0">
+                                        <i data-lucide="phone" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-slate-500 uppercase tracking-wide font-bold mb-1">Telefon</p>
+                                        <a href="tel:+420123456789" class="text-2xl font-bold text-slate-900 hover:text-sky-600 transition">+420 123 456 789</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-5">
+                                    <div class="bg-sky-50 p-4 rounded-2xl text-sky-600 shrink-0">
+                                        <i data-lucide="mail" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-slate-500 uppercase tracking-wide font-bold mb-1">Email</p>
+                                        <a href="mailto:info@novak-instalater.cz" class="text-xl font-bold text-slate-900 hover:text-sky-600 transition">info@novak-instalater.cz</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-5">
+                                    <div class="bg-sky-50 p-4 rounded-2xl text-sky-600 shrink-0">
+                                        <i data-lucide="map-pin" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-slate-500 uppercase tracking-wide font-bold mb-1">Sídlo / Lokalita</p>
+                                        <p class="text-lg font-bold text-slate-900">Praha 4 - Braník</p>
+                                        <p class="text-sm text-slate-500 mt-1">Výjezdy: Celá Praha a okolí</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="bg-white p-10 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-sky-50 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-8 relative z-10">Zanechte nám zprávu</h3>
+                        <form onsubmit="event.preventDefault(); alert('Toto je demo formulář. V reálu by se odeslal email.');" class="space-y-6 relative z-10">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Jméno a příjmení</label>
+                                <input type="text" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-sky-600 focus:border-transparent outline-none transition" placeholder="Jan Novák" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Telefon</label>
+                                <input type="tel" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-sky-600 focus:border-transparent outline-none transition" placeholder="+420 777 888 999" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">O co se jedná?</label>
+                                <textarea rows="4" class="w-full px-5 py-4 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-sky-600 focus:border-transparent outline-none transition" placeholder="Potřebuji opravit kapající kohoutek..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-xl transition shadow-lg">
+                                Odeslat poptávku
+                            </button>
+                            <p class="text-xs text-center text-slate-400">Odesláním souhlasíte se zpracováním osobních údajů.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6 text-white">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                        <span class="text-xl font-bold">NOVÁK</span>
+                    </div>
+                    <p class="text-sm leading-relaxed max-w-sm text-slate-500">
+                        Profesionální instalatérské práce v Praze a okolí. Zakládáme si na rychlosti, kvalitě a férovém jednání.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-6">Rychlé odkazy</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" onclick="router('home')" class="hover:text-sky-400 transition">Domů</a></li>
+                        <li><a href="#" onclick="router('services')" class="hover:text-sky-400 transition">Služby</a></li>
+                        <li><a href="#" onclick="router('pricing')" class="hover:text-sky-400 transition">Ceník</a></li>
+                        <li><a href="#" onclick="router('contact')" class="hover:text-sky-400 transition">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-6">Kontakt</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="tel:+420123456789" class="hover:text-sky-400 transition flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +420 123 456 789</a></li>
+                        <li><a href="mailto:info@novak.cz" class="hover:text-sky-400 transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> info@novak-instalater.cz</a></li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Praha a okolí</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-900 text-xs text-center text-slate-600">
+                &copy; 2026 Novák Instalatérství. Všechna práva vyhrazena. | Design by <a href="https://www.m2digitalagency.cz/" class="text-sky-600 font-bold hover:text-sky-500 transition">M² Digital Agency</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC FOR SPA ROUTER -->
+    <script>
+        lucide.createIcons();
+
+        // Simple Router Function
+        function router(pageId) {
+            // 1. Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 2. Show target section
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo(0, 0); // Scroll to top
+            }
+
+            // 3. Update Nav Links Styling
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-sky-600', 'font-bold');
+                link.classList.add('text-slate-600', 'font-medium');
+            });
+            
+            // Set active link style
+            const activeBtn = document.getElementById(`nav-${pageId}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'font-medium');
+                activeBtn.classList.add('text-sky-600', 'font-bold');
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize Icons on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            // Set Home as active by default visually in nav
+            document.getElementById('nav-home').classList.add('text-sky-600', 'font-bold');
+            document.getElementById('nav-home').classList.remove('text-slate-500', 'font-medium');
+        });
+    </script>
+
+</body>
+</html>
