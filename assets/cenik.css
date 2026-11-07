@@ -1,0 +1,15 @@
+/* Ceník: přepínač délky smlouvy, ikony u výčtů, štítek Nejoblíbenější */
+.pc.pi{width:20px;height:20px;margin-top:1px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--ink)}
+.ink .pc.pi{color:var(--gold)}
+.ticks li:has(.pi){align-items:center}
+.pt{margin:0 0 4px}
+.pt-chips{display:inline-flex;gap:4px;padding:4px;margin:0 0 18px;border-radius:99px;background:rgba(244,243,238,.1)}
+.pt-chips button{padding:8px 16px;border-radius:99px;font-size:14.5px;font-weight:600;color:var(--on-ink-2);transition:background .25s,color .25s}
+.pt-chips button[aria-pressed=true]{background:var(--on-ink);color:var(--ink)}
+.pt-chips b{color:var(--gold);font-weight:700;margin-left:4px}.pt-chips button[aria-pressed=true] b{color:#8a6f00}
+.pt-was{font-size:17px;color:var(--on-ink-2);margin:0 0 2px;min-height:1.4em}.pt-was s{text-decoration-thickness:2px}
+.pt-sub{margin:10px 0 0;font-size:15px;color:var(--on-ink-2)}.pt-sub strong{color:var(--gold);font-weight:600}
+.pt[data-m="12"] .pt-was{visibility:hidden}
+.pop{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--ink);font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:99px;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(0,0,0,.45)}
+.price.ink{box-shadow:0 0 0 2px var(--gold)}
+@media (max-width:760px){.pt-chips button{padding:8px 12px}}
