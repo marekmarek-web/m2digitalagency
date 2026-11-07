@@ -7,7 +7,7 @@
       const two = m === 24, price = two ? Math.round(BASE * DISC) : BASE;
       box.dataset.m = m; v.textContent = fmt(price);
       was.innerHTML = two ? `<s>${fmt(BASE)} Kč</s>` : '';
-      sub.innerHTML = two ? `${fmt(price * MONTHS)} Kč za ${MONTHS} měsíců, <strong>ušetříte ${fmt((BASE - price) * MONTHS)} Kč</strong>` : 'Min. 12 měsíců, bez vstupní investice';
+      sub.innerHTML = two ? `<span>${fmt(price * MONTHS)} Kč za ${MONTHS} měsíců</span><strong>ušetříte ${fmt((BASE - price) * MONTHS)} Kč</strong>` : 'Min. 12 měsíců, bez vstupní investice';
       btns.forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.ptM === m)));
     };
     btns.forEach((b) => b.addEventListener('click', () => set(+b.dataset.ptM)));

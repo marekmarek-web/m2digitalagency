@@ -22,3 +22,11 @@
 .pt-chips button{padding:9px 18px;font-size:15px}
 .pt-chips button[aria-pressed=true]{box-shadow:0 4px 14px -4px rgba(0,0,0,.5)}
 .ph{margin-top:10px}
+/* Zjednodušení: přehledné i v úzké kartě */
+.pop{top:0;left:24px;transform:translateY(-50%);padding:8px 18px;font-size:12px;letter-spacing:.12em;box-shadow:0 8px 18px -8px rgba(221,187,25,.6)}
+.ph{display:block;margin-top:6px}.ph h3{margin:0 0 14px}
+.pt-chips{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:4px}
+.pt-chips button{white-space:nowrap;text-align:center;padding:10px 8px;font-size:15px}
+.pt-was{font-size:19px;margin:0}
+.pt-sub{display:flex;flex-direction:column;gap:2px;margin:12px 0 0;font-size:15px;line-height:1.35}
+.pt-sub strong{display:block}
