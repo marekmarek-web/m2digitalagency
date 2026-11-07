@@ -148,7 +148,7 @@ body.menu-open{overflow:hidden}
 .ba-pr{width:100%;padding:24px;background:#fff;color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}.ba-pr small{font-weight:600;font-size:13px;margin-bottom:12px}.ba-pr strong{font:600 clamp(26px,2.6vw,36px)/1.04 var(--head);letter-spacing:-.03em}.ba-pr p{margin:10px 0 16px;color:var(--ink-2);font-size:15px;max-width:290px}.ba-pr span{background:var(--gold);padding:10px 16px;border-radius:99px;font-weight:600;font-size:14px}
 .ba-h{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--ink);pointer-events:none}
 .ba-h b{position:absolute;top:50%;left:50%;width:42px;height:42px;margin:-21px;background:var(--gold);transform:rotate(45deg);border-radius:9px;box-shadow:0 8px 20px -8px rgba(0,0,0,.5)}
-.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize}
+.ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize;z-index:3}
 .ba:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:3px}
 
 .sort{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
@@ -443,3 +443,4 @@ html.js .t.rv.in{transition:opacity .7s var(--ease),transform .35s var(--ease),b
 body:has(.menu:not([hidden])) .dock{display:none}
 @media (hover:none){.btn:hover{color:var(--fg);transform:none}.btn:hover::before{transform:translateX(-100%) skewX(-30deg)}.btn:hover .ar{transform:none}.seg-btn:hover{background:var(--stone)}}
 @media (prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none}}
+.deal{margin:10px 0 0;font:600 14px var(--body);color:var(--gold)}.t:not(.ink) .deal{color:var(--ink-2)}
