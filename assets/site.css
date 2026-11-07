@@ -192,7 +192,7 @@ body.menu-open{overflow:hidden}
 .work-s .brw{height:100%;display:flex;flex-direction:column}
 .brw-v{position:relative;flex:1;min-height:0;overflow:hidden;container-type:size}
 .work-s img,.gal-i img{width:100%;height:auto;transition:transform 7s linear}
-.work-s.on.pan img{transform:none}
+.work-s img{transition:transform .5s ease}.work-s.on.pan img{transform:translateY(var(--py,0px));transition:transform var(--pt,6s) linear}
 .gal-i:hover img,.gal-i:focus-visible img{transform:translateY(min(0px,calc(-100% + 100cqh)))}
 .gal{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
 .gal-i{display:flex;flex-direction:column;padding:var(--gap);text-decoration:none}

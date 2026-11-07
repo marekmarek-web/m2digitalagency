@@ -107,9 +107,11 @@
   /* projekty */
   $$('[data-work]').forEach((w) => {
     const items = $$('.work-i', w), slides = $$('.work-s', w); let t;
-    const on = (i) => { items.forEach((x, j) => x.classList.toggle('on', j === i)); slides.forEach((x, j) => { x.classList.toggle('on', j === i); x.classList.remove('pan'); }); clearTimeout(t); t = setTimeout(() => !calm && slides[i].classList.add('pan'), 500); };
+    const PAN_SPEED = 220, PAN_MAX = 1600; // px za sekundu, stejná rychlost pro všechny náhledy
+    const startPan = (s) => { const im = $('img', s), box = $('.brw-v', s); if (!im || !box) return; const d = Math.max(0, Math.min(PAN_MAX, im.offsetHeight - box.clientHeight)); if (d < 120) return; s.style.setProperty('--py', -d + 'px'); s.style.setProperty('--pt', (d / PAN_SPEED).toFixed(2) + 's'); s.classList.add('pan'); };
+    const on = (i) => { items.forEach((x, j) => x.classList.toggle('on', j === i)); slides.forEach((x, j) => { x.classList.toggle('on', j === i); x.classList.remove('pan'); }); clearTimeout(t); t = setTimeout(() => !calm && startPan(slides[i]), 500); };
     items.forEach((a, i) => { a.addEventListener('pointerenter', () => on(i)); a.addEventListener('focus', () => on(i)); });
-    new IntersectionObserver(([e], o) => { if (e.isIntersecting && !calm) { slides[0].classList.add('pan'); o.disconnect(); } }, { threshold: 0.3 }).observe(w);
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting && !calm) { startPan(slides[0]); o.disconnect(); } }, { threshold: 0.3 }).observe(w);
   });
 
   /* otázky */
