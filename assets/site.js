@@ -133,7 +133,34 @@
   /* obsah dokumentu */
   $$('[data-legal]').forEach((l) => { const as = $$('.toc a', l); const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) as.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-30% 0px -60% 0px' }); $$('.doc section', l).forEach((s) => io2.observe(s)); });
   /* cookies, jen volba v tomto prohlížeči */
-  $$('[data-ck]').forEach((c) => { const i = $('[data-ck-input]', c), s = $('[data-ck-s]', c); const show = () => { s.textContent = i.checked ? 'Zapnuto' : 'Vypnuto'; }; try { i.checked = localStorage.getItem('m2-ck') === '1'; } catch {} i.addEventListener('change', () => { try { localStorage.setItem('m2-ck', i.checked ? '1' : '0'); } catch {} show(); }); show(); });
+  $$('[data-ck]').forEach((c) => { const i = $('[data-ck-input]', c), s = $('[data-ck-s]', c); const show = () => { s.textContent = i.checked ? 'Zapnuto' : 'Vypnuto'; }; try { i.checked = localStorage.getItem('m2-ck') === '1'; } catch {} i.addEventListener('change', () => { try { localStorage.setItem('m2-ck', i.checked ? '1' : '0'); } catch {} show(); document.dispatchEvent(new Event('m2ck')); }); show(); });
+
+  /* cookie lišta: ukáže se při první návštěvě, dokud si člověk nevybere */
+  const ckb = $('[data-ckb]');
+  if (ckb) {
+    let saved = null; try { saved = localStorage.getItem('m2-ck'); } catch { saved = '0'; }
+    const hide = () => { ckb.hidden = true; };
+    if (saved === null && !location.pathname.startsWith('/cookies')) ckb.hidden = false;
+    const pick = (v) => { try { localStorage.setItem('m2-ck', v); } catch {} hide(); document.dispatchEvent(new Event('m2ck-saved')); };
+    $('[data-ckb-yes]', ckb).addEventListener('click', () => pick('1'));
+    $('[data-ckb-no]', ckb).addEventListener('click', () => pick('0'));
+    document.addEventListener('m2ck', hide);
+  }
+
+  /* Google Analytics 4: načte se až po souhlasu (m2-ck = 1). Sem doplňte měřicí ID ve tvaru G-XXXXXXXXXX */
+  const GA_ID = 'G-RQECF3C3N7';
+  let gaOn = false;
+  const ga = () => {
+    if (!GA_ID) return;
+    let ok = false; try { ok = localStorage.getItem('m2-ck') === '1'; } catch {}
+    window['ga-disable-' + GA_ID] = !ok;
+    if (!ok) { if (gaOn) document.cookie.split(';').forEach((c) => { const n = c.split('=')[0].trim(); if (n === '_ga' || n.startsWith('_ga_')) document.cookie = n + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.' + location.hostname.replace(/^www\./, ''); }); return; }
+    if (gaOn) return; gaOn = true;
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date()); window.gtag('config', GA_ID);
+    const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID); document.head.append(s);
+  };
+  ga(); document.addEventListener('m2ck', ga); document.addEventListener('m2ck-saved', ga);
 
   /* okno s objednávkou */
   const modal = $('#objednavka');
