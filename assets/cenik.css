@@ -30,3 +30,9 @@
 .pt-was{font-size:19px;margin:0}
 .pt-sub{display:flex;flex-direction:column;gap:2px;margin:12px 0 0;font-size:15px;line-height:1.35}
 .pt-sub strong{display:block}
+/* Zarovnání na střed */
+.pop{left:50%;transform:translate(-50%,-50%)}
+.pt-chips{display:flex;width:fit-content;max-width:100%;margin:0 auto 18px}
+.pt-chips button{padding:10px 22px}
+.ph{display:flex;flex-direction:column;align-items:center;text-align:center}.ph h3{margin:0 0 14px}
+.ph{align-items:stretch;text-align:left}.ph h3{align-self:flex-start}
