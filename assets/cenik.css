@@ -36,3 +36,4 @@
 .pt-chips button{padding:10px 22px}
 .ph{display:flex;flex-direction:column;align-items:center;text-align:center}.ph h3{margin:0 0 14px}
 .ph{align-items:stretch;text-align:left}.ph h3{align-self:flex-start}
+.deal2{margin:0 0 14px;padding:11px 14px;border-radius:14px;background:rgba(221,187,25,.14);color:var(--on-ink);font-size:15px;line-height:1.35;text-align:center}.deal2 b{color:var(--gold);font-weight:700}
