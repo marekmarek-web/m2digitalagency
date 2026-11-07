@@ -1,7 +1,7 @@
 /* M² Digital Agency: interakce návrhu. Bez knihoven a bez odesílání dat. */
 (() => {
   /* adresa vlastní služby pro formuláře, viz formular-api/README.md */
-  const LEAD_URL = 'DOPLNIT_ADRESU_FORMULARE'; const OPENED = Date.now();
+  const LEAD_URL = 'https://m2-formular.vercel.app/api/lead'; const OPENED = Date.now();
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
