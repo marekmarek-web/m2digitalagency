@@ -13,3 +13,5 @@
 .pop{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--gold);color:var(--ink);font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:99px;white-space:nowrap;box-shadow:0 8px 20px -8px rgba(0,0,0,.45)}
 .price.ink{box-shadow:0 0 0 2px var(--gold)}
 @media (max-width:760px){.pt-chips button{padding:8px 12px}}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;margin-bottom:18px}.ph h3{margin:0}.ph .pt-chips{margin:0}
+.ph+.pt{margin-top:4px}
