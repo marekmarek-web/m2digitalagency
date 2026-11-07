@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.m2digitalagency.cz/</loc>
-  </url>
-  <url>
-    <loc>https://www.m2digitalagency.cz/web-pro-zivnostniky/</loc>
-  </url>
-  <url>
-    <loc>https://www.m2digitalagency.cz/web-na-pronajem/</loc>
-  </url>
-  <url>
-    <loc>https://www.m2digitalagency.cz/tvorba-webu-cena/</loc>
-  </url>
+  <url><loc>https://www.m2digitalagency.cz/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/web-pro-zivnostniky/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/web-na-pronajem/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/tvorba-webu-cena/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/obchodni-podminky/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/gdpr/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/cookies/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/pribramsky/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/aidvisora/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/marek/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/realty/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/ukazky/poradci/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/demo/realty/</loc></url>
+  <url><loc>https://www.m2digitalagency.cz/demo/poradci/</loc></url>
 </urlset>
