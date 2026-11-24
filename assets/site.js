@@ -104,10 +104,50 @@
     let raf; addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }, { passive: true }); addEventListener('resize', tick); tick();
   }
 
+  /* Náhledy měříme v zobrazených CSS pixelech, ne procenty obrázku. */
+  const PREVIEW_SPEED = 80; // px/s, stejná rychlost pro krátké i dlouhé stránky
+  const previewMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  $$('.gal-i').forEach((card) => {
+    const box = $('.brw-v', card);
+    if (!box) return;
+    const image = $('img', box);
+    if (!image) return;
+    let hovered = false, focused = false, frame = 0, last = 0, position = 0;
+    const stop = () => { cancelAnimationFrame(frame); frame = 0; last = 0; };
+    const tick = (time) => {
+      frame = 0;
+      if (previewMotion.matches || document.hidden) { last = 0; return; }
+      const max = Math.max(0, box.scrollHeight - box.clientHeight);
+      const target = hovered || focused ? max : 0;
+      // Po návratu ze skryté karty nedoháníme čas jedním velkým skokem.
+      const step = PREVIEW_SPEED * Math.min(last ? (time - last) / 1000 : 0, 0.05);
+      last = time;
+      position = Math.min(position, max);
+      position += Math.sign(target - position) * Math.min(Math.abs(target - position), step);
+      // Posouvá se jen oříznutý vnitřní viewport, nikoli dlouhá transformovaná vrstva.
+      box.scrollTop = position;
+      if (Math.abs(target - position) > 0.01) frame = requestAnimationFrame(tick);
+      else last = 0;
+    };
+    const wake = () => {
+      if (previewMotion.matches) { stop(); position = 0; box.scrollTop = 0; }
+      else if (!document.hidden && !frame) frame = requestAnimationFrame(tick);
+    };
+    card.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') { hovered = true; wake(); } });
+    card.addEventListener('pointerleave', () => { hovered = false; wake(); });
+    card.addEventListener('pointercancel', () => { hovered = false; wake(); });
+    card.addEventListener('focusin', () => { focused = true; wake(); });
+    card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) { focused = false; wake(); } });
+    image.addEventListener('load', wake);
+    new ResizeObserver(wake).observe(box);
+    previewMotion.addEventListener('change', wake);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : wake());
+  });
+
   /* projekty */
   $$('[data-work]').forEach((w) => {
     const items = $$('.work-i', w), slides = $$('.work-s', w); let t;
-    const PAN_SPEED = 220, PAN_MAX = 1600; // px za sekundu, stejná rychlost pro všechny náhledy
+    const PAN_SPEED = PREVIEW_SPEED, PAN_MAX = 1600;
     const startPan = (s) => { const im = $('img', s), box = $('.brw-v', s); if (!im || !box) return; const d = Math.max(0, Math.min(PAN_MAX, im.offsetHeight - box.clientHeight)); if (d < 120) return; s.style.setProperty('--py', -d + 'px'); s.style.setProperty('--pt', (d / PAN_SPEED).toFixed(2) + 's'); s.classList.add('pan'); };
     const on = (i) => { items.forEach((x, j) => x.classList.toggle('on', j === i)); slides.forEach((x, j) => { x.classList.toggle('on', j === i); x.classList.remove('pan'); }); clearTimeout(t); t = setTimeout(() => !calm && startPan(slides[i]), 500); };
     items.forEach((a, i) => { a.addEventListener('pointerenter', () => on(i)); a.addEventListener('focus', () => on(i)); });

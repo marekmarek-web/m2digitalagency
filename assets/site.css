@@ -191,9 +191,9 @@ body.menu-open{overflow:hidden}
 .work-s.on{opacity:1;transform:none}
 .work-s .brw{height:100%;display:flex;flex-direction:column}
 .brw-v{position:relative;flex:1;min-height:0;overflow:hidden;container-type:size}
-.work-s img,.gal-i img{width:100%;height:auto;transition:transform 7s linear}
+.work-s img,.gal-i img{width:100%;height:auto}
 .work-s img{transition:transform .5s ease}.work-s.on.pan img{transform:translateY(var(--py,0px));transition:transform var(--pt,6s) linear}
-.gal-i:hover img,.gal-i:focus-visible img{transform:translateY(min(0px,calc(-100% + 100cqh)))}
+.gal-i .brw-v{contain:paint;overflow-anchor:none;overscroll-behavior:contain}
 .gal{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
 .gal-i{display:flex;flex-direction:column;padding:var(--gap);text-decoration:none}
 .gal-i:hover{transform:translateY(-3px);box-shadow:0 26px 50px -36px rgba(15,15,13,.5)}
